@@ -12,4 +12,9 @@ router.get('/', function(req, res) {
 	res.render('welcome');
 });
 
+ // Route to searching UI by KWF
+router.get('/user/search/', function(req, res) {
+	res.render('search');
+});
+
 module.exports = router;
