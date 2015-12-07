@@ -1,7 +1,87 @@
 <html>
 <head>
+	<title>Search Results</title>
 </head>
 <body>
-<p>{{data}}</p>
+	<style>
+		.results
+		{
+			border-radius: 10px;
+			border: 1px solid #aaa;
+			padding: 10px;
+			overflow: hidden;
+			background: #eee;
+		}
+		.restaurant
+		{
+			border-radius: 10px;
+			border: 1px solid #aaa;
+			background: #eee;
+			padding: 10px;
+		}
+		.inspection
+		{
+			border-radius: 10px;
+			border: 1px solid #aaa;
+			background: #ccc;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+		.violation
+		{
+			border-radius: 10px;
+			border: 1px solid #aaa;
+			background: #bbb;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+	</style>
+	<ul class="results">
+		Search Results
+		{{#each restaurants}}
+		<li class="restaurant"><span>{{this.name}}, {{this.location}}</span>
+			{{#if this.inspections}}
+			<ul>
+				<u>Inspections</u>
+				{{#each this.inspections}}
+					<li class="inspection"><span>{{this.date}}</span>
+					{{#if this.violations}}
+					<ul>
+						<u>Violations</u>
+						{{#each this.violations}}
+							<li class="violation"><span>{{this.code}}: {{this.description}}</span></li>
+						{{/each}}
+					</ul>
+					{{/if}}
+					</li>
+				{{/each}}
+			</ul>
+			{{/if}}
+		</li>
+		{{/each}}
+	</ul>
 </body>
+
+<script type="text/javascript">
+
+
+// http://www.justexample.com/wp/expand-and-collapse-html-list/
+var allSpan = document.getElementsByTagName('span');
+for(var i = 0; i < allSpan.length; i++){
+	allSpan[i].onclick=function(){
+		if(this.parentNode){
+			var childList = this.parentNode.getElementsByTagName('ul');
+			for(var j = 0; j< childList.length;j++){
+				var currentState = childList[j].style.display;
+				if(currentState=="none"){
+					childList[j].style.display="block";
+				}else{
+					childList[j].style.display="none";
+				}
+			}
+		}
+	}
+}
+</script>
 </html>
+
