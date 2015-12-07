@@ -200,6 +200,7 @@ exports.create = function() {
         db.run(properties_array["MATERIAL"]);
     }
   });
+	db.close();
 
 });
 

@@ -1,7 +1,7 @@
 var sqlite3 = require('sqlite3').verbose();
 //TODO: Handle separate databases
 //TODO: Get actually database locations
-var db = new sqlite3.Database('../../database/db', sqlite3.OPEN_READWRITE);
+var db = new sqlite3.Database('../database/db', sqlite3.OPEN_READWRITE);
 
 //callback: function(error)
 //	this.lastID is the last inserted row ID
