@@ -8,6 +8,9 @@ var router = express.Router();
 router.post('/post', (req, res) => {console.log("posted");});
 
 // Example route
-router.get('/', function(req, res) {console.log("routed");});
+router.get('/', function(req, res) {
+	console.log("routed");
+	res.render("data_entry");
+});
 
 module.exports = router;
