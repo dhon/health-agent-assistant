@@ -1,0 +1,362 @@
+<h1>Data Entry</h1>
+
+<div class="container">
+
+    <ul class="tabs">
+        <li class="tab-link current" data-tab="tab-1">Health Inspection</li>
+        <li class="tab-link" data-tab="tab-2">Water Well</li>
+        <li class="tab-link" data-tab="tab-3">Septic System</li>
+
+    </ul>
+
+    <div id="tab-1" class="tab-content current">
+        <div class="form add_new_form" >
+            <label>Add a New Restaurant</label>
+            <form method="post" action="#">
+                Name: <input type="text" name="name"> <br>
+                Address:  <input type="text" name="address"> <br>
+                Telephone: <input type="text" name="telephone"> <br>
+                Owner:  <input type="text" name="owner"> <br>
+                Person in Charge: <input type="text" name="person_in_charge"> <br>
+                <button>Add</button><button type="button" class="add_new_btn">Cancel</button>
+            </form>
+            
+        </div>
+        <div class="form">
+            <label>Restaurant Info</label>
+            <form method="post" action="#">
+                Name: <input type="text" name="name2"> <br>
+                Address:  <input type="text" name="address2"> <br>
+                Telephone: <input type="text" name="telephone2"> <br>
+                Owner:  <input type="text" name="owner2"> <br>
+                Person in Charge: <input type="text" name="person_in_charge2"> <br>
+                Choose a Restaurant:  <select name="choose_restaurant">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+            </select>
+                <button>Choose</button>
+            </form>
+            <button class="add_new_btn" type="button">Add New Restaurant</button>
+        </div>
+        <div class="form">
+            <label>Inspection</label>
+            <form method="post" action="#">
+                <div class="form">
+                <h5>Basic Information</h5>
+                1. Inspector: <input type="text" name="inspector"> <br>
+                2. Risk Level:  <input type="text" name="risk_level"> <br>
+                3. HACCP: <input type="text" name="haccp"> <br>
+                4. Time In:  <input type="text" name="time_in"> <br>
+                5. Time Out: <input type="text" name="time_out"> <br>
+                6. Type of Operation: <select name="operation">
+                <option value="1">Food Service</option>
+                <option value="2">Retail</option>
+                <option value="3">Residential Kitchen</option>
+                <option value="4">Mobile</option>
+                <option value="5">Temporary</option>
+                <option value="6">Caterer</option>
+                <option value="7">Bed & Breakfast</option>
+                </select><br>
+                7. Type of Inspection: <select name="inspection">
+                <option value="1">Routine</option>
+                <option value="2">Re-inspection</option>
+                </select><br>
+                8. Previous Inspection Date:  <input type="text" name="previous_inspection_date"> <br>
+                9. Reasoning: <select name="reasoning">
+                <option value="1">Pre-operation</option>
+                <option value="2">Suspect Illness</option>
+                <option value="3">General Complaint</option>
+                <option value="4">HACCP</option>
+                <option value="5">Other</option>
+                </select><br>
+                10. Other Reasoning:  <input type="text" name="other_reasoning"> <br>
+                </div>
+
+                <div class="form">
+                <h5>Violation Related to Good retail Practices</h5>
+                1. Management and Personal: <fieldset id="group1">
+                            <input type="radio" value="" name="group1">Critical
+                            <input type="radio" value="" name="group1">Non-critical
+                </fieldset>
+                2. Food and Food Protection: <fieldset id="group2">
+                            <input type="radio" value="" name="group2">Critical
+                            <input type="radio" value="" name="group2">Non-critical
+                </fieldset>
+                3. Equipment and Utensils: <fieldset id="group3">
+                            <input type="radio" value="" name="group3">Critical
+                            <input type="radio" value="" name="group3">Non-critical
+                </fieldset>
+                4. Water, Plumbing and Waste: <fieldset id="group4">
+                            <input type="radio" value="" name="group4">Critical
+                            <input type="radio" value="" name="group4">Non-critical
+                </fieldset>
+                5. Phisical Facility: <fieldset id="group5">
+                            <input type="radio" value="" name="group5">Critical
+                            <input type="radio" value="" name="group5">Non-critical
+                </fieldset>
+                6. Poisonous or Toxic Materials: <fieldset id="group6">
+                            <input type="radio" value="" name="group6">Critical
+                            <input type="radio" value="" name="group6">Non-critical
+                </fieldset>
+                7. Special requirements: <fieldset id="group7">
+                            <input type="radio" value="" name="group7">Critical
+                            <input type="radio" value="" name="group7">Non-critical
+                </fieldset>
+                8. Other: <input type="text" name="other2"> <fieldset id="group8">
+                            <input type="radio" value="" name="group8">Critical
+                            <input type="radio" value="" name="group8">Non-critical
+                </fieldset>
+                </div>
+
+                <div class="form">
+                <h5>Extra Violation Information</h5>
+                1. <input type="checkbox" name="ex1" value="y">Discussion with Person in Charge<br>
+                2. <input type="checkbox" name="ex2" value="y">Corrective Action Required<br>
+                3. <input type="checkbox" name="ex3" value="y">Voluntary Compliance<br>
+                4. <input type="checkbox" name="ex4" value="y">Re-inspection Scheduled <br>
+                5. <input type="checkbox" name="ex5" value="y">Voluntary Disposal<br>
+                6. <input type="checkbox" name="ex6" value="y">Employee Restriction/Exclusion<br>
+                7. <input type="checkbox" name="ex7" value="y">Eergency Suspension<br>
+                8. <input type="checkbox" name="ex8" value="y">Emergency Closure<br>
+                9. <input type="checkbox" name="ex9" value="y">Other<input type="text" name="other3"><br>
+                </div>
+
+                <div class="form">
+                <h5>Additional Notes</h5>
+                <textarea cols="80" rows="5" name="myname"></textarea>
+                </div>
+
+                <div class="form">
+                    <label>Violation</label>
+                    <div >
+                        <input autocomplete="off" id="field1" name="field1" type="text" placeholder="Input Violation" />
+                        <button id="b1" class="add-more" type="button">+</button>
+                    </div>
+
+                </div>
+                <button>Submit</button><button>Delete</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="tab-2" class="tab-content">
+        <div class="form add_new_form">
+            <label>Add a New Well</label>
+            <form method="post" action="#">
+                Duis aute: <input type="text" name="name"> <br>
+                Duis aute:  <input type="text" name="name"> <br>
+                <button>Add</button><button class="add_new_btn" type="button">Cancel</button>
+            </form>
+        </div>
+        <div class="form">
+            <label>Well Info</label>
+            <form method="post" action="#">
+                Duis aute: <input type="text" name="name"> <br>
+                Duis aute:  <input type="text" name="name"> <br>
+                Choose:  <select>
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+            </select><br>
+                <button class="add_new_btn" type="button">Add New</button>
+            </form>
+        </div>
+        <div class="form">
+            <label>Report</label>
+            <form method="post" action="#">
+                <div class="form">
+                <h5>General Information</h5>
+                1. Client's Name: <input type="text" name="name"> <br>
+                2. Collected by:  <input type="text" name="name"> <br>
+                3. Project: <input type="text" name="name"> <br>
+                4. Project Number: <input type="text" name="name"> <br>
+                5. Date Collected: <input type="text" name="name"> <br>
+                6. Sample Identification: <input type="text" name="name"> <br>
+                7. Lab Number: <input type="text" name="name"> <br>
+                </div>
+                <div class="form">
+                    <h5>Analysis</h5>
+                    1. Total Coliform Bacteria: <input type="text" name="name"> <br>
+                    2. Total Coliform Bacteria units: <input type="text" name="name"> <br>
+                    3. Nitrate-Nitrogen: <input type="text" name="name"> <br>
+                    4. Nitrate-Nitrogen units: <input type="text" name="name"> <br>
+                    5. pH: <input type="text" name="name"> <br>
+                    6. pH units: <input type="text" name="name"> <br>
+                    7. Iron: <input type="text" name="name"> <br>
+                    8. Iron units: <input type="text" name="name"> <br>
+                    9. Hardness as CaCO3: <input type="text" name="name"> <br>
+                    10. Hardness as CacO3 units: <input type="text" name="name"> <br>
+                    11. Sulfare Sulfur: <input type="text" name="name"> <br>
+                    12. Sulfare Sulfur units: <input type="text" name="name"> <br>
+                    13. Chloride: <input type="text" name="name"> <br>
+                    14. Chloride units: <input type="text" name="name"> <br>
+                    15. Specific Conductance: <input type="text" name="name"> <br>
+                    16. Specific Conductance units: <input type="text" name="name"> <br>
+                    17. <input type="checkbox" name="pass" value="y">This water sample passes drinking water standards. <br>
+                    18. Submitted by: <input type="text" name="name"> <br>
+                </div>
+                <div class="form">
+                    <h5>Additional Notes</h5>
+                    <textarea cols="80" rows="5" name="notes"></textarea>
+                </div>
+                <button>Submit</button><button>Delete</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="tab-3" class="tab-content">
+        <div class="form add_new_form">
+            <label>Add a New Tank</label>
+            <form method="post" action="#">
+                Duis aute: <input type="text" name="name"> <br>
+                Duis aute:  <input type="text" name="name"> <br>
+                <button>Add</button><button class="add_new_btn" type="button">Cancel</button>
+            </form>
+        </div>
+
+        <div class="form">
+            <label>Tank Info</label>
+            <form method="post" action="#">
+                Duis aute: <input type="text" name="name"> <br>
+                Duis aute:  <input type="text" name="name"> <br>
+                Choose:  <select>
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+            </select><br>
+                <button class="add_new_btn" type="button">Add New</button>
+            </form>
+        </div>
+        <div class="form">
+            <label>Report</label>
+            <form method="post" action="#">
+                1. Pumping Date: <input type="text" name="name"> <br>
+                2. Quantity Pumped(gallons): <input type="text" name="name"> <br>
+                3. Component: <input type="text" name="name"> <br>
+                4. Other: <input type="text" name="name"> <br>
+                5. Effluent Tee Filter Present: <fieldset id="group1">
+                            <input type="radio" value="" name="group1">Yes
+                            <input type="radio" value="" name="group1">No
+                </fieldset>
+                6. If yes, was it cleaned? <fieldset id="group2">
+                            <input type="radio" value="" name="group2">Yes
+                            <input type="radio" value="" name="group2">No
+                </fieldset>
+                7. Observed condition of component pumbed: <input type="text" name="name"> <br>
+                8. System pumbed by(name): <input type="text" name="name"> <br>
+                9. System pumbed by(License): <input type="text" name="name"> <br>
+                10. System pumbed by(company): <input type="text" name="name"> <br>
+                11. Location where contents were disposed: <input type="text" name="name"> <br>
+                12. Hauler: <input type="text" name="name"> <br>
+                13. Hauler date: <input type="text" name="name"> <br>
+                14. Receiving Facility: <input type="text" name="name"> <br>
+                15. Receiving Facility Date: <input type="text" name="name"> <br>
+                <button>Submit</button><button>Delete</button>
+            </form>
+        </div>
+    </div>
+
+</div><!-- container -->
+
+
+<style>
+
+    .container{
+        width: 800px;
+        margin: 0 auto;
+    }
+
+
+
+    ul.tabs{
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+    }
+    ul.tabs li{
+        background: none;
+        color: #222;
+        display: inline-block;
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+
+    ul.tabs li.current{
+        background: #ededed;
+        color: #222;
+    }
+
+    .tab-content{
+        display: none;
+        background: #ededed;
+        padding: 15px;
+    }
+
+    .tab-content.current{
+        display: inherit;
+    }
+    .form{
+        padding:10px;
+        margin:10px 0;
+        border:2px solid white;
+    }
+
+    .add_new_form{
+        display:none;
+    }
+</style>
+
+<script>
+    $(document).ready(function(){
+
+        $('ul.tabs li').click(function(){
+            var tab_id = $(this).attr('data-tab');
+
+            $('ul.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $("#"+tab_id).addClass('current');
+        });
+
+    });
+
+
+    $(document).ready(function(){
+        var next = 1;
+        $(".add-more").click(function(e){
+            e.preventDefault();
+            var addto = "#field" + next;
+            var addRemove = "#field" + (next);
+            next = next + 1;
+            var newIn = '<input autocomplete="off" id="field' + next + '" name="field' + next + '" type="text" placeholder="Input Violation">';
+            var newInput = $(newIn);
+            var removeBtn = '<button id="remove' + (next - 1) + '" class="remove-me" >-</button></div><div id="field">';
+            var removeButton = $(removeBtn);
+            $(addto).after(newInput);
+            $(addRemove).after(removeButton);
+            $("#field" + next).attr('data-source',$(addto).attr('data-source'));
+            $("#count").val(next);
+
+            $('.remove-me').click(function(e){
+                e.preventDefault();
+                var fieldNum = this.id.charAt(this.id.length-1);
+                var fieldID = "#field" + fieldNum;
+                $(this).remove();
+                $(fieldID).remove();
+            });
+        });
+    });
+
+
+    $(function(){
+        $('.add_new_btn').on('click',function(){
+            $('.add_new_form').slideToggle(1000);
+        });
+    });
+
+</script>
