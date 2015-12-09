@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/api');
+var index = require('./routes/index');
 var users = require('./routes/users');
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./database/db');
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', index);
 app.use('/api', routes);
 app.use('/api/user', users);
 
