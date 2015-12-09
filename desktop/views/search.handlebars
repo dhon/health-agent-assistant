@@ -1,0 +1,97 @@
+<head>
+	<title>Tabs are fun</title>
+	
+	
+	<style>
+		
+		.tabs ul {
+			list-style: none;
+		}
+
+		.tabs ul li {
+			float: left;
+			background: #eee;
+			border: 1px #aaa solid;
+			border-bottom: none;
+			margin-right: 10px;
+			padding: 5px;
+		}
+
+		.tabs ul li.active {
+			margin-bottom: -1px;
+			padding-bottom: 5px;
+		}
+
+		.tabInner {
+			clear: both;
+			border: 1px solid #aaa;
+			height: 250px;
+			overflow: hidden;
+			background: #eee;
+		}
+
+		.tabInner div {
+			height: 500px;
+			padding: 50px;
+
+		}
+		
+	</style>
+
+	
+</head>
+
+<body>
+    <div class="tabs">
+		
+		<nav>
+			<ul>
+				<li><a href="#restaurants">Restaurants</a></li>
+				<li class="active"><a href="#septic_tanks">Septic Tanks</a></li>
+				<li><a href="#water_wells">Water Wells</a></li>
+			</ul>
+		</nav>
+		
+        <div class="tabInner">
+           
+		   <div id="restaurants">
+				<form method="post" id="restForm">
+					Restaurant Name: <input type="text" name="restName" placeholder="Restaurant Name"><br>
+					Location: <input type="text" name="restLocation" placeholder="Address, Town"><br>
+					Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
+					Owner's Telephone Number: <input type="text" name="ownerNumber" placeholder="e.g. 403-416-5987"><br>
+					Number of Violations: <input type="text" name="numViolations" placeholder="Ex: 1, 20, 34"><br>
+					Violation Codes: <input type="text" name="codeViolations" placeholder="Ex. Violation Codes"><br>
+					Inspection Date: <input type="text" name="restDate" placeholder="MM/DD/YYYY"><br>
+					<button type="button">Save</button>
+					<input type="Submit" value="Search" Width="90px">
+					<input type="reset" value="Reset"><br>
+				</form>
+            </div>
+            <div id="septic_tanks" id="septicForm">
+				<form method="post">
+					Location: <input type="text" name="tankLocation" placeholder="Address, Town"><br>
+					Inspection Date: <input type="text" name="tankDate" placeholder="MM/DD/YYYY"><br>
+					Condition: <input type="text" name="tankCondition" placeholder="Empty, Need to be Empty"><br>
+					<button type="button">Save</button>
+					<input type="Submit" value="Search" Width="90px">
+					<input type="reset" value="Reset"><br>
+				</form>
+			</div>
+            <div id="water_wells">
+                <form method="post" id="wellForm">
+					Client Name: <input type="text" name="clientName" placeholder="e.g. Sam Smith"><br>
+					Project Name: <input type="text" name="projectName" placeholder="Project Name"><br>
+					Location: <input type="text" name="wellLocation" placeholder="Address, Town / GPS Coordinate"><br>
+					Water Quality: <input type="text" name="waterQuality" placeholder="Water Quality"><br>
+					Report Date: <input type="text" name="wellDate" placeholder="MM/DD/YYYY"><br>
+					<button type="button">Save</button>
+					<input type="Submit" value="Search" Width="90px">
+					<input type="reset" value="Reset"><br>
+				</form>
+			</div>
+			
+			
+		</div>
+    </div>
+</body>

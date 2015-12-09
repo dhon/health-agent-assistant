@@ -73,7 +73,7 @@ app.use('/searching', require('./routes/searching-routes'));
 //// End User Routes
 
 //// Server Startup
-app.listen(app.get('port'), () => {
+app.listen(app.get('port'), function() {
   console.log('Express started on http://localhost:' +
               app.get('port') + '; press Ctrl-C to terminate');
 });
