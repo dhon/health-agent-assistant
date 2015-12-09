@@ -10,8 +10,18 @@ router.post('/', function(req, res) {
 	for(var attribute in data){
 		console.log(attribute+": "+data[attribute]);
 	}
+	console.log();
 	
-	// TODO: use the form to search the DB and get results
+	//TODO: Validate attributes? May be someone else's job
+	
+	//TODO: Parse attributes into data types desired by DB
+	
+	//TODO: use attributes to query database and get relevant results
+	
+	//TODO: Parse DB results into desired format
+	
+	//TODO: Sort formated results
+	
 	
 	var results = {
 		restaurants: [
