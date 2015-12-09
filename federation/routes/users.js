@@ -51,16 +51,26 @@ router.post('/register', function(req, res, next) {
 
 router.post('/editpassword', function(req, res, next) {
 	var user = req.body;
+	if(!isValidObject(user).success){
+		res.json(isValidObject(user));
+	}
+	else{
 	userController.editPassword(user, function(result){
 		res.json(result);
 	});
+ }
 });
 //returns a password hash, logs in the user
 router.post('/login', function(req, res, next) {
 	var user = req.body;
+	if(!isValidObject(user).success){
+		res.json(isValidObject(user));
+	}
+	else{
 	userController.loginUser(user, function(result){
 		res.json(result);
 	});
+ }
 });
 
 //returns the id of the search in the table, adds a new saved search string
