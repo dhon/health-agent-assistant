@@ -1,17 +1,15 @@
+
 <h1>Map</h1>
 
-<div class="container">
 
-<iframe width='100%' height='500px' frameBorder='0' src='https://a.tiles.mapbox.com/v4/ashablygin.ocg5flkb/attribution,zoompan,zoomwheel,geocoder,share.html?access_token=pk.eyJ1IjoiYXNoYWJseWdpbiIsImEiOiJjaWhwM2R4YWEwMWhwdDZtNGxuMXVobjYwIn0.wKvqtULva4f_BiM5KgWZYQ'></iframe>
+<div id='map'></div>
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoiYXNoYWJseWdpbiIsImEiOiJjaWhwM2R4YWEwMWhwdDZtNGxuMXVobjYwIn0.wKvqtULva4f_BiM5KgWZYQ';
+var map = L.mapbox.map('map', 'ashablygin.ocg5flkb')
+    .setView([42.474, -72.598], 13);
+</script>
 
-
-</div><!-- container -->
 
 
 <style>
-#map { position:absolute; top:0; bottom:0; width:100%; }
-
-.container{
-    width: 800px;
-    margin: 0 auto;
-}
+#map { margin-top: 25px; top:0; bottom:0; width:90%; height: 500px; }
