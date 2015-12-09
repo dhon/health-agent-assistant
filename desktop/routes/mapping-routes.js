@@ -13,4 +13,8 @@ router.get('/', function(req, res) {
 	res.render("map");
 });
 
+router.get('/welldemo', function(req, res) {
+	res.render("welldemo");
+});
+
 module.exports = router;
