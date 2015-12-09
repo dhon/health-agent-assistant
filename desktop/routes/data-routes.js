@@ -7,21 +7,26 @@ var router = express.Router();
 // Example post
 router.post('/post', (req, res) => {console.log("posted");});
 
+// fake data
+	var restaurants = [	{"name":"WcDonalds", "id":"123", "address":"54 Maple Street"},
+						{"name":"Dunkin Donuts", "id":"456", "address":"100 Main Street"}];
+
 // Route via search results
-router.post('/edit', function(req, res){
-	var primarykey = req.body.key;
-	var form; // = query db
+router.get('/edit', function(req, res){
+
+	//var key = req.body.key;
+	var completed_form = {"id":"19", "inspector":"Steve"}; // query db using key
+
+	console.log("routed for editing");
+	res.render("data_entry",{
+		list:restaurants,
+		formdata:completed_form
+	});
 
 });
 
 // Main route
 router.get('/', function(req, res) {
-
-	//replace with a databse query
-	var restaurants = [	{"name":"WcDonalds", "id":"123", "address":"54 Maple Street"},
-						{"name":"Dunkin Donuts", "id":"456", "address":"100 Main Street"}];
-	var tanks;
-	var wells;
 
 	console.log("routed");
 	res.render("data_entry",{
