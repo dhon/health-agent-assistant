@@ -10,12 +10,13 @@ function addPin(key) {
 
   var image = document.createElement("div");
   image.className = "pin";
-
+  image.style.margin = "150px";
   anchor.appendChild(image);
 
   // actual popup below
   var canvas = document.createElement("div");
   canvas.setAttribute("data-role", "popup");
+  canvas.setAttribute("data-dismissible", "false");
   canvas.id = "popup-" + key;
   canvas.className = "ui-content";
 
@@ -26,6 +27,7 @@ function addPin(key) {
 
   start.appendChild(anchor);
   start.appendChild(canvas);
+
 }
 
 addPin("1");
