@@ -17,7 +17,9 @@ router.post('/edit', function(req, res){
 // Main route
 router.get('/', function(req, res) {
 
-	var restaurants = [{"test":"WcDonalds", "id":"123"}, {"test":"Dunkin Donuts", "id":"456"}];
+	//replace with a databse query
+	var restaurants = [	{"name":"WcDonalds", "id":"123", "address":"54 Maple Street"},
+						{"name":"Dunkin Donuts", "id":"456", "address":"100 Main Street"}];
 	var tanks;
 	var wells;
 

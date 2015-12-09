@@ -26,15 +26,16 @@
         <div class="form">
             <label>Restaurant Info</label>
             <form method="post" action="#">
-                Name: <input type="text" name="name2"> <br>
+            <!--    Name: <input type="text" name="name2"> <br>
                 Address:  <input type="text" name="address2"> <br>
                 Telephone: <input type="text" name="telephone2"> <br>
                 Owner:  <input type="text" name="owner2"> <br>
                 Person in Charge: <input type="text" name="person_in_charge2"> <br>
+            -->
                 Choose a Restaurant:  <select name="choose_restaurant">
                {{#each list}}
 
-                <option value={{id}}>{{test}}</option>
+                <option value={{id}}>{{name}} - {{address}}</option>
                {{/each}}
 
             </select>
