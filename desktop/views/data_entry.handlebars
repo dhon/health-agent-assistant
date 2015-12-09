@@ -1,3 +1,4 @@
+<html>
 <h1>Data Entry</h1>
 
 <div class="container">
@@ -31,10 +32,11 @@
                 Owner:  <input type="text" name="owner2"> <br>
                 Person in Charge: <input type="text" name="person_in_charge2"> <br>
                 Choose a Restaurant:  <select name="choose_restaurant">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+               {{#each list}}
+
+                <option value={{id}}>{{test}}</option>
+               {{/each}}
+
             </select>
                 <button>Choose</button>
             </form>
@@ -270,8 +272,6 @@
         margin: 0 auto;
     }
 
-
-
     ul.tabs{
         margin: 0px;
         padding: 0px;
@@ -360,3 +360,4 @@
     });
 
 </script>
+</html>
