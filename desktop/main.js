@@ -107,5 +107,79 @@ app.get('/profile',
     res.render('profile', { user: req.user,id:req.user.id, username:req.user.username,displayName:req.user.displayName,emails:req.user.emails });
   });
 
+//// API calls to and from database
+function addLocation(location){
+$.ajax({
+ type: "POST",
+ url: './api/add',
+ data: location,
+ success: function(msg){
+      alert('Success ' + msg);
+     },
+ dataType: "json"
+});
+}
+
+function editLocation(location, id){
+$.ajax({
+ type: "POST",
+ url: './api/edit',
+ data: {
+  'location': location.location,
+  'type': location.type,
+  'Name': location.name,
+  'Address': location.address,
+  'Telephone': location.telephone,
+  'Owner': location.owner,
+  'Person': location.person,
+  'id': location.id
+ },
+ success: function(msg){
+      alert('Success ' + msg);
+     },
+ dataType: "json"
+});
+}
+
+function removeLocation(location){
+$.ajax({
+ type: "POST",
+ url: './api/remove',
+ data: {
+  'location': location.location,
+  'type': location.type,
+  'id': location.id
+ },
+ success: function(msg){
+      alert('Success ' + msg);
+     },
+ dataType: "json"
+});
+}
+
+function getLocation(location){
+$.ajax({
+ type: "GET",
+ url: './api/get',
+ data: location,
+ success: function(msg){
+      alert('Success ' + msg);
+     },
+ dataType: "json"
+});
+}
+
+function getDatabase(location){
+$.ajax({
+ type: "GET",
+ url: './api/database',
+ data: location.location,
+ success: function(msg){
+      alert('Success ' + msg);
+     },
+ dataType: "json"
+});
+}
+
 app.listen(3000);
 console.log("listen to local:3000");
