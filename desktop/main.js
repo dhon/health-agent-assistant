@@ -72,6 +72,7 @@ app.use(passport.session());
 app.use('/data', require('./routes/data-routes'));
 app.use('/mapping', require('./routes/mapping-routes'));
 app.use('/searching', require('./routes/searching-routes'));
+app.use('/admin', require('./routes/admin-routes'));
 
 // Define routes.
 app.get('/',
@@ -88,13 +89,13 @@ app.get('/login',
   function(req, res){
     res.render('login', { message: req.flash('error') });
   });
-  
-app.post('/login', 
+
+app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
     res.redirect('/');
   });
-  
+
 app.get('/logout',
   function(req, res){
     req.logout();
