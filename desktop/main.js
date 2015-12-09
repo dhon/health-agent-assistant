@@ -1,79 +1,111 @@
-// Skeleton/Comments by Tim Richards
-var express    = require('express');
+var express = require('express');
 var handlebars = require('express-handlebars');
+var passport = require('passport');
+var Strategy = require('passport-local').Strategy;
+var db = require('./db');
+var es = require('./node_modules/connect-ensure-login/lib/ensureLoggedIn')
+var crypto = require('crypto');
 
-// The body parser is used to parse the body of an HTTP request.
-var bodyParser = require('body-parser');
+// Configure the local strategy for use by Passport.
+//
+// The local strategy require a `verify` function which receives the credentials
+// (`username` and `password`) submitted by the user.  The function must verify
+// that the password is correct and then invoke `cb` with a user object, which
+// will be set at `req.user` in route handlers after authentication.
+passport.use(new Strategy(
+  function(username, password, cb) {
 
-// Require session library.
-var session    = require('express-session');
+    var hashed = crypto.createHash('md5').update(password).digest('hex');
 
-// Require flash library.
-var flash      = require('connect-flash');
+    db.users.findByUsername(username, function(err, user) {
+      if (err) { return cb(err); }
+      //if (!user) { return cb(null, false, { message: 'Invalid username ' + username }); }
+      //if (user.password != password) { return cb(null, false, { message: 'Invalid password' }); }
+      if (!user || user.password != hashed) { return cb(null, false, { message: "Invalid username, password combination"})}
+      return cb(null, user);
+    });
+  }));
 
-// The cookie parser is used to parse cookies in an HTTP header.
-var cookieParser = require('cookie-parser');
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  The
+// typical implementation of this is as simple as supplying the user ID when
+// serializing, and querying the user record by ID from the database when
+// deserializing.
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
 
-// Morgan for server logging.
-var morgan = require('morgan');
+passport.deserializeUser(function(id, cb) {
+  db.users.findById(id, function (err, user) {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
 
-// Create the app:
+// Create a new Express application.
 var app = express();
 
-// Set the port number:
-app.set('port', 3000);
+// Configure view engine to render EJS templates.
+// app.set('views', __dirname + '/views');
+// app.set('view engine', 'ejs');
 
-//// Start Middleware Setup
-// Static File Serving:
-app.use(express.static(__dirname + '/public'));
-
-// View Engine:
+//var view = handlebars.create({ defaultLayout: null });
 var view = handlebars.create({ defaultLayout: 'main' });
 app.engine('handlebars', view.engine);
 app.set('view engine', 'handlebars');
 
-// Body Parser:
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// Use application-level middleware for common functionality, including
+// logging, parsing, and session handling.
+app.use(require('morgan')('combined'));
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(require('connect-flash')());
 
-// Cookie Parser:
-app.use(cookieParser());
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+app.use(passport.initialize());
+app.use(passport.session());
 
-// Session Support:
-app.use(session({
-  secret: 'octocat',
-  // Both of the options below are deprecated, but should be false
-  // until removed from the library - sometimes, the reality of
-  // libraries can be rather annoying!
-  saveUninitialized: false, // does not save uninitialized session.
-  resave: false             // does not save session if not modified.
-}));
-
-// Flash Support.
-app.use(flash());
-
-//// End Middleware Setup
-
-
-
-
-
-
-
-//// Begin User Routes
-
-// This adds the external router defined routes to the app.
-// Note: this includes a prefix to each of those routes.
-//       Example: /mapping/, /data/, ...
-app.use('/', require('./routes/general-routes'));
 app.use('/data', require('./routes/data-routes'));
 app.use('/mapping', require('./routes/mapping-routes'));
 app.use('/searching', require('./routes/searching-routes'));
 
-//// End User Routes
+// Define routes.
+app.get('/',
+  function(req, res) {
+    if(req.user==undefined){
+      res.render('home', { user: req.user, username:"" });
+    }
+    else{
+      res.render('home', { user: req.user, username:req.user.username });
+    }
+  });
 
-//// Server Startup
-app.listen(app.get('port'), function() {
-  console.log('Express started on http://localhost:' +
-              app.get('port') + '; press Ctrl-C to terminate');
-});
+app.get('/login',
+  function(req, res){
+    res.render('login', { message: req.flash('error') });
+  });
+  
+app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
+  function(req, res) {
+    res.redirect('/');
+  });
+  
+app.get('/logout',
+  function(req, res){
+    req.logout();
+    res.redirect('/');
+  });
+
+app.get('/profile',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    res.render('profile', { user: req.user,id:req.user.id, username:req.user.username,displayName:req.user.displayName,emails:req.user.emails });
+  });
+
+app.listen(3000);
+console.log("listen to local:3000");
