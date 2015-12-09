@@ -62,6 +62,7 @@ router.post('/login', function(req, res, next) {
 		res.json(result);
 	});
 });
+
 //returns the id of the search in the table, adds a new saved search string
 router.post('/addsearch', function(req, res, next) {
 	var user = req.body;
@@ -69,6 +70,7 @@ router.post('/addsearch', function(req, res, next) {
 		res.json(result);
 	});
 });
+
 //removes a saved search by id
 router.post('/removesearch', function(req, res, next) {
 	var user = req.body;
@@ -76,6 +78,7 @@ router.post('/removesearch', function(req, res, next) {
 		res.json(result);
 	});
 });
+
 //returns a list of all user's saved searches as [{"id": 12, "search" : ""}, ]
 router.get('/getsearches', function(req, res, next) {
 	var user = req.body;

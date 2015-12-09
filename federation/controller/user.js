@@ -1,113 +1,123 @@
 var sqlQuery = require('./sqlQueryWriter');
 var db = require('./dbCommunicator');
 
-exports.registerNewUser = function(userObject, callback) {
+exports.registerNewUser = function(user, callback) {
 	//do the queries, define string error based on the query
 	var result = {};
-	userObject.location = ['Sunderland', 'Leverett'];
-	userObject.type = 'User';
+	user.location = ['Sunderland', 'Leverett'];
+	user.type = 'User';
 	//TODO: Fix privilege level
-	userObject.privilegeLevel = 1;
-	var query = sqlQuery.writeSQLAdd(userObject);
-	//db.run(query, function(err, 
-
-	var error = "Did not work";
-	result.success = false;
-	if(result.success){
-		result.desc = "";
+	user.privilegeLevel = 1;
+	var query = sqlQuery.writeSQLAdd(user);
+	db.run(user.location, query, function(err) {
+		if (err) {
+			//TODO: return only the error message, not the object
+			result.error = err;
+			result.success = false;
+		}
+		else {
+			result.success = true;
+		}
 		callback(result);
-	}
-	else{
-		result.desc = error;
-		callback(result);
-	}
+	});
 }
 
-exports.editPassword = function(userObject, callback){
+exports.editPassword = function(user, callback){
 	//do the queries, define string error based on the query
-	userObject.location = ['Sunderland', 'Leverett'];
-	userObject.type = 'User';
-	var query = sqlQuery.writeSQLEdit(userObject);
+	user.location = ['Sunderland', 'Leverett'];
+	user.type = 'User';
+	var query = sqlQuery.writeSQLEdit(user);
 
-	var result = {};
-	var error = "Did not work";
-	result.success = false;
-	if(result.success){
-		result.desc = "";
+	db.run(user.location, query, function(err) {
+		if (err) {
+			result.error = err;
+			result.success = false;
+		}
+		else {
+			result.success = true;
+		}
 		callback(result);
-	}
-	else{
-		result.desc = error;
-		callback(result);
-	}
+	});
 }
 
-exports.loginUser = function(userObject, callback){
+exports.loginUser = function(user, callback){
 	//do the queries, define string error based on the query
-	userObject.location = ['Sunderland', 'Leverett'];
-	userObject.type = 'User';
-	var query = sqlQuery.writeSQLGet(userObject);
-	//TODO: Send query
-
-	var result = {};
-	var error = "Did not work";
-	result.success = false;
-	if(result.success){
-		result.desc = "";
+	user.location = ['Sunderland', 'Leverett'];
+	user.type = 'User';
+	var query = sqlQuery.writeSQLGet(user);
+	
+	db.get(user.location, query, function(err, row) {
+		if (err) {
+			result.error = err;
+			result.success = false;
+		}
+		else if (row == undefined) {
+			result.error = 'No user found.';
+			result.success = false;
+		}
+		else {
+			result.data = row;
+			result.success = true;
+		}
 		callback(result);
-	}
-	else{
-		result.desc = error;
-		callback(result);
-	}
+	});
 }
 
-exports.addSearch = function(userObject, callback){
-	//do the queries, define string error based on the query
-	userObject.location = ['Sunderland', 'Leverett'];
-	userObject.type = 'Saved Searches';
-	//TODO: Fix privilege level
-	var query = sqlQuery.writeSQLAdd(userObject);
+exports.addSearch = function(user, callback){
+	user.location = ['Sunderland', 'Leverett'];
+	//TODO: Ensure correct query generation, etc. for Multi-Word tables
+	user.type = 'Saved Searches';
+	var query = sqlQuery.writeSQLAdd(user);
 
-	var result = {};
-	var error = "Did not work";
-	result.success = false;
-	if(result.success){
-		result.desc = "";
+	db.run(user.location, query, function(err) {
+		if (err) {
+			result.error = err;
+			result.success = false;
+		}
+		else {
+			result.data = this.lastID;
+			result.success = true;
+		}
 		callback(result);
-	}
-	else{
-		result.desc = error;
-		callback(result);
-	}
+	});
 }
 
-exports.removeSearch = function(userObject, callback){
-	//do the queries, define string error based on the query
-	var result = {};
-	var error = "Did not work";
-	result.success = false;
-	if(result.success){
-		result.desc = "";
+exports.removeSearch = function(user, callback){
+	user.location = ['Sunderland', 'Leverett'];
+	user.type = 'Saved Searches';
+	var query = sqlQuery.writeSQLRemove(user);
+
+	db.get(user.location, query, function(err, row) {
+		if (err) {
+			result.error = err;
+			result.success = false;
+		}
+		else {
+			result.success = true;
+		}
 		callback(result);
-	}
-	else{
-		result.desc = error;
-		callback(result);
-	}
+	})
 }
 
-exports.getSearches = function(userObject, callback){
+exports.getSearches = function(user, callback){
 	//do the queries, define string error based on the query
-	var result = {};
-	var error = "Did not work";
-	result.success = false;
-	if(result.success){
-		result.desc = "";
+	user.location = ['Sunderland', 'Leverett'];
+	user.type = 'Saved Searches';
+	var query = sqlQuery.writeSQLGet(user);
+
+	db.all(user.location, query, function(err, rows) {
+		if (err) {
+			result.error = err;
+			result.success = false;
+		}
+		else if (rows.length == 0) {
+			result.error = 'No searches found.';
+			result.success = false;
+		}
+		else {
+			result.data = rows;
+			result.success = true;
+		}
 		callback(result);
-	}
-	else{
-		result.desc = error;
-		callback(result);
-	}
+	})
 }

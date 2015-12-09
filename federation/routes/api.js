@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var sqlQuery = require('../controller/sqlQueryWriter')
+var db = require('../controller/dbCommunicator')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -13,8 +14,15 @@ router.post('/add', function(req, res, next) {
 		return;
 	}
 	//TODO: Check permissions
-	//TODO: send to database
-	res.send(sqlQuery.writeSQLAdd(req.body));
+	var query = sqlQuery.writeSQLAdd(req.body);
+	db.run(req.body.location, query, function(err) {
+		if (err) {
+			res.json({'success': false, 'error': err});
+		}
+		else {
+			res.json({'success': true, 'data': this.lastID});
+		}
+	});
 });
 
 router.post('/edit', function(req, res, next) {
@@ -23,7 +31,15 @@ router.post('/edit', function(req, res, next) {
 		return;
 	}
 
-	res.send(sqlQuery.writeSQLEdit(req.body));	
+	var query = sqlQuery.writeSQLEdit(req.body);
+	db.run(req.body.location, query, function(err) {
+		if (err) {
+			res.json({'success': false, 'error': err});
+		}
+		else {
+			res.json({'success': true});
+		}
+	});
 });
 
 router.post('/remove', function(req, res, next) {
@@ -31,7 +47,16 @@ router.post('/remove', function(req, res, next) {
 		res.send("Invalid data");
 		return;
 	}
-	
+
+	var query = sqlQuery.writeSQLRemove(req.body);
+	db.run(req.body.location, query, function(err) {
+		if (err) {
+			res.json({'success': false, 'error': err});
+		}
+		else {
+			res.json({'success': true});
+		}
+	});
 	res.send(sqlQuery.writeSQLRemove(req.body));	
 });
 
@@ -40,8 +65,16 @@ router.post('/get', function(req, res, next) {
 		res.send("Invalid data");
 		return;
 	}
-	
-	res.send(sqlQuery.writeSQLGet(req.body));	
+
+	var query = sqlQuery.writeSQLGet(req.body);
+	db.all(req.body.location, query, function(err, rows) {
+		if (err) {
+			res.json({'success': false, 'error': err});
+		}
+		else {
+			res.json({'success': true, 'data': rows});
+		}
+	});
 });
 
 router.post('/database', function(req, res, next) {
