@@ -7,9 +7,10 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/api');
 var index = require('./routes/index');
 var users = require('./routes/users');
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('./database/db');
 
+var sqlite3 = require('sqlite3').verbose();
+var db_sunderland = new sqlite3.Database('database/sunderland');
+var db_leverett = new sqlite3.Database('database/leverett');
 var createDb = require('./create_database.js');
 
 var app = express();
@@ -37,12 +38,8 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-createDb.create();
-
-
-
-// db.close();
-
+createDb.create('sunderland');
+createDb.create('leverett');
 
 // error handlers
 
