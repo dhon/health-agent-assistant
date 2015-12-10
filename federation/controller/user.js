@@ -45,6 +45,7 @@ exports.loginUser = function(user, callback){
 	user.location = ['Sunderland', 'Leverett'];
 	user.type = 'User';
 	var query = sqlQuery.writeSQLGet(user);
+	var result = {};
 	
 	db.get(user.location, query, function(err, row) {
 		if (err) {
