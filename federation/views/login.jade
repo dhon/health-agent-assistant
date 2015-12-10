@@ -1,11 +1,18 @@
+script(language='JavaScript').
+    var back = function() {
+        window.history.back();
+    }
+
+
 html
+
   head
     title=title
     link(href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css', rel='stylesheet')
   body
     div.container
-      form(action='/api/user/login',method='post')
-        div.jumbotron<center>
+      div.jumbotron<center>
+        form(action='/api/user/login',method='post')
             p
               img(height='250' width='250' class='profile-img', src='http://i1.wp.com/www.techrepublic.com/bundles/techrepubliccore/images/icons/standard/icon-user-default.png')
             p
@@ -14,5 +21,5 @@ html
               input(type='password', name='password', placeholder='Password', required)
             p
               button(class='btn btn-lg btn-primary', type='submit') &nbsp;&nbsp; Sign in &nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              button(class='btn btn-lg btn-primary', type='submit') &nbsp;&nbsp; Cancel &nbsp;&nbsp;
+        p
+          button(class='btn btn-lg btn-primary', type='submit' onclick='back()') &nbsp;&nbsp; Cancel &nbsp;&nbsp;
