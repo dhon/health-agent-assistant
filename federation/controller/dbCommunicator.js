@@ -11,10 +11,10 @@ exports.run = function(location, queryString, callback) {
 	var num = location.length;
 	var errors = [];
 	var cb = function(error) {
-		num -= 1;
-		if (error == null) {
-			errors.concat(error);
+		if (error != null) {
+			errors = errors.concat(error);
 		}
+		num -= 1;
 		if (num == 0) {
 			callback(errors);
 		}
@@ -56,7 +56,7 @@ exports.all = function(location, queryString, callback) {
 			allRows.concat(rows);
 		}
 		else {
-			errors.concat(error);
+			errors = errors.concat(error);
 		}
 		if (num == 0) {
 			callback(errors, rows);
@@ -84,7 +84,7 @@ exports.each = function(location, queryString, callback, complete) {
 			numRows += _numRows;
 		}
 		else {
-			errors.concat(error);
+			errors = errors.concat(error);
 		}
 		if (num == 0) {
 			complete(errors, rows);

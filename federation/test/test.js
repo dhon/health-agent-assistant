@@ -40,19 +40,15 @@ var api_get1 = {
 	"PIC": "Frederick Malone"
 };
 
-function log(str) {
-	console.log(str + '\n');
-}
-
 describe('Invalid queries', function() {
 	it('Should get errors for invalid queries', function(done) {
 		this.timeout(999999);
 		var error = 'NO';
 		db.run(['Leverett'], 'SELECT * FROM NOT_A_TABLE', function (errors) {
-			assert.equal(true, errors.length == 1);
-			error = errors[0];
-			describe(error);
-			log(error);
+			errors.forEach(function(error) {
+				console.log('Got da error: ' + error);
+			});
+			assert.equal(1, errors.length);
 			done();
 		});
 	});
