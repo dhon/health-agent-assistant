@@ -18,26 +18,58 @@ router.post('/', function(req, res) {
 	
 	//TODO: use attributes to query database and get relevant results
 	
-	var fakeDBResults = {//TODO: Make this contain all fields given by DB
-		restaurants:[{ID:"0", Name:"Test0", Address:"Leverit", OwnerID:"", PersonInCharge:"", RestaurantInspectionID:"?"},
-			{ID:"1", Name:"Test1", Address:"Leverit", OwnerID:"", PersonInCharge:"", RestaurantInspectionID:"?"},
-			{ID:"2", Name:"Test2", Address:"Leverit", OwnerID:"", PersonInCharge:"", RestaurantInspectionID:"?"}],
-		inspections:[{ID:"1", RestaurantID:"0", ViolationsID:""},
-			{ID:"2", RestaurantID:"0", ViolationsID:""},
-			{ID:"3", RestaurantID:"1", ViolationsID:""},
-			{ID:"4", RestaurantID:"0", ViolationsID:""},
-			{ID:"5", RestaurantID:"1", ViolationsID:""},
-			{ID:"6", RestaurantID:"0", ViolationsID:""},
-			{ID:"7", RestaurantID:"2", ViolationsID:""}],
-		violations:[{ID:"0", RestaurantInspectionID:"1", CodeReference:"0"},
-			{ID:"1", RestaurantInspectionID:"1", CodeReference:"1"},
-			{ID:"2", RestaurantInspectionID:"2", CodeReference:"2"},
-			{ID:"3", RestaurantInspectionID:"2", CodeReference:"3"},
-			{ID:"4", RestaurantInspectionID:"2", CodeReference:"4"},
-			{ID:"5", RestaurantInspectionID:"3", CodeReference:"5"},
-			{ID:"6", RestaurantInspectionID:"4", CodeReference:"6"},
-			{ID:"7", RestaurantInspectionID:"5", CodeReference:"7"},
-			{ID:"8", RestaurantInspectionID:"6", CodeReference:"8"}]
+	
+	//the parser makes it so the owner and the inspections are fields in the 
+	//restaurant, the violations are in the inspections, and the numbers that 
+	//refer to strings in other tables have been replaced with the strings.
+	//It also adds a date object to the inspections which is calculated from timein
+	var fakeDBResults = {
+		restaurants:[
+			{	ID:"0", 
+				name:"Test0", 
+				Location:"Leverit", //This should be changed to a pointer to a property
+				OwnerID:"0", 
+				PersonInCharge:"", 
+				RestaurantInspectionID:"0"},
+			],
+		inspections:[{ID:"0",
+			RESTAURANTID:"0",
+			INSPECTOR:"",
+			RISKLEVEL:"",
+			HACCP:"",
+			TIMEIN:"",
+			TIMEOUT:"",
+			TYPEOFOPERATION:"0",
+			TYPEOFINSPECTION:"0",
+			PREVIOUSINSPECTIONDATE:"",
+			REASONING:"0",
+			OTHERREASONING:"",
+			MANAGEMENTANDPERSONNEL:"",
+			FOODANDFOODPROTECTION:"",
+			EQUIPMENTANDUTENSILS:"",
+			WATERPLUMBINGANDWASTE:"",
+			PHYSICALFACILITY:"",
+			POISONOUSORTOXICMATERIALS:"",
+			SPECIALREQUIREMENTS:"",
+			OTHER0:"",
+			DISCUSSIONWITHPERSONINCHARGE:"",
+			CORRECTIVEACTIONREQUIRED:"",
+			VOLUNTARYCOMPLIANCE:"",
+			REINSPECTIONSCHEDULED:"",
+			VOLUNTARYDISPOSAL:"",
+			EMPLOYEERESTRICTIONEXCLUSION:"",
+			EMERGENCYSUSPENSION:"",
+			EMERGENCYCLOSURE:"",
+			OTHER1:"",
+			ADDITIONALNOTES:""}
+			],
+		violations:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"", DATEVERIFIED:""}
+			],
+		owners:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}]
+		property:[ID:"", GPSCOORDINATES:"", ADDRESS:"", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""],
+		typeOfOperations:[{ID:"0", OPERATIONTYPE:""}],
+		typeOfInspection:[{ID:"0", INSPECTIONTYPE:""}],
+		reasonings:[{ID:"0", REASONING:"Because"}]
 	};
 	var DBResults = fakeDBResults;
 	//TODO: Parse DB results into desired format
@@ -46,25 +78,62 @@ router.post('/', function(req, res) {
 	var results = {restaurants:[]};
 	for(i = 0; i<DBResults.restaurants.length; i++)
 	{
-		var restaurant = {name:"", location:"", inspections:[]};
-		restaurant.name = DBResults.restaurants[i].Name;
-		restaurant.location = DBResults.restaurants[i].Address;
-		//TODO: Populate all of desired fields
+		var restaurant = DBResults.restaurants[i];
+		
+		for(int j = 0; j<DBResults.owners.length; j++)
+		{
+			if(DBResults.owners[j].ID == restraunt.OwnerID)
+			{
+				restraunt.Owner = DBResults.owners[j];
+				break;
+			}
+		}
+		
+		restaurant.inspections = [];
+		
+		//TODO: Add link to property information
 		for(j = 0; j<DBResults.inspections.length; j++)
 		{
 			if(DBResults.inspections[j].RestaurantID != DBResults.restaurants[i].ID)
 				continue;
 			
-			var inspection = {date:"REPLACE", violations:[]};
-			//TODO: Populate all of desired fields
+			var inspection = DBResults.inspections[j];
+			inspection.date = new Date(inspection.TIMEIN);
+			//Replaces numbers that refer to tables with the corresponding strings
+			for(int k = 0; k<DBResults.typeOfOperations.length; k++)
+			{
+				if(DBResults.typeOfOperations[k].ID == inspection.TYPEOFOPERATION)
+				{
+					inspection.TYPEOFOPERATION = DBResults.typeOfOperations[k].OPERATIONTYPE;
+				}
+			}
+			
+			for(int k = 0; k<DBResults.typeOfInspections.length; k++)
+			{
+				if(DBResults.typeOfInspections[k].ID == inspection.TYPEOFINSPECTION)
+				{
+					inspection.TYPEOFINSPECTION = DBResults.typeOfInspections[k].INSPECTIONTYPE;
+				}
+			}
+			
+			for(int k = 0; k<DBResults.reasonings.length; k++)
+			{
+				if(DBResults.reasonings[k].ID == inspection.REASONING)
+				{
+					inspection.REASONING = DBResults.reasonings[k].REASONING;
+				}
+			}
+			
+			inspection.violations = [];
+			
 			for(k = 0; k<DBResults.violations.length; k++)
 			{
 				if(DBResults.violations[k].RestaurantInspectionID != DBResults.inspections[j].ID)
 					continue;
 				
-				var violation = {code:"", description:"REPLACE"};
-				//TODO: Populate all of desired fields
-				violation.code = DBResults.violations[k].CodeReference;
+				var violation = DBResults.violations[k];
+				
+				
 				inspection.violations.push(violation);
 			}
 			restaurant.inspections.push(inspection);
@@ -72,6 +141,7 @@ router.post('/', function(req, res) {
 		
 		results.restaurants.push(restaurant);
 	}
+	
 	
 	
 	//TODO: Sort formated results
