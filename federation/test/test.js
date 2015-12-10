@@ -1,5 +1,5 @@
 var db = require('../dbCommunicator');
-var user = require('../user.js');
+var user = require('../user');
 var assert = require('assert');
 
 describe('User login', function() {
