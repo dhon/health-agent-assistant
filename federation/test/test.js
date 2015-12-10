@@ -1,5 +1,6 @@
-var db = require('../dbCommunicator');
-var user = require('../user');
+var db = require('../controller/dbCommunicator');
+var sqlQuery = require('../controller/sqlQueryWriter');
+var user = require('../controller/user');
 var assert = require('assert');
 
 describe('User login', function() {
