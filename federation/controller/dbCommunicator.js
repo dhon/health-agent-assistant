@@ -8,7 +8,7 @@ var db = {'leverett': new sqlite3.Database('./database/leverett', sqlite3.OPEN_R
 //Runs a command with no direct return value
 //callback: function(errors)
 exports.run = function(location, queryString, callback) {
-	var num = db.length;
+	var num = location.length;
 	var errors = [];
 	var cb = function(error) {
 		num -= 1;
@@ -47,7 +47,7 @@ exports.get = function(location, queryString, callback) {
 //callback: function(errors, rows)
 //	This is executed on a list of rows
 exports.all = function(location, queryString, callback) {
-	var num = db.length;
+	var num = location.length;
 	var allRows = [];
 	var errors = [];
 	var cb = function(error, rows) {
@@ -75,7 +75,7 @@ exports.all = function(location, queryString, callback) {
 //While all() requires the results to be in memory, this
 //is much more efficient for large queries
 exports.each = function(location, queryString, callback, complete) {
-	var num = db.length;
+	var num = location.length;
 	var numRows = 0;
 	var errors = [];
 	var completionCallback = function(error, _numRows) {
