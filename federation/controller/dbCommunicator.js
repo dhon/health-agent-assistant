@@ -1,34 +1,96 @@
 var sqlite3 = require('sqlite3').verbose();
 //TODO: Handle separate databases
 //TODO: Get actually database locations
-var database = new sqlite3.Database('./database/leverett');
+var db = {'leverett': new sqlite3.Database('./database/leverett', sqlite3.OPEN_READWRITE),
+						'sunderland': new sqlite3.Database('./database/sunderland', sqlite3.OPEN_READWRITE)};
+//var database = new sqlite3.Database('./database/leverett');
 
-//callback: function(error)
-//	this.lastID is the last inserted row ID
-//	this.changes is the # of rows affected
-//
+//Runs a command with no direct return value
+//callback: function(errors)
 exports.run = function(location, queryString, callback) {
-	database.run(queryString, [], callback);
+	var num = db.length;
+	var errors = [];
+	var cb = function(error) {
+		num -= 1;
+		if (error == null) {
+			errors.concat(error);
+		}
+		if (num == 0) {
+			callback(errors);
+		}
+	}
+
+	location.forEach(function(loc) {
+		db[loc.toLowerCase()].run(queryString, [], cb);
+	});
 }
 
+//Gets the first matching row
 //callback: function(error, row)
 //	This is executed only for the first row returned
 exports.get = function(location, queryString, callback) {
-	database.get(queryString, [], callback);
+	var sent = false;
+	var cb = function(error, row) {
+		if (!sent) {
+			if (row != undefined) {
+				sent = true;
+				callback(error, row);
+			}
+		}
+	}
+	location.forEach(function(loc) {
+		db[loc.toLowerCase()].get(queryString, [], cb);
+	});
 }
 
-//callback: function(error, rows)
+//Gets all matching rows
+//callback: function(errors, rows)
 //	This is executed on a list of rows
 exports.all = function(location, queryString, callback) {
-	database.all(queryString, [], callback);
+	var num = db.length;
+	var allRows = [];
+	var errors = [];
+	var cb = function(error, rows) {
+		num -= 1;
+		if (error == null) {
+			allRows.concat(rows);
+		}
+		else {
+			errors.concat(error);
+		}
+		if (num == 0) {
+			callback(errors, rows);
+		}
+	}
+	location.forEach(function(loc) {
+		db[loc.toLowerCase()].all(queryString, [], cb);
+	});
 }
 
-//callback: function(error, row)
+//Gets each matching row separately
+//callback: function(errors, row)
 //	This is executed on each row returned separately
-//complete: function(error, #rows)
+//complete: function(error, numRows)
 //	This is called once all row callbacks have been called
 //While all() requires the results to be in memory, this
 //is much more efficient for large queries
 exports.each = function(location, queryString, callback, complete) {
-	database.each(queryString, [], callback, complete)
+	var num = db.length;
+	var numRows = 0;
+	var errors = [];
+	var completionCallback = function(error, _numRows) {
+		num -= 1;
+		if (error == null) {
+			numRows += _numRows;
+		}
+		else {
+			errors.concat(error);
+		}
+		if (num == 0) {
+			complete(errors, rows);
+		}
+	}
+	location.forEach(function(loc) {
+		db[loc.toLowerCase()].each(queryString, [], callback, completionCallback);
+	});
 }
