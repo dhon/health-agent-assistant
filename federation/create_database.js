@@ -158,37 +158,73 @@ var db = new sqlite3.Database('database/' + town);
 
   db.get("SELECT * FROM DEPAPPROVAL", function(error, row) {
     if(error && error.errno === 1){
+      db.serialize(function(){
         db.run(properties_array["DEPAPPROVAL"]);
+        db.run("INSERT INTO DEPAPPROVAL(OPTION) VALUES ('passes')");
+        db.run("INSERT INTO DEPAPPROVAL(OPTION) VALUES ('conditionally passes')");
+        db.run("INSERT INTO DEPAPPROVAL(OPTION) VALUES ('fails')");
+        db.run("INSERT INTO DEPAPPROVAL(OPTION) VALUES ('needs further evaluation by the local approving authority')");
+      });
     }
   });
 
   db.get("SELECT * FROM SYSTEMWILLPASSIF", function(error, row) {
     if(error && error.errno === 1){
+      db.serialize(function(){
         db.run(properties_array["SYSTEMWILLPASSIF"]);
+        db.run("INSERT INTO SYSTEMWILLPASSIF(OPTION) VALUES ('surface water')");
+        db.run("INSERT INTO SYSTEMWILLPASSIF(OPTION) VALUES ('wetland')");
+      });
     }
   });
 
   db.get("SELECT * FROM SYSTEMWILLFAILIF", function(error, row) {
     if(error && error.errno === 1){
+      db.serialize(function(){
         db.run(properties_array["SYSTEMWILLFAILIF"]);
+        db.run("INSERT INTO SYSTEMWILLFAILIF(OPTION) VALUES ('water supply')");
+        db.run("INSERT INTO SYSTEMWILLFAILIF(OPTION) VALUES ('public water')");
+        db.run("INSERT INTO SYSTEMWILLFAILIF(OPTION) VALUES ('private water')");
+      });
     }
   });
 
   db.get("SELECT * FROM GENERALTYPEOFSYSTEM", function(error, row) {
     if(error && error.errno === 1){
+      db.serialize(function(){
         db.run(properties_array["GENERALTYPEOFSYSTEM"]);
+        db.run("INSERT INTO GENERALTYPEOFSYSTEM(OPTION) VALUES ('septic tank')");
+        db.run("INSERT INTO GENERALTYPEOFSYSTEM(OPTION) VALUES ('single cesspool')");
+        db.run("INSERT INTO GENERALTYPEOFSYSTEM(OPTION) VALUES ('overflow cesspool')");
+        db.run("INSERT INTO GENERALTYPEOFSYSTEM(OPTION) VALUES ('privy')");
+        db.run("INSERT INTO GENERALTYPEOFSYSTEM(OPTION) VALUES ('shared system')");
+        db.run("INSERT INTO GENERALTYPEOFSYSTEM(OPTION) VALUES ('innovative/alternative system')");
+        db.run("INSERT INTO GENERALTYPEOFSYSTEM(OPTION) VALUES ('tight tank')");
+        db.run("INSERT INTO GENERALTYPEOFSYSTEM(OPTION) VALUES ('other')");
+      });
     }
   });
 
   db.get("SELECT * FROM BUILDINGSEWERMATERIAL", function(error, row) {
     if(error && error.errno === 1){
+      db.serialize(function(){
         db.run(properties_array["BUILDINGSEWERMATERIAL"]);
+        db.run("INSERT INTO BUILDINGSEWERMATERIAL(OPTION) VALUES ('cast iron')");
+        db.run("INSERT INTO BUILDINGSEWERMATERIAL(OPTION) VALUES ('PVC')");
+        db.run("INSERT INTO BUILDINGSEWERMATERIAL(OPTION) VALUES ('other')");
+      });
     }
   });
 
   db.get("SELECT * FROM MATERIAL", function(error, row) {
     if(error && error.errno === 1){
+      db.serialize(function() {
         db.run(properties_array["MATERIAL"]);
+        db.run("INSERT INTO MATERIAL(OPTION) VALUES ('concrete')");
+        db.run("INSERT INTO MATERIAL(OPTION) VALUES ('metal')");
+        db.run("INSERT INTO MATERIAL(OPTION) VALUES ('fiberglass')");
+        db.run("INSERT INTO MATERIAL(OPTION) VALUES ('other')");
+      });
     }
     db.close();
   });
