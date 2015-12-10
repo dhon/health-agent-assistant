@@ -2,13 +2,133 @@ var db = require('../controller/dbCommunicator');
 var sqlQuery = require('../controller/sqlQueryWriter');
 var user = require('../controller/user');
 var assert = require('assert');
+var http = require('http');
+var querystring = require('querystring');
 
 describe('User login', function() {
-  describe('#indexOf()', function () {
-    it('should return -1 when the value is not present', function () {
-      assert.equal(-1, [1,2,3].indexOf(5));
-      assert.equal(-1, [1,2,3].indexOf(0));
-		});
+  describe('#userCreation()', function (done) {
+    it('jsonResponse field should have success as true', function () {
+      var user1 = querystring.stringify({
+        username: "dhon",
+        passwordhash: "hello"
+      });
+
+      var post_options = {
+        host: 'localhost',
+        port: '3000',
+        path: '/api/user/register',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(user1)
+        }
+      };
+
+      var post_req = http.request(post_options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (jsonResponse) {
+          assert.equal(jsonResponse.success,true);
+          done();
+        });
+      });
+
+      // post the data
+      post_req.write(user1);
+      post_req.end();
+    });
+  });
+  describe('#userCreation()', function () {
+    it('jsonResponse field should have success as true', function (done) {
+      var user2 = querystring.stringify({
+        username: "george",
+        passwordhash: "wordpress"
+      });
+
+      var post_options = {
+        host: 'localhost',
+        port: '3000',
+        path: '/api/user/login',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(user2)
+        }
+      };
+
+      var post_req = http.request(post_options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (jsonResponse) {
+          assert.equal(jsonResponse.success,false);
+          done();
+        });
+      });
+
+      // post the data
+      post_req.write(user2);
+      post_req.end();
+    });
+  });
+  describe('#userCreation()', function () {
+    it('jsonResponse field should have success as true', function (done) {
+      var user3 = querystring.stringify({
+        username: "dhon",
+        passwordhash: "wordpress"
+      });
+
+      var post_options = {
+        host: 'localhost',
+        port: '3000',
+        path: '/api/user/login',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(user3)
+        }
+      };
+
+      var post_req = http.request(post_options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (jsonResponse) {
+          assert.equal(jsonResponse.success,false);
+          done();
+        });
+      });
+
+      // post the data
+      post_req.write(user3);
+      post_req.end();
+    });
+  });
+  describe('#userCreation()', function () {
+    it('jsonResponse field should have success as true', function (done) {
+      var user4 = querystring.stringify({
+        username: "wrong",
+        passwordhash: "in"
+      });
+
+      var post_options = {
+        host: 'localhost',
+        port: '3000',
+        path: '/api/user/login',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(user4)
+        }
+      };
+
+      var post_req = http.request(post_options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (jsonResponse) {
+          assert.equal(jsonResponse.success,false);
+          done();
+        });
+      });
+
+      // post the data
+      post_req.write(user4);
+      post_req.end();
+    });
   });
 });
 
