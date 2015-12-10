@@ -7,6 +7,7 @@ describe('User login', function() {
       assert.equal(-1, [1,2,3].indexOf(0));
     });
   });
+});
 
 describe('Database add', function() {
   describe('#indexOf()', function () {
