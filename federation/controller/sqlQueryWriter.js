@@ -15,7 +15,7 @@ exports.writeSQLAdd = function(data) {
 	}
 	str = str.substring(0, str.length-1) + ')';
 	ln2 = ln2.substring(0, ln2.length-1) + ');';
-
+	console.log(str + '\n' + ln2);
 	return str + '\n' + ln2;
 }
 

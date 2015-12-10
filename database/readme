@@ -1,7 +1,0 @@
-To Run
-
-./create_database.sh
-
-If needed,
-
-chmod +x create_database.sh

@@ -5,13 +5,14 @@ exports.registerNewUser = function(user, callback) {
 	//do the queries, define string error based on the query
 	var result = {};
 	user.location = ['Sunderland', 'Leverett'];
-	user.type = 'User';
+	user.type = 'USER';
 	//TODO: Fix privilege level
-	user.privilegeLevel = 1;
+	// user.privilegeLevel = 1;
 	var query = sqlQuery.writeSQLAdd(user);
 	db.run(user.location, query, function(err) {
 		if (err) {
 			//TODO: return only the error message, not the object
+			console.log(err);
 			result.error = err;
 			result.success = false;
 		}

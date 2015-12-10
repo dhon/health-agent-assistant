@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 function isValidObject(user){
 	var result = {};
 	var username = user.username;
-	var password = user.password;
+	var password = user.passwordhash;
 	console.log(username + " " + password);
 	if(username && username.length > 0){
 		if(password && password.length > 0) {
@@ -32,16 +32,14 @@ function isValidObject(user){
 
 router.post('/register', function(req, res, next) {
 	var user = req.body;
-	console.log(req.body);
-	console.log(user);
-	if(!isValidObject(user).success){
-		res.json(isValidObject(user));
+	var checkUserResult = isValidObject(user);
+	if(checkUserResult.success){
+		userController.registerNewUser(user, function(result){
+			res.json(result);
+		});
+	} else {
+		res.json(checkUserResult);
 	}
-	else{
-	userController.registerNewUser(user, function(result){
-		res.json(result);
-	});
-}
 });
 
 router.post('/editpassword', function(req, res, next) {
@@ -59,13 +57,12 @@ router.post('/editpassword', function(req, res, next) {
 router.post('/login', function(req, res, next) {
 	var user = req.body;
 	var checkUserResult = isValidObject(user);
-	if(!checkUserResult.success){
-		res.json(checkUserResult);
-	}
-	else{
+	if(checkUserResult.success){
 		userController.loginUser(user, function(result){
 			res.json(result);
 		});
+	} else {
+		res.json(checkUserResult);
 	}
 });
 

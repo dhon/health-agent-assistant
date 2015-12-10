@@ -247,6 +247,7 @@ var db = new sqlite3.Database('database/' + town);
       });
     }
     db.close();
+    console.log("DB CLOSED");
   });
 
 });
