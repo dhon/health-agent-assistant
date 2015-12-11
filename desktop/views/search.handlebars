@@ -14,18 +14,18 @@
 			border: 1px #aaa solid;
 			border-bottom: none;
 			margin-right: 10px;
-			padding: 5px;
+			padding: 5px; 
 		}
 
 		.tabs ul li.active {
 			margin-bottom: -1px;
-			padding-bottom: 5px;
+			padding-bottom: 5px; 
 		}
 
 		.tabInner {
 			clear: both;
 			border: 1px solid #aaa;
-			height: 250px;
+			height: 600px;
 			overflow: hidden;
 			background: #eee;
 		}
@@ -33,7 +33,6 @@
 		.tabInner div {
 			height: 500px;
 			padding: 50px;
-
 		}
 		
 	</style>
@@ -43,7 +42,7 @@
 
 <body>
     <div class="tabs">
-		
+	
 		<nav>
 			<ul>
 				<li><a href="#restaurants">Restaurants</a></li>
@@ -57,34 +56,100 @@
 		   <div id="restaurants">
 				<form method="post" id="restForm">
 					Restaurant Name: <input type="text" name="restName" placeholder="Restaurant Name"><br>
-					Location: <input type="text" name="restLocation" placeholder="Address, Town"><br>
+					Street Address: <input type="text" name="restLocation" placeholder="e.g. 5 A Street">
+					Town:  <select name="restaurantTown">
+						<option value="sunderland">Sunderland</option>
+						<option value="leverett">Leverett</option>
+					</select><br>
 					Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
 					Owner's Telephone Number: <input type="text" name="ownerNumber" placeholder="e.g. 403-416-5987"><br>
-					Number of Violations: <input type="text" name="numViolations" placeholder="Ex: 1, 20, 34"><br>
+					
+					Inspection Before: <input type="date" name="restDateBefore"><br>
+					Inspection After: <input type="date" name="restDateAfter"><br>
+					Inspector Name: <input type="text" name="inspectorName" placeholder="e.g. Sam Smith"><br>
+					HACCP: <input type="number" name="HACCP" min="0"><br>
+					Time In:  <input type="text" name="time_in"> <br>
+					Time Out: <input type="text" name="time_out"> <br>
+					Type of Operation: <select name="operation">
+					<option value="1">Food Service</option>
+					<option value="2">Retail</option>
+					<option value="3">Residential Kitchen</option>
+					<option value="4">Mobile</option>
+					<option value="5">Temporary</option>
+					<option value="6">Caterer</option>
+					<option value="7">Bed & Breakfast</option>
+					</select><br>
+					Type of Inspection: <select name="inspection">
+					<option value="1">Routine</option>
+					<option value="2">Re-inspection</option>
+					</select><br>
+					Corrective Action Required?  Yes<input type="checkbox" name="correctiveAction" value=1>
+					No<input type="checkbox" name="correctiveAction" value=0><br>
+					Voluntary Compliance?  Yes<input type="checkbox" name="voluntarCompliance" value=1>
+					No<input type="checkbox" name="voluntarCompliance" value=0><br>
+					Reinspection Scheduled?  Yes<input type="checkbox" name="needReinspection" value=1>
+					No<input type="checkbox" name="needReinspection" value=0><br>
+					Voluntary Disposal?  Yes<input type="checkbox" name="voluntaryDisposal" value=1>
+					No<input type="checkbox" name="voluntaryDisposal" value=0><br>
+					Employee Restriction Exclusion?  Yes<input type="checkbox" name="employeeRestriction" value=1>
+					No<input type="checkbox" name="employeeRestriction" value=0><br>
+					Emergency Suspension?  Yes<input type="checkbox" name="emergencySuspension" value=1>
+					No<input type="checkbox" name="emergencySuspension" value=0><br>
+					Emergency Closure?  Yes<input type="checkbox" name="emergencyClosure" value=1>
+					No<input type="checkbox" name="emergencyClosure" value=0><br>
+					Number of Violations: <input type="number" name="numViolations" min="0"><br>
 					Violation Codes: <input type="text" name="codeViolations" placeholder="Ex. Violation Codes"><br>
-					Inspection Date: <input type="text" name="inspectionDate" placeholder="MM/DD/YYYY"><br>
+					Keywords: <input type="text" name="restKeyword" placeholder="Keywords"><br>
 					<button type="button">Save</button>
 					<input type="Submit" value="Search" Width="90px">
 					<input type="reset" value="Reset"><br>
 				</form>
             </div>
-            <div id="septic_tanks" id="septicForm">
+            
+			<div id="septic_tanks" id="septicForm">
 				<form method="post">
-					Location: <input type="text" name="tankLocation" placeholder="Address, Town"><br>
-					Inspection Date: <input type="text" name="tankDate" placeholder="MM/DD/YYYY"><br>
-					Condition: <input type="text" name="tankCondition" placeholder="Empty, Need to be Empty"><br>
+					Location: <input type="text" name="tankLocation" placeholder="Address">
+					Town:  <select name="septicTown">
+						<option value="sunderland">Sunderland</option>
+						<option value="leverett">Leverett</option>
+					</select><br>
+					Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
+					Option: <input type="text" name="option" placeholder="Option"><br> 
+					Pumping Date: <input type="date" name="pumpingDate"><br>
+					Range of Quantity Pumped: <input type="number" name="lowBoundQuantityPumped" min="0">
+					 - <input type="number" name="upBoundQuantityPumped" min="0"><br>
+					
+					System Quality Other: <input type="text" name="systemQuality" placeholder="System Quality"><br>
+					Effluent Tee Filter Present: Yes<input type="checkbox" name="effluentTeeFilter" value=1>
+					No<input type="checkbox" name="effluentTeeFilter" value=0><br>
+					Was it cleaned: Yes<input type="checkbox" name="isCleaned" value=1>
+					No<input type="checkbox" name="isCleaned" value=0><br>
+					Observe Condition Keywords: <input type="text" name="conditionKeyword" placeholder="Keywords"><br>
+					System Pumped by Name: <input type="text" name="systemPmpByName" placeholder=""><br>
+					System Pumped by License: <input type="text" name="systemPmpByLic" placeholder=""><br>
+					System Pumped by Company: <input type="text" name="systemPmpByCompany" placeholder=""><br>
+					Location Where Contents Were Disposed: <input type="text" name="disposalLocation" placeholder="Location of Disposal"><br>
+					Hauler: <input type="text" name="hauler"><br>
+					Hauler Date; <input type="date" name="haulerDate"><br> 
+					Receiving Facility: <input type="text" name="receivingFacility"><br>
+					Receiving Facility Date; <input type="date" name="receivingFacilityDate"><br>
 					<button type="button">Save</button>
 					<input type="Submit" value="Search" Width="90px">
 					<input type="reset" value="Reset"><br>
 				</form>
 			</div>
-            <div id="water_wells">
+            
+			<div id="water_wells">
                 <form method="post" id="wellForm">
 					Client Name: <input type="text" name="clientName" placeholder="e.g. Sam Smith"><br>
 					Project Name: <input type="text" name="projectName" placeholder="Project Name"><br>
-					Location: <input type="text" name="wellLocation" placeholder="Address, Town / GPS Coordinate"><br>
+					Location: <input type="text" name="wellLocation" placeholder="Street Address/ GPS Coordinate">
+					Town:  <select name="wellTown">
+						<option value="sunderland">Sunderland</option>
+						<option value="leverett">Leverett</option>
+					</select><br>
 					Water Quality: <input type="text" name="waterQuality" placeholder="Water Quality"><br>
-					Report Date: <input type="text" name="wellDate" placeholder="MM/DD/YYYY"><br>
+					Report Date: <input type="date" name="wellDate"><br>
 					<button type="button">Save</button>
 					<input type="Submit" value="Search" Width="90px">
 					<input type="reset" value="Reset"><br>
