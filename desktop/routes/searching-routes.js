@@ -65,8 +65,8 @@ router.post('/', function(req, res) {
 			],
 		violations:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"", DATEVERIFIED:""}
 			],
-		owners:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}]
-		property:[ID:"", GPSCOORDINATES:"", ADDRESS:"", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""],
+		owners:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
+		property:[{ID:"", GPSCOORDINATES:"", ADDRESS:"", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""}],
 		typeOfOperations:[{ID:"0", OPERATIONTYPE:""}],
 		typeOfInspection:[{ID:"0", INSPECTIONTYPE:""}],
 		reasonings:[{ID:"0", REASONING:"Because"}]
@@ -80,11 +80,11 @@ router.post('/', function(req, res) {
 	{
 		var restaurant = DBResults.restaurants[i];
 		
-		for(int j = 0; j<DBResults.owners.length; j++)
+		for(j = 0; j<DBResults.owners.length; j++)
 		{
-			if(DBResults.owners[j].ID == restraunt.OwnerID)
+			if(DBResults.owners[j].ID == restaurant.OwnerID)
 			{
-				restraunt.Owner = DBResults.owners[j];
+				restaurant.Owner = DBResults.owners[j];
 				break;
 			}
 		}
@@ -100,7 +100,7 @@ router.post('/', function(req, res) {
 			var inspection = DBResults.inspections[j];
 			inspection.date = new Date(inspection.TIMEIN);
 			//Replaces numbers that refer to tables with the corresponding strings
-			for(int k = 0; k<DBResults.typeOfOperations.length; k++)
+			for(k = 0; k<DBResults.typeOfOperations.length; k++)
 			{
 				if(DBResults.typeOfOperations[k].ID == inspection.TYPEOFOPERATION)
 				{
@@ -108,7 +108,7 @@ router.post('/', function(req, res) {
 				}
 			}
 			
-			for(int k = 0; k<DBResults.typeOfInspections.length; k++)
+			for(k = 0; k<DBResults.typeOfInspections.length; k++)
 			{
 				if(DBResults.typeOfInspections[k].ID == inspection.TYPEOFINSPECTION)
 				{
@@ -116,7 +116,7 @@ router.post('/', function(req, res) {
 				}
 			}
 			
-			for(int k = 0; k<DBResults.reasonings.length; k++)
+			for(k = 0; k<DBResults.reasonings.length; k++)
 			{
 				if(DBResults.reasonings[k].ID == inspection.REASONING)
 				{
