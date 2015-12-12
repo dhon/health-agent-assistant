@@ -7,7 +7,7 @@ var querystring = require('querystring');
 
 describe('User login', function() {
   describe('#userCreation()', function (done) {
-    it('jsonResponse field should have success as true', function () {
+    it('Success should return true if account was successfully created', function () {
       var user1 = querystring.stringify({
         username: "dhon",
         passwordhash: "hello"
@@ -32,13 +32,12 @@ describe('User login', function() {
         });
       });
 
-      // post the data
       post_req.write(user1);
       post_req.end();
     });
   });
-  describe('#userCreation()', function () {
-    it('jsonResponse field should have success as true', function (done) {
+  describe('#userGoodLogin()', function () {
+    it('Success should return true since user:george pass:wordpress exists in DB', function (done) {
       var user2 = querystring.stringify({
         username: "george",
         passwordhash: "wordpress"
@@ -58,18 +57,17 @@ describe('User login', function() {
       var post_req = http.request(post_options, function(res) {
         res.setEncoding('utf8');
         res.on('data', function (jsonResponse) {
-          assert.equal(jsonResponse.success,false);
+          assert.equal(jsonResponse.success,true);
           done();
         });
       });
 
-      // post the data
       post_req.write(user2);
       post_req.end();
     });
   });
-  describe('#userCreation()', function () {
-    it('jsonResponse field should have success as true', function (done) {
+  describe('#userMixLogin()', function () {
+    it('Success should return false since user:dhon pass:wordpress does not exists in DB', function (done) {
       var user3 = querystring.stringify({
         username: "dhon",
         passwordhash: "wordpress"
@@ -94,16 +92,15 @@ describe('User login', function() {
         });
       });
 
-      // post the data
       post_req.write(user3);
       post_req.end();
     });
   });
-  describe('#userCreation()', function () {
-    it('jsonResponse field should have success as true', function (done) {
+  describe('#userBadLogin()', function () {
+    it('Success should return false since user:wrong pass:input does not exists in DB', function (done) {
       var user4 = querystring.stringify({
         username: "wrong",
-        passwordhash: "in"
+        passwordhash: "input"
       });
 
       var post_options = {
@@ -125,9 +122,13 @@ describe('User login', function() {
         });
       });
 
-      // post the data
       post_req.write(user4);
       post_req.end();
+    });
+  });
+  describe('#userDeletion()', function () {
+    it('test not made', function (done) {
+      // Test Code Goes Here
     });
   });
 });
