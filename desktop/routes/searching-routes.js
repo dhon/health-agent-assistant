@@ -217,7 +217,7 @@ router.post('/', function(req, res) {
 				INSPECTOR:"",
 				RISKLEVEL:"",
 				HACCP:"",
-				TIMEIN:"68861560",
+				TIMEIN:"1450045320337",
 				TIMEOUT:"",
 				TYPEOFOPERATION:"0",
 				TYPEOFINSPECTION:"0",
@@ -298,7 +298,7 @@ router.post('/', function(req, res) {
 				console.log("passed first");
 				
 				var inspection = DBResults.inspection[j];
-				inspection.date = new Date(inspection.TIMEIN);
+				inspection.date = new Date(parseInt(inspection.TIMEIN));
 				//Replaces numbers that refer to tables with the corresponding strings
 				for(k = 0; k<DBResults.typeOfOperations.length; k++)
 				{
