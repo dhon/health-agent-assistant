@@ -26,8 +26,9 @@ describe('User login', function() {
 
       var post_req = http.request(post_options, function(res) {
         res.setEncoding('utf8');
-        res.on('data', function (jsonResponse) {
-          assert.equal(jsonResponse.success,true);
+        res.on('data', function (data) {
+        var jsonResponse = JSON.parse(data);
+         assert.equal(jsonResponse.success,true);
           done();
         });
       });
@@ -39,8 +40,8 @@ describe('User login', function() {
   describe('#userGoodLogin()', function () {
     it('Success should return true since user:george pass:wordpress exists in DB', function (done) {
       var user2 = querystring.stringify({
-        username: "george",
-        passwordhash: "wordpress"
+        username: "dhon",
+        passwordhash: "hello"
       });
 
       var post_options = {
@@ -53,11 +54,11 @@ describe('User login', function() {
             'Content-Length': Buffer.byteLength(user2)
         }
       };
-
       var post_req = http.request(post_options, function(res) {
         res.setEncoding('utf8');
-        res.on('data', function (jsonResponse) {
-          assert.equal(jsonResponse.success,true);
+        res.on('data', function (data) {
+        var jsonResponse = JSON.parse(data);
+         assert.equal(jsonResponse.success,true);
           done();
         });
       });
@@ -86,8 +87,9 @@ describe('User login', function() {
 
       var post_req = http.request(post_options, function(res) {
         res.setEncoding('utf8');
-        res.on('data', function (jsonResponse) {
-          assert.equal(jsonResponse.success,false);
+        res.on('data', function (data) {
+        var jsonResponse = JSON.parse(data);
+         assert.equal(jsonResponse.success,false);
           done();
         });
       });
@@ -116,19 +118,15 @@ describe('User login', function() {
 
       var post_req = http.request(post_options, function(res) {
         res.setEncoding('utf8');
-        res.on('data', function (jsonResponse) {
+        res.on('data', function (data) {
+         var jsonResponse = JSON.parse(data);
           assert.equal(jsonResponse.success,false);
-          done();
+           done();
         });
       });
 
       post_req.write(user4);
       post_req.end();
-    });
-  });
-  describe('#userDeletion()', function () {
-    it('test not made', function (done) {
-      // Test Code Goes Here
     });
   });
 });
@@ -295,14 +293,14 @@ describe('Database (all) gets', function() {
   });
 });
 
-/*describe('Database gets', function() {
+describe('Database gets', function() {
   describe('#indexOf()', function () {
     it('should return -1 when the value is not present', function () {
       assert.equal(-1, [1,2,3].indexOf(5));
       assert.equal(-1, [1,2,3].indexOf(0));
     });
   });
-});*/
+});
 
 describe('Database edit', function() {
   describe('#indexOf()', function () {

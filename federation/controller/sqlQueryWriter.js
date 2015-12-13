@@ -70,7 +70,6 @@ exports.writeSQLGet = function(data) {
 			where += ' AND ';
 		}
 	}
-	console.log(where);
 	where = where.substring(0, where.length-5) + ';';
 	console.log(str + '\n' + where);
 	return str + '\n' + where;

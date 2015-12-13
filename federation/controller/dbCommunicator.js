@@ -31,11 +31,12 @@ exports.run = function(location, queryString, callback) {
 exports.get = function(location, queryString, callback) {
 	var sent = false;
 	var cb = function(error, row) {
+	    console.log("cb row", row);
 		if (!sent) {
-			if (row != undefined) {
+
 				sent = true;
 				callback(error, row);
-			}
+
 		}
 	}
 	location.forEach(function(loc) {
