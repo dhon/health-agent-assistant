@@ -160,6 +160,10 @@ var api_get1 = {
 	"State": "Massachusetts",
 	"ZipCode": 02494,
 };
+var api_remove1 = {
+	"location": ["Leverett"],
+	"type": "Property",
+};
 
 describe('Invalid queries', function() {
 	it('Should get errors for invalid queries', function(done) {
@@ -194,6 +198,7 @@ describe('Database add', function() {
 			});
     });
   });
+	var rowIds = [];
 	describe('retrieval', function() {
 		it('Should get the added data with no errors', function(done) {
 			var query = sqlQuery.writeSQLGet(api_get1);
@@ -204,16 +209,27 @@ describe('Database add', function() {
 					console.log(error);
 				});
 				rows.forEach(function(row) {
-					for (var key in row) {
-						if (row.hasOwnProperty(key)) {
-							
-						}
-					}
+					rowIds.append(row['ID']);
 					console.log(row);
 				});
 				done();	
 			});
 		});
+	});
+	describe('remove all new rows', function() {
+		for (id in rowIds) {
+			api_remove1.id = id;
+			it('Should remove one of the new rows', function(done) {
+				var query = sqlQuery.writeSQLRemove(api_remove1);
+				db.run(api_remove1.location, query, function callback(errors) {
+					assert.equal(0, errors.length);
+					errors.forEach(function(error) {
+						console.log(error);
+					});
+					done();	
+				});
+			});
+		}
 	});
 });
 //Testing /api/get
