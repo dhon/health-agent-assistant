@@ -6,7 +6,8 @@ var db = {'leverett': new sqlite3.Database('./database/leverett', sqlite3.OPEN_R
 //var database = new sqlite3.Database('./database/leverett');
 
 //Runs a command with no direct return value
-//callback: function(errors)
+//callback: function(errors, lastId)
+//	lastId: id of last row changed, for add this is the id of the new row
 exports.run = function(location, queryString, callback) {
 	var num = location.length;
 	var errors = [];
@@ -16,7 +17,7 @@ exports.run = function(location, queryString, callback) {
 		}
 		num -= 1;
 		if (num == 0) {
-			callback(errors);
+			callback(errors, this.lastId);
 		}
 	}
 
