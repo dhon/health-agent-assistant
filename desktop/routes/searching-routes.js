@@ -399,9 +399,50 @@ router.post('/', function(req, res) {
 				SITEEXAMDESCRIBE:"",
 				REPORTCOMPLETENESSABCDE:"",
 				REPORTCOMPLETENESSD:"",
-				REPORTCOMPLETENESSSYSTEMINFORMATION
+				REPORTCOMPLETENESSSYSTEMINFORMATION:""
 			}]
 		};
+		
+		var DBResults = fakeDBResults;
+		
+		results = {septic:[]};
+		
+		for(i = 0; i<DBResults.septic.length; i++)
+		{
+			var septic = DBResults.septic[i];
+			
+			for(k = 0; k<DBResults.owner.length; k++)
+			{
+				if(septic.OWNERID == DBResults.owner[k].ID)
+				{
+					septic.owner = DBResults.owner[k];
+					break;
+				}
+			}
+			
+			for(k = 0; k<DBResults.property.length; k++)
+			{
+				if(septic.PROPERTYID == DBResults.property[k].ID)
+				{
+					septic.property = DBResults.property[k];
+					break;
+				}
+			}
+			
+			septic.systemPumpingRecords = [];
+			
+			for(k = 0; k<DBResults.systemPumpingRecord.length; k++)
+			{
+				if(DBResults.systemPumpingRecord.SEPTICID == septic.ID)
+				{
+					septic.systemPumpingRecords.push(DBResults.systemPumpingRecord);
+				}
+			}
+			
+			//TODO: Need to link septic pumping records and septicinspections
+			
+			results.septic.push(septic);
+		}
 	}
 	//if well
 	else if(data.clientName != undefined)
