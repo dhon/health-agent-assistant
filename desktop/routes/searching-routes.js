@@ -9,6 +9,11 @@ var router = express.Router();
 router.post('/', function(req, res) {
 	var data = req.body; //Data takes type of json object
 	
+	for(var attribute in data){
+		console.log(attribute+": "+data[attribute]);
+	}
+	console.log();
+	
 	var searchTypes = {restaurant:0, septic:1, well:2};
 	var searchType = -1;
 	if(data.restName != undefined){
@@ -59,9 +64,9 @@ router.post('/', function(req, res) {
 		};
 		
 		var restaurantInfo = {};
-		// if(data.restName!=""){
-			// restaurantInfo.name = data.restName;
-		// }
+		if(data.restName!=undefined){
+			restaurantInfo.name = data.restName;
+		}
 		
 		var restaurantQuery = querystring.stringify(restaurantInfo);
 		
@@ -71,12 +76,12 @@ router.post('/', function(req, res) {
 		
 		
 		var propertyInfo = {};
-		// if(data.restLocation != ""){
-			// propertyInfo.address = data.restLocation;
-		// }
-		// if(data.restLocation != ""){
-			// propertyInfo.town = data.restaurantTown;
-		// }
+		if(data.restLocation != undefined){
+			propertyInfo.address = data.restLocation;
+		}
+		if(data.restLocation != undefined){
+			propertyInfo.town = data.restaurantTown;
+		}
 		var propertyQuery = querystring.stringify(propertyInfo);
 		if(propertyQuery != ""){
 			queryBy.property = true;
@@ -84,44 +89,72 @@ router.post('/', function(req, res) {
 		
 		
 		var ownerInfo = {};
-		// if(data.ownerName!= ""){
-			// ownerInfo.ownername = data.ownerName;
-		// }
-		// if(data.ownerNumber != ""){
-			// ownerInfo.telephonenumber = data.ownerNumber
-		// }
+		if(data.ownerName!= undefined){
+			ownerInfo.ownername = data.ownerName;
+		}
+		if(data.ownerNumber != undefined){
+			ownerInfo.telephonenumber = data.ownerNumber
+		}
 		var ownerQuery = querystring.stringify(ownerInfo);
 		if(ownerQuery != ""){
 			queryBy.owner = true;
 		}
 		
 		var inspectionInfo = {};
-		// if(data.inspectorName != ""){
-			// inspectionInfo.inspector = data.inspectorName;
-		// }
-		// if(data.time_in != ""){
-			// timein=data.time_in;
-		// }
-		
+		if(data.inspectorname != undefined){
+			inspectionInfo.inspector = data.inspectorname;
+		}
+		if(data.time_in != undefined){
+			inspectionInfo.timein=data.time_in;
+		}
+		if(data.time_out != undefined){
+			inspectionInfo.timeout=data.time_out;
+		}
+		if(data.HACCP != undefined){
+			inspectionInfo.haccp=data.HACCP;
+		}
+		if(data.operation != undefined){
+			inspectionInfo.typeofoperation= data.operation;
+		}
+		if(data.inspection != undefined){
+			inspectionInfo.typeofinspection = data.inspection;
+		}
+		if(data.correctiveAcction != undefined){
+			inspectionInfo.correctiveactionrequired = data.correctiveAction;
+		}
+		if(data.voluntaryCompliance != undefined){
+			inspectionInfo.voluntaryCompliance = data.voluntaryCompliance;
+		}
+		if(data.reinspectionScheduled != undefined){
+			inspectionInfo.reinspectionScheduled = data.reinspectionScheduled;
+		}
+		if(data.voluntaryDisposal != undefined){
+			inspectionInfo.voluntaryDisposal = data.voluntaryDisposal;
+		}
+		if(data.employeeRestriction != undefined){
+			inspectionInfo.employeeRestrictionExclusion = data.employeeRestriction;
+		}
+		if(data.emergencySuspension != undefined){
+			inspectionInfo.emergencySuspension = data.emergencySuspension;
+		}
+		if(data.emergencyClosure != undefined){
+			inspectionInfo.emergecyClosure = data.emergencyClosure;
+		}
 			
-		var inspectionQuery = querystring.stringify({
-			inspector:data.inspectorName,
-			timein:data.time_in,
-			timeout:data.time_out,
-			haccp:data.HACCP,
-			typeofoperation:data.operation,
-			typeofinspection:data.inspection,
-			correctiveactionrequired:data.correctiveAction,
-			voluntaryCompliance:data.voluntaryCompliance,
-			reinspectionScheduled:data.reinspectionScheduled,
-			voluntaryDisposal:data.voluntaryDisposal,
-			employeeRestrictionExclusion:data.employeeRestriction,
-			emergencySuspension:data.emergencySuspension,
-			emergencyClosure:data.emergencyClosure
-		});
+		var inspectionQuery = querystring.stringify(inspectionInfo);
+		if(inspectionQuery != ""){
+			queryBy.inspection = true;
+		}
 		
 		//TODO: need to parse the codeViolations incase there are multiple codes seperated by spaces or commas
-		var violationQuery = querystring.stringify({codeReference:data.codeViolations})
+		var violationInfo = {};
+		if(data.codeViolations!= undefined){
+			violationInfo.codeReference = data.codeViolations;
+		}
+		var violationQuery = querystring.stringify(violationInfo);
+		if(violationQuery != ""){
+			queryBy.violation = false
+		}
 		
 		//TODO: use attributes to query database and get relevant results
 		
