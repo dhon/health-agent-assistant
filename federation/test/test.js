@@ -209,7 +209,7 @@ describe('Database add', function() {
 					console.log(error);
 				});
 				rows.forEach(function(row) {
-					rowIds.append(row['ID']);
+					rowIds.push(row['ID']);
 					console.log(row);
 				});
 				done();	
