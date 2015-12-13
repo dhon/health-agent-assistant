@@ -67,13 +67,16 @@ router.post('/', function(req, res) {
 		//It also adds a date object to the inspections which is calculated from timein
 		var fakeDBResults = {
 			restaurants:[
-				{	ID:"0", 
-					name:"Test0", 
-					Location:"Leverit", //This should be changed to a pointer to a property
-					OwnerID:"0", 
-					PersonInCharge:"", 
-					RestaurantInspectionID:"0"},
-				],
+				{
+					ID:"0", 
+					PROPERTYID:"0", 
+					NAME:"Test0", 
+					ADDRESS:"", 
+					OWNERID:"", 
+					PERSONINCHARGE:""
+				}
+			],
+			
 			inspections:[{ID:"0",
 				RESTAURANTID:"0",
 				INSPECTOR:"",
@@ -108,7 +111,7 @@ router.post('/', function(req, res) {
 			violations:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"", DATEVERIFIED:""}
 				],
 			owners:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
-			property:[{ID:"", GPSCOORDINATES:"", ADDRESS:"", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""}],
+			property:[{ID:"0", GPSCOORDINATES:"", ADDRESS:"", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""}],
 			typeOfOperations:[{ID:"0", OPERATIONTYPE:""}],
 			typeOfInspection:[{ID:"0", INSPECTIONTYPE:""}],
 			reasonings:[{ID:"0", REASONING:"Because"}]
@@ -124,9 +127,18 @@ router.post('/', function(req, res) {
 			
 			for(j = 0; j<DBResults.owners.length; j++)
 			{
-				if(DBResults.owners[j].ID == restaurant.OwnerID)
+				if(DBResults.owners[j].ID == restaurant.OWNERID)
 				{
 					restaurant.Owner = DBResults.owners[j];
+					break;
+				}
+			}
+			
+			for(j = 0; j<DBResults.property.length; j++)
+			{
+				if(DBResults.property[j].ID == restaurant.PROPERTYID)
+				{
+					restaurant.property = DBResults.property[j];
 					break;
 				}
 			}
