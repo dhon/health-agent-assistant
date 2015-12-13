@@ -291,11 +291,10 @@ router.post('/', function(req, res) {
 			//TODO: Add link to property information
 			for(j = 0; j<DBResults.inspection.length; j++)
 			{
-				console.log("started inspection");
 				if(DBResults.inspection[j].RESTAURANTID != DBResults.restaurant[i].ID){
 					continue;
 				}
-				console.log("passed first");
+				
 				
 				var inspection = DBResults.inspection[j];
 				inspection.date = new Date(parseInt(inspection.TIMEIN));
@@ -328,7 +327,7 @@ router.post('/', function(req, res) {
 				
 				for(k = 0; k<DBResults.violation.length; k++)
 				{
-					if(DBResults.violation[k].RestaurantInspectionID != DBResults.inspection[j].ID){
+					if(DBResults.violation[k].RESTRAUNTINSPETIONID != DBResults.inspection[j].ID){
 						continue;
 					}
 					
@@ -342,7 +341,7 @@ router.post('/', function(req, res) {
 					console.log("Inspection pushed");
 					restaurant.inspection.push(inspection);
 				}
-				console.log("Inspection should have been pushed");
+				
 				
 			}
 			if(!queryBy.inspection || restaurant.inspection.length != 0){
