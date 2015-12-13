@@ -14,15 +14,22 @@ router.post('/post', (req, res) => {console.log("posted");});
 // Route via search results
 router.get('/edit', function(req, res){
 
+	var completed_form = "";
+
 	//var key = req.body.key;
-	var completed_form = {"id":"19", "inspector":"Steve"}; // query db using key
+	completed_form = {"id":"19", "inspector":"Steve"}; // query db using key
 
-	console.log("routed for editing");
-	res.render("data_entry",{
-		list:restaurants,
-		formdata:completed_form
-	});
-
+	if (completed_form === ""){
+		console.log("no data to edit");
+		res.redirect('/data');
+	}
+	else{
+		console.log("routed for editing");
+		res.render("data_entry",{
+			list:restaurants,
+			formdata:completed_form
+		});
+	}
 });
 
 // Main route
