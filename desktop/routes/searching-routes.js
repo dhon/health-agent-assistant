@@ -9,6 +9,11 @@ var router = express.Router();
 router.post('/', function(req, res) {
 	var data = req.body; //Data takes type of json object
 	
+	for(var attribute in data){
+		console.log(attribute+": "+data[attribute]);
+	}
+	console.log();
+	
 	var searchTypes = {restaurant:0, septic:1, well:2};
 	var searchType = -1;
 	if(data.restName != undefined){
@@ -41,14 +46,14 @@ router.post('/', function(req, res) {
 	var results;
 	//TODO: Validate attributes? May be someone else's job
 	
-	//searched for restaurants
+	//searched for restaurant
 	if(searchType == searchTypes.restaurant)
 	{
 		//TODO: Parse attributes into data types desired by DB
 		
 		//breaks up all of the searchable terms into queries to the DB tables they refer to
 		
-		//TODO: need to handle restDateBefore, restDateAfter, numViolations, and restKeyword
+		//TODO: need to handle restDateBefore, restDateAfter, numviolation, and restKeyword
 		
 		var queryBy = {
 			restaurant:false, 
@@ -58,81 +63,122 @@ router.post('/', function(req, res) {
 			violation:false
 		};
 		
+		var query = {
+			restaurant:"", 
+			property:"", 
+			owner:"", 
+			inspection:"", 
+			violation:""
+		};
+		
 		var restaurantInfo = {};
-		// if(data.restName!=""){
-			// restaurantInfo.name = data.restName;
-		// }
+		if(data.restName!=undefined){
+			restaurantInfo.name = data.restName;
+		}
 		
-		var restaurantQuery = querystring.stringify(restaurantInfo);
+		var query.restaurant = querystring.stringify(restaurantInfo);
 		
-		if(restaurantQuery != ""){
+		if(query.restaurant != ""){
 			queryBy.restaurant = true;
 		}
 		
 		
 		var propertyInfo = {};
-		// if(data.restLocation != ""){
-			// propertyInfo.address = data.restLocation;
-		// }
-		// if(data.restLocation != ""){
-			// propertyInfo.town = data.restaurantTown;
-		// }
-		var propertyQuery = querystring.stringify(propertyInfo);
-		if(propertyQuery != ""){
+		if(data.restLocation != undefined){
+			propertyInfo.address = data.restLocation;
+		}
+		if(data.restLocation != undefined){
+			propertyInfo.town = data.restaurantTown;
+		}
+		var query.property = querystring.stringify(propertyInfo);
+		if(query.property != ""){
 			queryBy.property = true;
 		}
 		
 		
 		var ownerInfo = {};
-		// if(data.ownerName!= ""){
-			// ownerInfo.ownername = data.ownerName;
-		// }
-		// if(data.ownerNumber != ""){
-			// ownerInfo.telephonenumber = data.ownerNumber
-		// }
-		var ownerQuery = querystring.stringify(ownerInfo);
-		if(ownerQuery != ""){
+		if(data.ownerName!= undefined){
+			ownerInfo.ownername = data.ownerName;
+		}
+		if(data.ownerNumber != undefined){
+			ownerInfo.telephonenumber = data.ownerNumber
+		}
+		var query.owner = querystring.stringify(ownerInfo);
+		if(query.owner != ""){
 			queryBy.owner = true;
 		}
 		
 		var inspectionInfo = {};
-		// if(data.inspectorName != ""){
-			// inspectionInfo.inspector = data.inspectorName;
-		// }
-		// if(data.time_in != ""){
-			// timein=data.time_in;
-		// }
-		
+		if(data.inspectorname != undefined){
+			inspectionInfo.inspector = data.inspectorname;
+		}
+		if(data.time_in != undefined){
+			inspectionInfo.timein=data.time_in;
+		}
+		if(data.time_out != undefined){
+			inspectionInfo.timeout=data.time_out;
+		}
+		if(data.HACCP != undefined){
+			inspectionInfo.haccp=data.HACCP;
+		}
+		if(data.operation != undefined){
+			inspectionInfo.typeofoperation= data.operation;
+		}
+		if(data.inspection != undefined){
+			inspectionInfo.typeofinspection = data.inspection;
+		}
+		if(data.correctiveAcction != undefined){
+			inspectionInfo.correctiveactionrequired = data.correctiveAction;
+		}
+		if(data.voluntaryCompliance != undefined){
+			inspectionInfo.voluntaryCompliance = data.voluntaryCompliance;
+		}
+		if(data.reinspectionScheduled != undefined){
+			inspectionInfo.reinspectionScheduled = data.reinspectionScheduled;
+		}
+		if(data.voluntaryDisposal != undefined){
+			inspectionInfo.voluntaryDisposal = data.voluntaryDisposal;
+		}
+		if(data.employeeRestriction != undefined){
+			inspectionInfo.employeeRestrictionExclusion = data.employeeRestriction;
+		}
+		if(data.emergencySuspension != undefined){
+			inspectionInfo.emergencySuspension = data.emergencySuspension;
+		}
+		if(data.emergencyClosure != undefined){
+			inspectionInfo.emergecyClosure = data.emergencyClosure;
+		}
 			
-		var inspectionQuery = querystring.stringify({
-			inspector:data.inspectorName,
-			timein:data.time_in,
-			timeout:data.time_out,
-			haccp:data.HACCP,
-			typeofoperation:data.operation,
-			typeofinspection:data.inspection,
-			correctiveactionrequired:data.correctiveAction,
-			voluntaryCompliance:data.voluntaryCompliance,
-			reinspectionScheduled:data.reinspectionScheduled,
-			voluntaryDisposal:data.voluntaryDisposal,
-			employeeRestrictionExclusion:data.employeeRestriction,
-			emergencySuspension:data.emergencySuspension,
-			emergencyClosure:data.emergencyClosure
-		});
+		var query.inspection = querystring.stringify(inspectionInfo);
+		if(query.inspection != ""){
+			queryBy.inspection = true;
+		}
 		
-		//TODO: need to parse the codeViolations incase there are multiple codes seperated by spaces or commas
-		var violationQuery = querystring.stringify({codeReference:data.codeViolations})
+		//TODO: need to parse the codeviolation incase there are multiple codes seperated by spaces or commas
+		var violationInfo = {};
+		if(data.codeviolation!= undefined){
+			violationInfo.codeReference = data.codeviolation;
+		}
+		var query.violation = querystring.stringify(violationInfo);
+		if(query.violation != ""){
+			queryBy.violation = false
+		}
 		
 		//TODO: use attributes to query database and get relevant results
 		
 		
 		
-		//the parser makes it so the owner and the inspections are fields in the 
-		//restaurant, the violations are in the inspections, and the numbers that 
+		
+		
+		
+		
+		
+		//the parser makes it so the owner and the inspection are fields in the 
+		//restaurant, the violation are in the inspection, and the numbers that 
 		//refer to strings in other tables have been replaced with the strings.
-		//It also adds a date object to the inspections which is calculated from timein
+		//It also adds a date object to the inspection which is calculated from timein
 		var fakeDBResults = {
-			restaurants:[
+			restaurant:[
 				{
 					ID:"0", 
 					PROPERTYID:"0", 
@@ -143,7 +189,7 @@ router.post('/', function(req, res) {
 				}
 			],
 			
-			inspections:[{ID:"0",
+			inspection:[{ID:"0",
 				RESTAURANTID:"0",
 				INSPECTOR:"",
 				RISKLEVEL:"",
@@ -174,22 +220,22 @@ router.post('/', function(req, res) {
 				OTHER1:"",
 				ADDITIONALNOTES:""}
 				],
-			violations:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"", DATEVERIFIED:""}
+			violation:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"", DATEVERIFIED:""}
 				],
-			owners:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
+			owner:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
 			property:[{ID:"0", GPSCOORDINATES:"", ADDRESS:"", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""}],
 			typeOfOperations:[{ID:"0", OPERATIONTYPE:""}],
 			typeOfInspection:[{ID:"0", INSPECTIONTYPE:""}],
 			reasonings:[{ID:"0", REASONING:"Because"}]
 		};
-		var DBResults = fakeDBResults;
+		DBResults = fakeDBResults;
 		
 		
 		
-		results = {restaurants:[]};
-		for(i = 0; i<DBResults.restaurants.length; i++)
+		results = {restaurant:[]};
+		for(i = 0; i<DBResults.restaurant.length; i++)
 		{
-			var restaurant = DBResults.restaurants[i];
+			var restaurant = DBResults.restaurant[i];
 			
 			for(j = 0; j<DBResults.owners.length; j++)
 			{
@@ -200,6 +246,11 @@ router.post('/', function(req, res) {
 				}
 			}
 			
+			if(queryBy.owner && restaurant.Owner == undefined){
+				continue;
+			}
+			
+			
 			for(j = 0; j<DBResults.property.length; j++)
 			{
 				if(DBResults.property[j].ID == restaurant.PROPERTYID)
@@ -208,16 +259,20 @@ router.post('/', function(req, res) {
 					break;
 				}
 			}
+			if(queryBy.property && restaurant.property == undefined){
+				continue;
+			}
 			
-			restaurant.inspections = [];
+			restaurant.inspection = [];
 			
 			//TODO: Add link to property information
-			for(j = 0; j<DBResults.inspections.length; j++)
+			for(j = 0; j<DBResults.inspection.length; j++)
 			{
-				if(DBResults.inspections[j].RestaurantID != DBResults.restaurants[i].ID)
+				if(DBResults.inspection[j].RestaurantID != DBResults.restaurant[i].ID){
 					continue;
+				}
 				
-				var inspection = DBResults.inspections[j];
+				var inspection = DBResults.inspection[j];
 				inspection.date = new Date(inspection.TIMEIN);
 				//Replaces numbers that refer to tables with the corresponding strings
 				for(k = 0; k<DBResults.typeOfOperations.length; k++)
@@ -244,22 +299,28 @@ router.post('/', function(req, res) {
 					}
 				}
 				
-				inspection.violations = [];
+				inspection.violation = [];
 				
-				for(k = 0; k<DBResults.violations.length; k++)
+				for(k = 0; k<DBResults.violation.length; k++)
 				{
-					if(DBResults.violations[k].RestaurantInspectionID != DBResults.inspections[j].ID)
+					if(DBResults.violation[k].RestaurantInspectionID != DBResults.inspection[j].ID){
 						continue;
+					}
 					
-					var violation = DBResults.violations[k];
+					var violation = DBResults.violation[k];
 					
 					
-					inspection.violations.push(violation);
+					inspection.violation.push(violation);
 				}
-				restaurant.inspections.push(inspection);
+				
+				if(!queryBy.violation || inspection.violation.length != 0){
+					restaurant.inspection.push(inspection);
+				}
+				
 			}
-			
-			results.restaurants.push(restaurant);
+			if(!queryBy.inspection || restaurant.inspection.length != 0){
+				results.restaurant.push(restaurant);
+			}
 		}
 		
 		
@@ -517,7 +578,7 @@ router.post('/', function(req, res) {
 				}
 			}
 			
-			//TODO: Need to link septic pumping records and septicinspections
+			//TODO: Need to link septic pumping records and septicinspection
 			
 			results.septics.push(septic);
 		}
