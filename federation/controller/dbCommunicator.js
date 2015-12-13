@@ -33,7 +33,6 @@ exports.get = function(location, queryString, callback) {
 	var gotResult = false;
 	var rows = [];
 	var cb = function(error, row) {
-<<<<<<< HEAD
 		num -= 1;
 		rows.push({'error': error, 'row': row});
 		if (row != undefined) {
