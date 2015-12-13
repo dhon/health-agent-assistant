@@ -46,14 +46,14 @@ router.post('/', function(req, res) {
 	var results;
 	//TODO: Validate attributes? May be someone else's job
 	
-	//searched for restaurants
+	//searched for restaurant
 	if(searchType == searchTypes.restaurant)
 	{
 		//TODO: Parse attributes into data types desired by DB
 		
 		//breaks up all of the searchable terms into queries to the DB tables they refer to
 		
-		//TODO: need to handle restDateBefore, restDateAfter, numViolations, and restKeyword
+		//TODO: need to handle restDateBefore, restDateAfter, numviolation, and restKeyword
 		
 		var queryBy = {
 			restaurant:false, 
@@ -63,14 +63,22 @@ router.post('/', function(req, res) {
 			violation:false
 		};
 		
+		var query = {
+			restaurant:"", 
+			property:"", 
+			owner:"", 
+			inspection:"", 
+			violation:""
+		};
+		
 		var restaurantInfo = {};
 		if(data.restName!=undefined){
 			restaurantInfo.name = data.restName;
 		}
 		
-		var restaurantQuery = querystring.stringify(restaurantInfo);
+		var query.restaurant = querystring.stringify(restaurantInfo);
 		
-		if(restaurantQuery != ""){
+		if(query.restaurant != ""){
 			queryBy.restaurant = true;
 		}
 		
@@ -82,8 +90,8 @@ router.post('/', function(req, res) {
 		if(data.restLocation != undefined){
 			propertyInfo.town = data.restaurantTown;
 		}
-		var propertyQuery = querystring.stringify(propertyInfo);
-		if(propertyQuery != ""){
+		var query.property = querystring.stringify(propertyInfo);
+		if(query.property != ""){
 			queryBy.property = true;
 		}
 		
@@ -95,8 +103,8 @@ router.post('/', function(req, res) {
 		if(data.ownerNumber != undefined){
 			ownerInfo.telephonenumber = data.ownerNumber
 		}
-		var ownerQuery = querystring.stringify(ownerInfo);
-		if(ownerQuery != ""){
+		var query.owner = querystring.stringify(ownerInfo);
+		if(query.owner != ""){
 			queryBy.owner = true;
 		}
 		
@@ -141,18 +149,18 @@ router.post('/', function(req, res) {
 			inspectionInfo.emergecyClosure = data.emergencyClosure;
 		}
 			
-		var inspectionQuery = querystring.stringify(inspectionInfo);
-		if(inspectionQuery != ""){
+		var query.inspection = querystring.stringify(inspectionInfo);
+		if(query.inspection != ""){
 			queryBy.inspection = true;
 		}
 		
-		//TODO: need to parse the codeViolations incase there are multiple codes seperated by spaces or commas
+		//TODO: need to parse the codeviolation incase there are multiple codes seperated by spaces or commas
 		var violationInfo = {};
-		if(data.codeViolations!= undefined){
-			violationInfo.codeReference = data.codeViolations;
+		if(data.codeviolation!= undefined){
+			violationInfo.codeReference = data.codeviolation;
 		}
-		var violationQuery = querystring.stringify(violationInfo);
-		if(violationQuery != ""){
+		var query.violation = querystring.stringify(violationInfo);
+		if(query.violation != ""){
 			queryBy.violation = false
 		}
 		
@@ -160,12 +168,17 @@ router.post('/', function(req, res) {
 		
 		
 		
-		//the parser makes it so the owner and the inspections are fields in the 
-		//restaurant, the violations are in the inspections, and the numbers that 
+		
+		
+		
+		
+		
+		//the parser makes it so the owner and the inspection are fields in the 
+		//restaurant, the violation are in the inspection, and the numbers that 
 		//refer to strings in other tables have been replaced with the strings.
-		//It also adds a date object to the inspections which is calculated from timein
+		//It also adds a date object to the inspection which is calculated from timein
 		var fakeDBResults = {
-			restaurants:[
+			restaurant:[
 				{
 					ID:"0", 
 					PROPERTYID:"0", 
@@ -176,7 +189,7 @@ router.post('/', function(req, res) {
 				}
 			],
 			
-			inspections:[{ID:"0",
+			inspection:[{ID:"0",
 				RESTAURANTID:"0",
 				INSPECTOR:"",
 				RISKLEVEL:"",
@@ -207,22 +220,22 @@ router.post('/', function(req, res) {
 				OTHER1:"",
 				ADDITIONALNOTES:""}
 				],
-			violations:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"", DATEVERIFIED:""}
+			violation:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"", DATEVERIFIED:""}
 				],
-			owners:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
+			owner:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
 			property:[{ID:"0", GPSCOORDINATES:"", ADDRESS:"", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""}],
 			typeOfOperations:[{ID:"0", OPERATIONTYPE:""}],
 			typeOfInspection:[{ID:"0", INSPECTIONTYPE:""}],
 			reasonings:[{ID:"0", REASONING:"Because"}]
 		};
-		var DBResults = fakeDBResults;
+		DBResults = fakeDBResults;
 		
 		
 		
-		results = {restaurants:[]};
-		for(i = 0; i<DBResults.restaurants.length; i++)
+		results = {restaurant:[]};
+		for(i = 0; i<DBResults.restaurant.length; i++)
 		{
-			var restaurant = DBResults.restaurants[i];
+			var restaurant = DBResults.restaurant[i];
 			
 			for(j = 0; j<DBResults.owners.length; j++)
 			{
@@ -250,16 +263,16 @@ router.post('/', function(req, res) {
 				continue;
 			}
 			
-			restaurant.inspections = [];
+			restaurant.inspection = [];
 			
 			//TODO: Add link to property information
-			for(j = 0; j<DBResults.inspections.length; j++)
+			for(j = 0; j<DBResults.inspection.length; j++)
 			{
-				if(DBResults.inspections[j].RestaurantID != DBResults.restaurants[i].ID){
+				if(DBResults.inspection[j].RestaurantID != DBResults.restaurant[i].ID){
 					continue;
 				}
 				
-				var inspection = DBResults.inspections[j];
+				var inspection = DBResults.inspection[j];
 				inspection.date = new Date(inspection.TIMEIN);
 				//Replaces numbers that refer to tables with the corresponding strings
 				for(k = 0; k<DBResults.typeOfOperations.length; k++)
@@ -286,27 +299,27 @@ router.post('/', function(req, res) {
 					}
 				}
 				
-				inspection.violations = [];
+				inspection.violation = [];
 				
-				for(k = 0; k<DBResults.violations.length; k++)
+				for(k = 0; k<DBResults.violation.length; k++)
 				{
-					if(DBResults.violations[k].RestaurantInspectionID != DBResults.inspections[j].ID){
+					if(DBResults.violation[k].RestaurantInspectionID != DBResults.inspection[j].ID){
 						continue;
 					}
 					
-					var violation = DBResults.violations[k];
+					var violation = DBResults.violation[k];
 					
 					
-					inspection.violations.push(violation);
+					inspection.violation.push(violation);
 				}
 				
-				if(!queryBy.violation || inspection.violations.length != 0){
-					restaurant.inspections.push(inspection);
+				if(!queryBy.violation || inspection.violation.length != 0){
+					restaurant.inspection.push(inspection);
 				}
 				
 			}
-			if(!queryBy.inspection || restaurant.inspections.length != 0){
-				results.restaurants.push(restaurant);
+			if(!queryBy.inspection || restaurant.inspection.length != 0){
+				results.restaurant.push(restaurant);
 			}
 		}
 		
@@ -565,7 +578,7 @@ router.post('/', function(req, res) {
 				}
 			}
 			
-			//TODO: Need to link septic pumping records and septicinspections
+			//TODO: Need to link septic pumping records and septicinspection
 			
 			results.septics.push(septic);
 		}
