@@ -47,8 +47,9 @@ exports.loginUser = function(user, callback){
 	user.type = 'User';
 	var query = sqlQuery.writeSQLGet(user);
 	var result = {};
-	
+	console.log("exports.longUser");
 	db.get(user.location, query, function(err, row) {
+	    console.log("db callback", row);
 		if (err) {
 			result.error = err;
 			result.success = false;

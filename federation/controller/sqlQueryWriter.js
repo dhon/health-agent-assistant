@@ -73,7 +73,6 @@ exports.writeSQLGet = function(data) {
 			where += ' AND ';
 		}
 	}
-	console.log(where);
 	where = where.substring(0, where.length-5) + ';';
 	if (!hasProps) {
 		str += ';';
