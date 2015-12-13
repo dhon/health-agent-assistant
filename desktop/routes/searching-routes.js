@@ -1,5 +1,6 @@
 var express = require('express');
 var querystring = require('querystring');
+var http = require('http');
 
 // This creates an express "router" that allows us to separate
 // particular routes from the main application.
@@ -76,7 +77,7 @@ router.post('/', function(req, res) {
 			restaurantInfo.name = data.restName;
 		}
 		
-		var query.restaurant = querystring.stringify(restaurantInfo);
+		query.restaurant = querystring.stringify(restaurantInfo);
 		
 		if(query.restaurant != ""){
 			queryBy.restaurant = true;
@@ -90,7 +91,7 @@ router.post('/', function(req, res) {
 		if(data.restLocation != undefined){
 			propertyInfo.town = data.restaurantTown;
 		}
-		var query.property = querystring.stringify(propertyInfo);
+		query.property = querystring.stringify(propertyInfo);
 		if(query.property != ""){
 			queryBy.property = true;
 		}
@@ -103,7 +104,7 @@ router.post('/', function(req, res) {
 		if(data.ownerNumber != undefined){
 			ownerInfo.telephonenumber = data.ownerNumber
 		}
-		var query.owner = querystring.stringify(ownerInfo);
+		query.owner = querystring.stringify(ownerInfo);
 		if(query.owner != ""){
 			queryBy.owner = true;
 		}
@@ -149,7 +150,7 @@ router.post('/', function(req, res) {
 			inspectionInfo.emergecyClosure = data.emergencyClosure;
 		}
 			
-		var query.inspection = querystring.stringify(inspectionInfo);
+		query.inspection = querystring.stringify(inspectionInfo);
 		if(query.inspection != ""){
 			queryBy.inspection = true;
 		}
@@ -159,15 +160,37 @@ router.post('/', function(req, res) {
 		if(data.codeviolation!= undefined){
 			violationInfo.codeReference = data.codeviolation;
 		}
-		var query.violation = querystring.stringify(violationInfo);
+		query.violation = querystring.stringify(violationInfo);
 		if(query.violation != ""){
 			queryBy.violation = false
 		}
 		
 		//TODO: use attributes to query database and get relevant results
 		
+		var DBResults;
 		
 		
+		// var post_options = {
+			// host: 'localhost',
+			// port: '3000',
+			// path: '/api/get',
+			// method: 'GET',
+			// headers: {
+				// 'Content-Type': 'application/x-www-form-urlencoded',
+				// 'Content-Length': Buffer.byteLength(query.property)
+			// }
+		// };
+		
+		// var post_req = http.request(post_options, function(res) {
+			// res.setEncoding('utf8');
+			// res.on('data', function (jsonResponse) {
+				// assert.equal(jsonResponse.success,true);
+				// done();
+			// });
+		// });
+
+		// post_req.write(user1);
+		// post_req.end();
 		
 		
 		
@@ -194,7 +217,7 @@ router.post('/', function(req, res) {
 				INSPECTOR:"",
 				RISKLEVEL:"",
 				HACCP:"",
-				TIMEIN:"",
+				TIMEIN:"1450045320337",
 				TIMEOUT:"",
 				TYPEOFOPERATION:"0",
 				TYPEOFINSPECTION:"0",
@@ -220,12 +243,12 @@ router.post('/', function(req, res) {
 				OTHER1:"",
 				ADDITIONALNOTES:""}
 				],
-			violation:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"", DATEVERIFIED:""}
+			violation:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"123", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"Here is some text", DATEVERIFIED:""}
 				],
 			owner:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
-			property:[{ID:"0", GPSCOORDINATES:"", ADDRESS:"", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""}],
+			property:[{ID:"0", GPSCOORDINATES:"", ADDRESS:"1234 1st Street", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""}],
 			typeOfOperations:[{ID:"0", OPERATIONTYPE:""}],
-			typeOfInspection:[{ID:"0", INSPECTIONTYPE:""}],
+			typeOfInspections:[{ID:"0", INSPECTIONTYPE:""}],
 			reasonings:[{ID:"0", REASONING:"Because"}]
 		};
 		DBResults = fakeDBResults;
@@ -237,11 +260,11 @@ router.post('/', function(req, res) {
 		{
 			var restaurant = DBResults.restaurant[i];
 			
-			for(j = 0; j<DBResults.owners.length; j++)
+			for(j = 0; j<DBResults.owner.length; j++)
 			{
-				if(DBResults.owners[j].ID == restaurant.OWNERID)
+				if(DBResults.owner[j].ID == restaurant.OWNERID)
 				{
-					restaurant.Owner = DBResults.owners[j];
+					restaurant.Owner = DBResults.owner[j];
 					break;
 				}
 			}
@@ -268,12 +291,13 @@ router.post('/', function(req, res) {
 			//TODO: Add link to property information
 			for(j = 0; j<DBResults.inspection.length; j++)
 			{
-				if(DBResults.inspection[j].RestaurantID != DBResults.restaurant[i].ID){
+				if(DBResults.inspection[j].RESTAURANTID != DBResults.restaurant[i].ID){
 					continue;
 				}
 				
+				
 				var inspection = DBResults.inspection[j];
-				inspection.date = new Date(inspection.TIMEIN);
+				inspection.date = new Date(parseInt(inspection.TIMEIN));
 				//Replaces numbers that refer to tables with the corresponding strings
 				for(k = 0; k<DBResults.typeOfOperations.length; k++)
 				{
@@ -303,7 +327,7 @@ router.post('/', function(req, res) {
 				
 				for(k = 0; k<DBResults.violation.length; k++)
 				{
-					if(DBResults.violation[k].RestaurantInspectionID != DBResults.inspection[j].ID){
+					if(DBResults.violation[k].RESTRAUNTINSPETIONID != DBResults.inspection[j].ID){
 						continue;
 					}
 					
@@ -314,8 +338,10 @@ router.post('/', function(req, res) {
 				}
 				
 				if(!queryBy.violation || inspection.violation.length != 0){
+					console.log("Inspection pushed");
 					restaurant.inspection.push(inspection);
 				}
+				
 				
 			}
 			if(!queryBy.inspection || restaurant.inspection.length != 0){

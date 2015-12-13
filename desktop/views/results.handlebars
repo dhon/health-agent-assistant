@@ -38,18 +38,18 @@
 	</style>
 	<ul class="results">
 		Search Results
-		{{#each restaurants}}
-		<li class="restaurant"><span>{{this.name}}, {{this.location}}</span>
-			{{#if this.inspections}}
+		{{#each restaurant}}
+		<li class="restaurant"><span>{{this.NAME}}, {{this.property.ADDRESS}}</span>
+			{{#if this.inspection}}
 			<ul>
 				<u>Inspections</u>
-				{{#each this.inspections}}
+				{{#each this.inspection}}
 					<li class="inspection"><span>{{this.date}}</span>
-					{{#if this.violations}}
+					{{#if this.violation}}
 					<ul>
 						<u>Violations</u>
-						{{#each this.violations}}
-							<li class="violation"><span>{{this.code}}: {{this.description}}</span></li>
+						{{#each this.violation}}
+							<li class="violation"><span>{{this.CODEREFERENCE}}: {{this.DESCRIPTIONOFVIOLATIONCORRECTIONPLAN}}</span></li>
 						{{/each}}
 					</ul>
 					{{/if}}
