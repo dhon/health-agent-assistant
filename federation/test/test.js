@@ -14,40 +14,36 @@ describe('User login', function() {
 
 var api_add1 = {
 	"location": ["Leverett"],
-	"type": "Restaurant",
-	"Name": "WcDonalds",
+	"type": "Property",
+	"gpscoordinates": 5,
 	"Address": "999 Lois Lane",
-	"Telephone": "1113335555",
-	"Owner": "Bobby Malone",
-	"PIC": "Frederick Malone"
+	"Town": "Leverett",
+	"State": "Massachusetts",
+	"ZipCode": 02494,
+	"PlotNumer": 1
 };
 var api_add2 = {
 	"location": ["Leverett"],
-	"type": "Restaurant",
-	"Name": "McDonalds",
-	"Address": "The Street",
-	"Telephone": "9997874014",
-	"Owner": "Calvin",
-	"PIC": "Susie Derkins"
+	"type": "Property",
+	"gpscoordinates": 5,
+	"Address": "992 Lois Lane",
+	"Town": "Leverett",
+	"State": "Massachusetts",
+	"ZipCode": 02494,
+	"PlotNumer": 2
 };
 var api_get1 = {
 	"location": ["Leverett"],
-	"type": "Restaurant",
-	"Name": "WcDonalds",
-	"Address": "999 Lois Lane",
-	"Telephone": "1113335555",
-	"Owner": "Bobby Malone",
-	"PIC": "Frederick Malone"
+	"type": "Property",
+	"Town": "Leverett",
+	"State": "Massachusetts",
+	"ZipCode": 02494,
 };
 
 describe('Invalid queries', function() {
 	it('Should get errors for invalid queries', function(done) {
-		this.timeout(999999);
 		var error = 'NO';
 		db.run(['Leverett'], 'SELECT * FROM NOT_A_TABLE', function (errors) {
-			errors.forEach(function(error) {
-				console.log('Got da error: ' + error);
-			});
 			assert.equal(1, errors.length);
 			done();
 		});
@@ -56,14 +52,17 @@ describe('Invalid queries', function() {
 
 describe('Database add', function() {
   describe('addition', function () {
-    it('Should not get any errors', function (done) {
+    it('Should not get any errors[1]', function(done) {
       var query = sqlQuery.writeSQLAdd(api_add1);
 			db.run(api_add1.location, query, function callback(errors) {
 				errors.forEach(function(error) {
 					console.log(error);
 				});
 				assert.equal(0, errors.length);
+				done();
 			});
+		});
+		it('Should not get any errors[2]', function(done) {
 			var query2 = sqlQuery.writeSQLAdd(api_add2);
 			db.run(api_add2.location, query2, function callback(errors) {
 				errors.forEach(function(error) {
@@ -75,19 +74,23 @@ describe('Database add', function() {
     });
   });
 	describe('retrieval', function() {
-		it('Should get the added data with no errors', function() {
-			var query = sqlQuery.writeSQLGet(api_add1);
-			db.all(api_add1.location, query, function callback(errors, rows) {
+		it('Should get the added data with no errors', function(done) {
+			var query = sqlQuery.writeSQLGet(api_get1);
+			db.all(api_get1.location, query, function callback(errors, rows) {
 				assert.equal(0, errors.length);
 				assert.equal(true, rows.length >= 1);
+				errors.forEach(function(error) {
+					console.log(error);
+				});
 				rows.forEach(function(row) {
 					for (var key in row) {
-						if (data.hasOwnProperty(key)) {
+						if (row.hasOwnProperty(key)) {
 							
 						}
 					}
 					console.log(row);
-				});	
+				});
+				done();	
 			});
 		});
 	});
@@ -95,19 +98,19 @@ describe('Database add', function() {
 //Testing /api/get
 //One record matches info provided
 
-var api_get0 = {
+var api_get3 = {
 	"location": ["Leverett"],
 	"type": "Restaurant",
 	"Telephone":"1113335555",
 	"Owner":"Bobby Malone"
 };
 //Multiple records match info provided
-var api_get1 = {
+var api_get4 = {
 	"location": ["Leverett"],
 	"type": "Restaurant",
 };
 //No records match info provided
-var api_get2 = {
+var api_get5 = {
 	"location": ["Leverett"],
 	"type": "Restaurant",
 	"Telephone":"15845453535",
@@ -117,7 +120,7 @@ describe('Database (all) gets', function() {
   describe('one record', function () {
     it('should return an array.length>=1 when the value is present', function () {
 		var query = sqlQuery.writeSQLAdd(api_add1);
-			db.run(api_get0.location, query, function callback(errors) {
+			db.run(api_get3.location, query, function callback(errors) {
 				errors.forEach(function(error) {
 					console.log(error);
 				});
@@ -131,7 +134,7 @@ describe('Database (all) gets', function() {
   describe('multiple records', function () {
     it('should return >1 when there are multple results', function () {
 		var query = sqlQuery.writeSQLAdd(api_add1);
-			db.run(api_get0.location, query, function callback(errors) {
+			db.run(api_get3.location, query, function callback(errors) {
 				errors.forEach(function(error) {
 					console.log(error);
 				});
@@ -145,7 +148,7 @@ describe('Database (all) gets', function() {
   describe('zero records', function () {
     it('should return length 0 when there are zero results', function () {
 		var query = sqlQuery.writeSQLAdd(api_add1);
-			db.run(api_get0.location, query, function callback(errors) {
+			db.run(api_get3.location, query, function callback(errors) {
 				errors.forEach(function(error) {
 					console.log(error);
 				});
