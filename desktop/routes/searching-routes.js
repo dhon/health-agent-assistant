@@ -233,6 +233,11 @@ router.post('/', function(req, res) {
 				}
 			}
 			
+			if(queryBy.owner && restaurant.Owner == undefined){
+				continue;
+			}
+			
+			
 			for(j = 0; j<DBResults.property.length; j++)
 			{
 				if(DBResults.property[j].ID == restaurant.PROPERTYID)
@@ -241,14 +246,18 @@ router.post('/', function(req, res) {
 					break;
 				}
 			}
+			if(queryBy.property && restaurant.property == undefined){
+				continue;
+			}
 			
 			restaurant.inspections = [];
 			
 			//TODO: Add link to property information
 			for(j = 0; j<DBResults.inspections.length; j++)
 			{
-				if(DBResults.inspections[j].RestaurantID != DBResults.restaurants[i].ID)
+				if(DBResults.inspections[j].RestaurantID != DBResults.restaurants[i].ID){
 					continue;
+				}
 				
 				var inspection = DBResults.inspections[j];
 				inspection.date = new Date(inspection.TIMEIN);
@@ -281,18 +290,24 @@ router.post('/', function(req, res) {
 				
 				for(k = 0; k<DBResults.violations.length; k++)
 				{
-					if(DBResults.violations[k].RestaurantInspectionID != DBResults.inspections[j].ID)
+					if(DBResults.violations[k].RestaurantInspectionID != DBResults.inspections[j].ID){
 						continue;
+					}
 					
 					var violation = DBResults.violations[k];
 					
 					
 					inspection.violations.push(violation);
 				}
-				restaurant.inspections.push(inspection);
+				
+				if(!queryBy.violation || inspection.violations.length != 0){
+					restaurant.inspections.push(inspection);
+				}
+				
 			}
-			
-			results.restaurants.push(restaurant);
+			if(!queryBy.inspection || restaurant.inspections.length != 0){
+				results.restaurants.push(restaurant);
+			}
 		}
 		
 		
