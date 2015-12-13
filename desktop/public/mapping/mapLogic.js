@@ -47,7 +47,7 @@ function clearMap() {
   }
 }
 
-initializeMap();
+$(document).ready(initializeMap);
 // testing to see if it actually clears it
 // "1" is a key
 //
