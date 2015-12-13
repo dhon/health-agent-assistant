@@ -405,7 +405,7 @@ router.post('/', function(req, res) {
 		
 		var DBResults = fakeDBResults;
 		
-		results = {septic:[]};
+		results = {septics:[]};
 		
 		for(i = 0; i<DBResults.septic.length; i++)
 		{
@@ -433,15 +433,15 @@ router.post('/', function(req, res) {
 			
 			for(k = 0; k<DBResults.systemPumpingRecord.length; k++)
 			{
-				if(DBResults.systemPumpingRecord.SEPTICID == septic.ID)
+				if(DBResults.systemPumpingRecord[k].SEPTICID == septic.ID)
 				{
-					septic.systemPumpingRecords.push(DBResults.systemPumpingRecord);
+					septic.systemPumpingRecords.push(DBResults.systemPumpingRecord[k]);
 				}
 			}
 			
 			//TODO: Need to link septic pumping records and septicinspections
 			
-			results.septic.push(septic);
+			results.septics.push(septic);
 		}
 	}
 	//if well
@@ -481,6 +481,46 @@ router.post('/', function(req, res) {
 				ADDITIONALNOTES:""
 			}]
 		};
+		
+		var DBResults = fakeDBResults;
+		
+		results = {wells:[]};
+		
+		for(i = 0; i<DBResults.well.length; i++)
+		{
+			var well = DBResults.well[i];
+			
+			for(k = 0; k<DBResults.owner.length; k++)
+			{
+				if(well.OWNERID == DBResults.owner[k].ID)
+				{
+					well.owner = DBResults.owner[k];
+					break;
+				}
+			}
+			
+			for(k = 0; k<DBResults.property.length; k++)
+			{
+				if(well.PROPERTYID == DBResults.property[k].ID)
+				{
+					well.property = DBResults.property[k];
+					break;
+				}
+			}
+			
+			well.waterQualityReports = [];
+			
+			for(k = 0; k<DBResults.waterQualityReport.length; k++)
+			{
+				if(DBResults.waterQualityReport[k].WELLID == well.ID)
+				{
+					well.waterQualityReports.push(DBResults.waterQualityReport[k]);
+				}
+			}
+			
+			
+			results.wells.push(well);
+		}
 	}
 	else
 	{
