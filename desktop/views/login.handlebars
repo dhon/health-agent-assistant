@@ -1,18 +1,14 @@
 <head>
 	<title>UMass 320 WebApp</title>
-	<style>
-		p{
-			line-height:20px; 
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
 
 <body>
 	<center>
 		<h1>Login</h1>
 		
-		<img src='https://revolutionarystudents.files.wordpress.com/2015/10/maxresdefault.jpg' 
-		style="width:480px;height:270px;" align="middle">
+		<img src='http://i1.wp.com/www.techrepublic.com/bundles/techrepubliccore/images/icons/standard/icon-user-default.png' 
+		style="width:300px;height:300px;" align="middle">
 	
 		<div>
 		<p>{{message}}</p>
@@ -21,7 +17,7 @@
 		<form method="post">
 			Username: <input type="text" name="username" placeholder="Username"><br>
 			Password: <input type="password" name="password" placeholder="Password"><br>
-			<input type="Submit" value="Submit" Width="90px">
+			<input type="Submit" value="Login" Width="90px">
 			<a href="/help" class="button">?</a> <br>
 		</form>
 		<button type="button" onClick="alert("Void Button")">Login As Guest</button>
