@@ -8,6 +8,32 @@ var router = express.Router();
 // Example post
 router.post('/', function(req, res) {
 	var data = req.body; //Data takes type of json object
+	
+	var searchTypes = {restaurant:0, septic:1, well:2};
+	var searchType = -1;
+	if(data.restName != undefined){
+		searchType = searchTypes.restaurant;
+	}
+	else if(data.tankLocation != undefined)
+	{
+		searchType = searchTypes.septic;
+	}
+	else if(data.clientName != undefined)
+	{
+		searchType = searchTypes.well;
+	}
+	else
+	{
+		console.log("Invalid type of search");
+	}
+	
+	for(var attribute in data){
+		if(data[attribute] == "")
+		{
+			delete data[attribute];
+		}
+	}
+	
 	for(var attribute in data){
 		console.log(attribute+": "+data[attribute]);
 	}
@@ -16,28 +42,68 @@ router.post('/', function(req, res) {
 	//TODO: Validate attributes? May be someone else's job
 	
 	//searched for restaurants
-	if(data.restName != undefined)
+	if(searchType == searchTypes.restaurant)
 	{
 		//TODO: Parse attributes into data types desired by DB
 		
 		//breaks up all of the searchable terms into queries to the DB tables they refer to
-		//TODO: need to make sure that all of the capitalization is correct
+		
 		//TODO: need to handle restDateBefore, restDateAfter, numViolations, and restKeyword
 		
-		var restaurantQuery = querystring.stringify({
-			name:data.restName
-		});
+		var queryBy = {
+			restaurant:false, 
+			property:false, 
+			owner:false, 
+			inspection:false, 
+			violation:false
+		};
 		
-		var propertyQuery = querystring.stringify({
-			address:data.restLocation, 
-			town:data.restaurantTown
-		});
+		var restaurantInfo = {};
+		// if(data.restName!=""){
+			// restaurantInfo.name = data.restName;
+		// }
 		
-		var ownerQuery = querystring.stringify({
-			ownername:data.ownerName, 
-			telephonenumber:data.ownerNumber
-		});
+		var restaurantQuery = querystring.stringify(restaurantInfo);
 		
+		if(restaurantQuery != ""){
+			queryBy.restaurant = true;
+		}
+		
+		
+		var propertyInfo = {};
+		// if(data.restLocation != ""){
+			// propertyInfo.address = data.restLocation;
+		// }
+		// if(data.restLocation != ""){
+			// propertyInfo.town = data.restaurantTown;
+		// }
+		var propertyQuery = querystring.stringify(propertyInfo);
+		if(propertyQuery != ""){
+			queryBy.property = true;
+		}
+		
+		
+		var ownerInfo = {};
+		// if(data.ownerName!= ""){
+			// ownerInfo.ownername = data.ownerName;
+		// }
+		// if(data.ownerNumber != ""){
+			// ownerInfo.telephonenumber = data.ownerNumber
+		// }
+		var ownerQuery = querystring.stringify(ownerInfo);
+		if(ownerQuery != ""){
+			queryBy.owner = true;
+		}
+		
+		var inspectionInfo = {};
+		// if(data.inspectorName != ""){
+			// inspectionInfo.inspector = data.inspectorName;
+		// }
+		// if(data.time_in != ""){
+			// timein=data.time_in;
+		// }
+		
+			
 		var inspectionQuery = querystring.stringify({
 			inspector:data.inspectorName,
 			timein:data.time_in,
@@ -201,7 +267,7 @@ router.post('/', function(req, res) {
 		//TODO: Sort formated results
 	}
 	//if septic tank
-	else if(data.tankLocation != undefined)
+	else if(searchType == searchTypes.septic)
 	{
 		var fakeDBResults = {
 			septic:[{ID:"", PROPERTYID:"", OWNERID:""}],
@@ -457,7 +523,7 @@ router.post('/', function(req, res) {
 		}
 	}
 	//if well
-	else if(data.clientName != undefined)
+	else if(searchType == searchTypes.well)
 	{
 		var fakeDBResults = {
 			well:[{ID:"", PROPERTYID:"", OWNERID:""}],
@@ -534,10 +600,7 @@ router.post('/', function(req, res) {
 			results.wells.push(well);
 		}
 	}
-	else
-	{
-		console.log("Invalid type of search");
-	}
+	
 	
 	
 	
