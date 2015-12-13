@@ -1,4 +1,5 @@
 var express = require('express');
+var querystring = require('querystring');
 
 // This creates an express "router" that allows us to separate
 // particular routes from the main application.
@@ -12,11 +13,52 @@ router.post('/', function(req, res) {
 	}
 	console.log();
 	
+	//TODO:  Make a seperate case for septic tanks and wells, current code only handles restaurants
+	
+	
 	//TODO: Validate attributes? May be someone else's job
 	
 	//TODO: Parse attributes into data types desired by DB
 	
+	//breaks up all of the searchable terms into queries to the DB tables they refer to
+	//TODO: need to make sure that all of the capitalization is correct
+	//TODO: need to handle restDateBefore, restDateAfter, numViolations, and restKeyword
+	
+	var restaurantQuery = querystring.stringify({
+		name:data.restName
+	});
+	
+	var propertyQuery = querystring.stringify({
+		address:data.restLocation, 
+		town:data.restaurantTown
+	});
+	
+	var ownerQuery = querystring.stringify({
+		ownername:data.ownerName, 
+		telephonenumber:data.ownerNumber
+	});
+	
+	var inspectionQuery = querystring.stringify({
+		inspector:data.inspectorName,
+		timein:data.time_in,
+		timeout:data.time_out,
+		haccp:data.HACCP,
+		typeofoperation:data.operation,
+		typeofinspection:data.inspection,
+		correctiveactionrequired:data.correctiveAction,
+		voluntaryCompliance:data.voluntaryCompliance,
+		reinspectionScheduled:data.reinspectionScheduled,
+		voluntaryDisposal:data.voluntaryDisposal,
+		employeeRestrictionExclusion:data.employeeRestriction,
+		emergencySuspension:data.emergencySuspension,
+		emergencyClosure:data.emergencyClosure
+	});
+	
+	//TODO: need to parse the codeViolations incase there are multiple codes seperated by spaces or commas
+	var violationQuery = querystring.stringify({codeReference:data.codeViolations})
+	
 	//TODO: use attributes to query database and get relevant results
+	
 	
 	
 	//the parser makes it so the owner and the inspections are fields in the 
@@ -72,7 +114,7 @@ router.post('/', function(req, res) {
 		reasonings:[{ID:"0", REASONING:"Because"}]
 	};
 	var DBResults = fakeDBResults;
-	//TODO: Parse DB results into desired format
+	
 	
 	
 	var results = {restaurants:[]};
