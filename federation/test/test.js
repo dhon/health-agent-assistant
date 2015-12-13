@@ -2,13 +2,134 @@ var db = require('../controller/dbCommunicator');
 var sqlQuery = require('../controller/sqlQueryWriter');
 var user = require('../controller/user');
 var assert = require('assert');
+var http = require('http');
+var querystring = require('querystring');
 
 describe('User login', function() {
-  describe('#indexOf()', function () {
-    it('should return -1 when the value is not present', function () {
-      assert.equal(-1, [1,2,3].indexOf(5));
-      assert.equal(-1, [1,2,3].indexOf(0));
-		});
+  describe('#userCreation()', function (done) {
+    it('Success should return true if account was successfully created', function () {
+      var user1 = querystring.stringify({
+        username: "dhon",
+        passwordhash: "hello"
+      });
+
+      var post_options = {
+        host: 'localhost',
+        port: '3000',
+        path: '/api/user/register',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(user1)
+        }
+      };
+
+      var post_req = http.request(post_options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (jsonResponse) {
+          assert.equal(jsonResponse.success,true);
+          done();
+        });
+      });
+
+      post_req.write(user1);
+      post_req.end();
+    });
+  });
+  describe('#userGoodLogin()', function () {
+    it('Success should return true since user:george pass:wordpress exists in DB', function (done) {
+      var user2 = querystring.stringify({
+        username: "george",
+        passwordhash: "wordpress"
+      });
+
+      var post_options = {
+        host: 'localhost',
+        port: '3000',
+        path: '/api/user/login',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(user2)
+        }
+      };
+
+      var post_req = http.request(post_options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (jsonResponse) {
+          assert.equal(jsonResponse.success,true);
+          done();
+        });
+      });
+
+      post_req.write(user2);
+      post_req.end();
+    });
+  });
+  describe('#userMixLogin()', function () {
+    it('Success should return false since user:dhon pass:wordpress does not exists in DB', function (done) {
+      var user3 = querystring.stringify({
+        username: "dhon",
+        passwordhash: "wordpress"
+      });
+
+      var post_options = {
+        host: 'localhost',
+        port: '3000',
+        path: '/api/user/login',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(user3)
+        }
+      };
+
+      var post_req = http.request(post_options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (jsonResponse) {
+          assert.equal(jsonResponse.success,false);
+          done();
+        });
+      });
+
+      post_req.write(user3);
+      post_req.end();
+    });
+  });
+  describe('#userBadLogin()', function () {
+    it('Success should return false since user:wrong pass:input does not exists in DB', function (done) {
+      var user4 = querystring.stringify({
+        username: "wrong",
+        passwordhash: "input"
+      });
+
+      var post_options = {
+        host: 'localhost',
+        port: '3000',
+        path: '/api/user/login',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(user4)
+        }
+      };
+
+      var post_req = http.request(post_options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (jsonResponse) {
+          assert.equal(jsonResponse.success,false);
+          done();
+        });
+      });
+
+      post_req.write(user4);
+      post_req.end();
+    });
+  });
+  describe('#userDeletion()', function () {
+    it('test not made', function (done) {
+      // Test Code Goes Here
+    });
   });
 });
 

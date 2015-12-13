@@ -1,20 +1,73 @@
-<h1>Admin</h1>
+<head>
+  <title>UMass 320 WebApp Admin</title>
+  <style>
+    div {
+      text-align: center;
+    }
+    .table {
+      padding-top: 50px;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 5px;
+      text-align: center;
+    }
+    th{
+      background-color: black;
+      color: white;
+    }
+    table tr:nth-child(even) {
+      background-color: #eee;
+    }
+    table tr:nth-child(odd) {
+      background-color:#fff;
+    }
+  </style>
+</head>
 
-<!-- TEST BY NOEL, THIS ISN'T FINAL AND WILL CHANGE -->
-<h4>Add a New User</h4>
-<form method="post" action="/admin/user">
-  User Name: <input type="text" name="name"> <br>
-  Password:  <input type="password" name="pass"> <br>
-  Admin:
-    <select name="admin">
-      <option value="yes">Yes</option>
-      <option value="no">No</option>
-    </select>
-    <br>
-  <button>Add User</button>
-</form>
-<style>
-  h1{
-    text-align: center;
-  }
-</style>
+<body>
+  <div>
+    <h1>Admin</h1>
+    <h3>Create An Account</h3>
+    <form method="post" action="/admin/user">
+      Username: <input type="text" name="name"> <br>
+      Password:  <input type="password" name="pass"> <br>
+      Admin:
+      <select name="admin">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      <br>
+      <button>Add Account</button>
+    </form>
+  </div>
+
+  <div class="table">
+    <h3>Account List</h3>
+
+    {{!-- THIS WILL NEED TO BE REDONE USING THE TABLE IN db/users.js --}}
+    <table style="width:100%">
+      <tr>
+        <th>Username</th>
+        <th>Password (THIS MAY BE REMOVED)</th>
+        <th>ID</th>
+        <th>Display Name</th>
+        <th>Email</th>
+        <th>Permissions</th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <td>admintest</td>
+        <td>passwordtest</td>
+        <td>0</td>
+        <td>displaynametest</td>
+        <td>test@test.com</td>
+        <td>test</td>
+        <td>actionstest</td>
+      </tr>
+    </table>
+  </div>
+</body>
