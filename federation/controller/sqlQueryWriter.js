@@ -45,15 +45,18 @@ exports.writeSQLEdit = function(data) {
 exports.writeSQLRemove = function(data) {
 	var str = 'DELETE FROM ' + data.type;
 	var where = 'WHERE id=' + data.id + ';';
-
+	
+	console.log(str + '\n' + where);
 	return str + '\n' + where;
 }
 
 exports.writeSQLGet = function(data) {
 	var str =  "SELECT * FROM " + data.type;
 	var where = 'WHERE ';
+	var hasProps = false
 	for (var key in data) {
 		if (data.hasOwnProperty(key) && key.toLowerCase() != 'location' && key.toLowerCase() != 'type') {
+			hasProps = true;
 			var keyStr = key.toUpperCase();
 			var dataStr = data[key].toString();
 			if (isTimeVariable(key)) {
@@ -72,6 +75,11 @@ exports.writeSQLGet = function(data) {
 	}
 	console.log(where);
 	where = where.substring(0, where.length-5) + ';';
+	if (!hasProps) {
+		str += ';';
+		console.log(str);
+		return str;
+	}
 	console.log(str + '\n' + where);
 	return str + '\n' + where;
 }

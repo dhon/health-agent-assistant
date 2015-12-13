@@ -1,6 +1,7 @@
 var db = require('../controller/dbCommunicator');
 var sqlQuery = require('../controller/sqlQueryWriter');
 var user = require('../controller/user');
+var async = require('async');
 var assert = require('assert');
 var http = require('http');
 var querystring = require('querystring');
@@ -170,6 +171,9 @@ describe('Invalid queries', function() {
 		var error = 'NO';
 		db.run(['Leverett'], 'SELECT * FROM NOT_A_TABLE', function (errors) {
 			assert.equal(1, errors.length);
+			errors.forEach(function(error) {
+				console.log(error);
+			});
 			done();
 		});
 	});
@@ -217,7 +221,7 @@ describe('Database add', function() {
 		});
 	});
 	describe('remove all new rows', function() {
-		for (id in rowIds) {
+		async.each(rowIds, function(id, callback) {
 			api_remove1.id = id;
 			it('Should remove one of the new rows', function(done) {
 				var query = sqlQuery.writeSQLRemove(api_remove1);
@@ -226,10 +230,12 @@ describe('Database add', function() {
 					errors.forEach(function(error) {
 						console.log(error);
 					});
+					console.log("Deleted row");
 					done();	
 				});
 			});
-		}
+			callback();
+		});
 	});
 });
 //Testing /api/get

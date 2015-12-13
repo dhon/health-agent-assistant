@@ -29,14 +29,33 @@ exports.run = function(location, queryString, callback) {
 //callback: function(error, row)
 //	This is executed only for the first row returned
 exports.get = function(location, queryString, callback) {
-	var sent = false;
+	var num = location.length;
+	var gotResult = false;
+	var rows = [];
 	var cb = function(error, row) {
-		if (!sent) {
-			if (row != undefined) {
-				sent = true;
-				callback(error, row);
-			}
+		num -= 1;
+		rows.push({'error': error, 'row': row});
+		if (row != undefined) {
+			gotResult = true;
 		}
+
+		if (num == 0) {
+			if (rows.length == 0) {
+				callback("No such row found.", undefined);
+			}
+			else if (gotResult) {
+				for (var entry in rows) {
+					if (entry.row != undefined) {
+						callback(entry.error, entry.row);
+						break;
+					}
+				}
+			}
+			else {
+				callback(rows[0].error, undefined);
+			}		
+		}
+		
 	}
 	location.forEach(function(loc) {
 		db[loc.toLowerCase()].get(queryString, [], cb);
