@@ -1,11 +1,54 @@
 var express = require('express');
 var router = express.Router();
 var userController = require('../controller/user');
+var passport = require('passport');
+var Strategy = require('passport-local').Strategy;
+var flash = require('flash');
+//var es = require('./node_modules/connect-ensure-login/lib/ensureLoggedIn')
+var crypto = require('crypto');
 
+var app = express();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
+
+passport.use(new Strategy(
+  function(username, password, cb) {
+
+    var hashed = crypto.createHash('md5').update(password).digest('hex');
+
+    db.users.findByUsername(username, function(err, user) {
+      if (err) { return cb(err); }
+      //if (!user) { return cb(null, false, { message: 'Invalid username ' + username }); }
+      //if (user.password != password) { return cb(null, false, { message: 'Invalid password' }); }
+      if (!user || user.password != hashed) { return cb(null, false, { message: "Invalid username, password combination"})}
+      return cb(null, user);
+    });
+  }));
+
+  passport.serializeUser(function(user, cb) {
+    cb(null, user.id);
+  });
+
+  passport.deserializeUser(function(id, cb) {
+    db.users.findById(id, function (err, user) {
+      if (err) { return cb(err); }
+      cb(null, user);
+    });
+  });
+
+  app.use(require('morgan')('combined'));
+  app.use(require('cookie-parser')());
+  app.use(require('body-parser').urlencoded({ extended: true }));
+  app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+  app.use(flash());
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(require('connect-flash')());
+
+
+
 
 function isValidObject(user){
 	var result = {};
@@ -59,6 +102,10 @@ router.post('/login', function(req, res, next) {
 	var checkUserResult = isValidObject(user);
 	if(checkUserResult.success){
 		userController.loginUser(user, function(result){
+		    var b = result.data.PASSWORDHASH;
+            var hashed = crypto.createHash('md5').update(b).digest('hex');
+		    result.data.PASSWORDHASH = hashed;
+		    console.log(result, "jkldfljkfsdaljkfsdaljk");
 			res.json(result);
 		});
 	} else {
