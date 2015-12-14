@@ -92,6 +92,7 @@ router.post('/get', function(req, res, next) {
 
 	var query = sqlQuery.writeSQLGet(req.body);
 	db.all(req.body.location, query, function(err, rows) {
+		console.log("Got callback");
 		if (err) {
 			res.json({'success': false, 'error': err});
 		}

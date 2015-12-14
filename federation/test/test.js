@@ -10,8 +10,8 @@ describe('User login', function() {
   describe('#userCreation()', function (done) {
     it('Success should return true if account was successfully created', function () {
       var user1 = querystring.stringify({
-        username: "dhon",
-        passwordhash: "hello"
+        username: "abc",
+        passwordhash: "abc"
       });
 
       var post_options = {
@@ -30,6 +30,7 @@ describe('User login', function() {
         res.on('data', function (data) {
         var jsonResponse = JSON.parse(data);
          assert.equal(jsonResponse.success,true);
+         console.log(jsonResponse);
           done();
         });
       });
@@ -39,9 +40,9 @@ describe('User login', function() {
     });
   });
   describe('#userGoodLogin()', function () {
-    it('Success should return true since user:george pass:wordpress exists in DB', function (done) {
+    it('Success should return true since user:dhon password: hello exists in DB', function (done) {
       var user2 = querystring.stringify({
-        username: "dhon",
+        username: "dhon2",
         passwordhash: "hello"
       });
 
@@ -71,7 +72,7 @@ describe('User login', function() {
   describe('#userMixLogin()', function () {
     it('Success should return false since user:dhon pass:wordpress does not exists in DB', function (done) {
       var user3 = querystring.stringify({
-        username: "dhon",
+        username: "dhon3",
         passwordhash: "wordpress"
       });
 
@@ -116,12 +117,12 @@ describe('User login', function() {
             'Content-Length': Buffer.byteLength(user4)
         }
       };
-
       var post_req = http.request(post_options, function(res) {
         res.setEncoding('utf8');
         res.on('data', function (data) {
          var jsonResponse = JSON.parse(data);
           assert.equal(jsonResponse.success,false);
+          console.log("NO SYNCH BUG!!!!!!!!");
            done();
         });
       });

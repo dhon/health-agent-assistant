@@ -39,24 +39,33 @@
 	<ul class="results">
 		Search Results
 		{{#each restaurant}}
-		<li class="restaurant"><span>{{this.NAME}}, {{this.property.ADDRESS}}</span>
-			{{#if this.inspection}}
+		<li class="restaurant"><span>{{this.NAME}}</span>
 			<ul>
+				<!-- General restaurant information goes here -->
+				<div>{{this.property.ADDRESS}}</div>
 				<u>Inspections</u>
+				{{#if this.inspection}}
 				{{#each this.inspection}}
 					<li class="inspection"><span>{{this.date}}</span>
-					{{#if this.violation}}
 					<ul>
+						<!-- General inspection information goes here -->
 						<u>Violations</u>
+						{{#if this.violation}}
 						{{#each this.violation}}
 							<li class="violation"><span>{{this.CODEREFERENCE}}: {{this.DESCRIPTIONOFVIOLATIONCORRECTIONPLAN}}</span></li>
 						{{/each}}
+						{{else}}
+							<li class ="violation"><span>No violations.</span></li>
+						{{/if}}
 					</ul>
-					{{/if}}
+					
 					</li>
 				{{/each}}
+				{{else}}
+					<li class="inspections"><span>No inspections found.</span></li>
+				{{/if}}
 			</ul>
-			{{/if}}
+			
 		</li>
 		{{/each}}
 	</ul>
