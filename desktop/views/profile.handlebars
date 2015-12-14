@@ -1,0 +1,11 @@
+<p>
+ID: {{id }}<br/>
+Username: {{username}}<br/>
+Name: {{displayName }}<br/>
+ {{#if emails}}
+ {{#each emails}}
+Email: {{value }}<br/>
+{{/each}}
+{{/if}}
+</p>
+<a href="/logout">Log out</a>

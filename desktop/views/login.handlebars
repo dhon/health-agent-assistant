@@ -1,10 +1,25 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<head>
+	<title>UMass 320 WebApp</title>
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+</head>
 
-<div>{{message}}</div><br>
-
-<form method="post" action="/user/auth">
-  User Name: <input type="text" name="name"> <br>
-  Password:  <input type="password" name="pass"> <br>
-  <button>Login</button>
-</form>
+<body>
+	<center>
+		<h1>Login</h1>
+		
+		<img src='http://i1.wp.com/www.techrepublic.com/bundles/techrepubliccore/images/icons/standard/icon-user-default.png' 
+		style="width:300px;height:300px;" align="middle">
+	
+		<div>
+		<p>{{message}}</p>
+		</div> 
+	
+		<form action="http://localhost:3000/api/user/login", method="post">
+			Username: <input type="text" name="username" placeholder="Username"><br>
+			Password: <input type="password" name="passwordhash" placeholder="Password"><br>
+			<input type="Submit" value="Login" Width="90px">
+			<a href="/help" class="button">?</a> <br>
+		</form>
+		<button type="button" onClick="alert("Void Button")">Login As Guest</button>
+	</center>
+</body>

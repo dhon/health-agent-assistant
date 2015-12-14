@@ -1,0 +1,73 @@
+<head>
+  <title>UMass 320 WebApp Admin</title>
+  <style>
+    div {
+      text-align: center;
+    }
+    .table {
+      padding-top: 50px;
+    }
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 5px;
+      text-align: center;
+    }
+    th{
+      background-color: black;
+      color: white;
+    }
+    table tr:nth-child(even) {
+      background-color: #eee;
+    }
+    table tr:nth-child(odd) {
+      background-color:#fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>Admin</h1>
+    <h3>Create An Account</h3>
+    <form method="post" action="http://localhost:3000/api/user/register">
+      Username: <input type="text" name="username"> <br>
+      Password:  <input type="password" name="passwordhash"> <br>
+      Admin:
+      <select name="admin">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      <br>
+      <button>Add Account</button>
+    </form>
+  </div>
+
+  <div class="table">
+    <h3>Account List</h3>
+
+    {{!-- THIS WILL NEED TO BE REDONE USING THE TABLE IN db/users.js --}}
+    <table style="width:100%">
+      <tr>
+        <th>Username</th>
+        <th>Password (THIS MAY BE REMOVED)</th>
+        <th>ID</th>
+        <th>Display Name</th>
+        <th>Email</th>
+        <th>Permissions</th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <td>admintest</td>
+        <td>passwordtest</td>
+        <td>0</td>
+        <td>displaynametest</td>
+        <td>test@test.com</td>
+        <td>test</td>
+        <td>actionstest</td>
+      </tr>
+    </table>
+  </div>
+</body>

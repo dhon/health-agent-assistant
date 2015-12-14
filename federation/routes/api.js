@@ -8,6 +8,20 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+/**
+ * NOTES:
+ * See each function for the return values.
+ * They each return a boolean success value.
+ * If success is false, it will return an error object.
+ * If success is true, it might return a data object.
+ * Contents of the data object are defined for each api call.
+ * */
+
+//Return value contains:
+//	success: true/false
+//	if !success, error
+//	if success, data
+//	data: id of added row
 router.post('/add', function(req, res, next) {
 	if (!hasValidLocation(req.body) || !hasValidType(req.body)) {
 		res.send("Invalid data");
@@ -15,16 +29,19 @@ router.post('/add', function(req, res, next) {
 	}
 	//TODO: Check permissions
 	var query = sqlQuery.writeSQLAdd(req.body);
-	db.run(req.body.location, query, function(err) {
+	db.run(req.body.location, query, function(err, lastId) {
 		if (err) {
 			res.json({'success': false, 'error': err});
 		}
 		else {
-			res.json({'success': true, 'data': this.lastID});
+			res.json({'success': true, 'data': lastId});
 		}
 	});
 });
 
+//Return value contains:
+//	success: true/false
+//	if !success, error
 router.post('/edit', function(req, res, next) {
 	if (!hasValidLocation(req.body) || !hasValidType(req.body)) {
 		res.send("Invalid data");
@@ -42,6 +59,9 @@ router.post('/edit', function(req, res, next) {
 	});
 });
 
+//Return value contains:
+//	success: true/false
+//	if !success, error
 router.post('/remove', function(req, res, next) {
 	if (!hasValidLocation(req.body) || !hasValidType(req.body)) {
 		res.send("Invalid data");
@@ -60,6 +80,10 @@ router.post('/remove', function(req, res, next) {
 	res.send(sqlQuery.writeSQLRemove(req.body));	
 });
 
+//Return value contains:
+//	success: true/false
+//	if !success, error
+//	if success, data: array of result rows
 router.post('/get', function(req, res, next) {
 	if (!hasValidLocation(req.body) || !hasValidType(req.body)) {
 		res.send("Invalid data");
@@ -77,6 +101,7 @@ router.post('/get', function(req, res, next) {
 	});
 });
 
+//TODO: Return database...
 router.post('/database', function(req, res, next) {
 	if (!hasValidLocation(req.body)) {
 		res.send("Invalid data");

@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>A simple map</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:100px; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<h3>Mapping</h3>
+
+<div id='map'></div>
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoiYXNoYWJseWdpbiIsImEiOiJjaWhwM2R4YWEwMWhwdDZtNGxuMXVobjYwIn0.wKvqtULva4f_BiM5KgWZYQ';
+var map = L.mapbox.map('map', 'ashablygin.ocg5flkb')
+    .setView([42.474, -72.598], 13);
+</script>
+
+</body>
+</html>
+

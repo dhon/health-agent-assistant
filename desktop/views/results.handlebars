@@ -38,21 +38,21 @@
 	</style>
 	<ul class="results">
 		Search Results
-		{{#each restaurants}}
-		<li class="restaurant"><span>{{this.name}}</span>
+		{{#each restaurant}}
+		<li class="restaurant"><span>{{this.NAME}}</span>
 			<ul>
 				<!-- General restaurant information goes here -->
-				<div>{{this.location}}</div>
+				<div>{{this.property.ADDRESS}}</div>
 				<u>Inspections</u>
-				{{#if this.inspections}}
-				{{#each this.inspections}}
+				{{#if this.inspection}}
+				{{#each this.inspection}}
 					<li class="inspection"><span>{{this.date}}</span>
 					<ul>
 						<!-- General inspection information goes here -->
 						<u>Violations</u>
-						{{#if this.violations}}
-						{{#each this.violations}}
-							<li class="violation"><span>{{this.code}}: {{this.description}}</span></li>
+						{{#if this.violation}}
+						{{#each this.violation}}
+							<li class="violation"><span>{{this.CODEREFERENCE}}: {{this.DESCRIPTIONOFVIOLATIONCORRECTIONPLAN}}</span></li>
 						{{/each}}
 						{{else}}
 							<li class ="violation"><span>No violations.</span></li>

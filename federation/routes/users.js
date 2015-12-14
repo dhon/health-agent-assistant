@@ -10,57 +10,60 @@ router.get('/', function(req, res, next) {
 function isValidObject(user){
 	var result = {};
 	var username = user.username;
-	var password = user.password;
+	var password = user.passwordhash;
 	console.log(username + " " + password);
 	if(username && username.length > 0){
-		result.success = true;
-		result.desc = "";
+		if(password && password.length > 0) {
+			result.success = true;
+			result.desc = "OK";
+			return result;
+		}
+		else {
+			result.success = false;
+			result.desc = "Password is not valid.";
+		}
 	}
 	else{
 		result.success = false;
-		result.desc = "username not valid";
+		result.desc = "Username is not valid.";
+		return result;
 	}
-
-	if(result.success == true){
-
-	if(password && password.length > 0){
-		result.success = true;
-		result.desc = "";
-	}
-	else{
-		result.success = false;
-		result.desc = "password not valid";
-	}
-}
-	return result;	
 }
 
 router.post('/register', function(req, res, next) {
 	var user = req.body;
-	console.log(req.body);
-	console.log(user);
-	if(!isValidObject(user).success){
-		res.json(isValidObject(user));
+	var checkUserResult = isValidObject(user);
+	if(checkUserResult.success){
+		userController.registerNewUser(user, function(result){
+			res.json(result);
+		});
+	} else {
+		res.json(checkUserResult);
 	}
-	else{
-	userController.registerNewUser(user, function(result){
-		res.json(result);
-	});
-}
 });
 
 router.post('/editpassword', function(req, res, next) {
 	var user = req.body;
+	if(!isValidObject(user).success){
+		res.json(isValidObject(user));
+	}
+	else{
 	userController.editPassword(user, function(result){
 		res.json(result);
 	});
+ }
 });
 //returns a password hash, logs in the user
 router.post('/login', function(req, res, next) {
 	var user = req.body;
-	userController.loginUser(user, function(result){
-		res.json(result);
-	});
+	var checkUserResult = isValidObject(user);
+	if(checkUserResult.success){
+		userController.loginUser(user, function(result){
+			res.json(result);
+		});
+	} else {
+		res.json(checkUserResult);
+	}
 });
 
 //returns the id of the search in the table, adds a new saved search string
