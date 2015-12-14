@@ -4,9 +4,9 @@
 <div class="container">
 
     <ul class="tabs">
-        <li class="tab-link current" data-tab="tab-1">Health Inspection</li>
-        <li class="tab-link" data-tab="tab-2">Water Well</li>
-        <li class="tab-link" data-tab="tab-3">Septic System</li>
+        <li class="{{healthtabclass}}" data-tab="tab-1">Health Inspection</li>
+        <li class="{{watertabclass}}" data-tab="tab-2">Water Well</li>
+        <li class="{{septictabclass}}" data-tab="tab-3">Septic System</li>
 
     </ul>
 
@@ -258,7 +258,7 @@
                 13. Hauler date: <input type="text" name="name"> <br>
                 14. Receiving Facility: <input type="text" name="name"> <br>
                 15. Receiving Facility Date: <input type="text" name="name"> <br>
-                <button>Submit</button><button>Delete</button>
+                <button>{{submit_string}}</button><button>Delete</button>
             </form>
         </div>
     </div>
