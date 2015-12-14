@@ -25,13 +25,13 @@
 		.tabInner {
 			clear: both;
 			border: 1px solid #aaa;
-			height: 650px;
+			height: 750px;
 			overflow: hidden;
 			background: #eee;
 		}
 
 		.tabInner div {
-			height: 650px;
+			height: 750px;
 			padding: 50px;
 		}
 		
@@ -110,6 +110,7 @@
             
 			<div id="septic_tanks" id="septicForm">
 				<form method="post">
+					
 					Location: <input type="text" name="tankLocation" placeholder="Address">
 					Town:  <select name="septicTown">
 						<option value="">Select</option>
@@ -144,16 +145,34 @@
             
 			<div id="water_wells">
                 <form method="post" id="wellForm">
-					Client Name: <input type="text" name="clientName" placeholder="e.g. Sam Smith"><br>
+					Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
+					Owner's Telephone Number: <input type="text" name="ownerNumber" placeholder="e.g. 403-416-5987"><br>
+					Collected By: <input type="text" name="collectorName" placeholder="e.g. Sam Smith"><br>
 					Project Name: <input type="text" name="projectName" placeholder="Project Name"><br>
-					Location: <input type="text" name="wellLocation" placeholder="Street Address/ GPS Coordinate">
-					Town:  <select name="wellTown">
-						<option value="">Select</option>
-						<option value="sunderland">Sunderland</option>
-						<option value="leverett">Leverett</option>
-					</select><br>
-					Water Quality: <input type="text" name="waterQuality" placeholder="Water Quality"><br>
-					Report Date: <input type="date" name="wellDateAfter" placeholder="MM/DD/YY"> - <input type="date" name="wellDateBefore" placeholder="MM/DD/YY"><br>
+					Project Number: <input type="number" name="projectNumber"><br>
+					Date Collected: <input type="date" name="dateCollected" placeholder="MM/DD/YY"><br>
+					Sample Identification: <input type="text" name="sampleID" placeholder="Sample ID"><br>
+					Lab Number: <input type="number" name="labNumber"><br>
+					Total Coliform Bacteria: <input type="number" name="amtColiformBac"><br>
+					Total Coliform Bacteria Units: <input type="text" name="unitColiformBac" placeholder="Units"><br>
+					Nitrate/Nitrogen Level: <input type="number" name="amtNitrogen"><br>
+					Nitrate/Nitrogen Level Units: <input type="text" name="unitNitrogen" placeholder="Units"><br>
+					pH Level: <input type="number" name="pHLevel"><br>
+					pH Units: <input type="text" name="unitpH" placeholder="Units"><br>
+					Iron Level: <input type="number" name="amtIron"><br>
+					Iron Level Units: <input type="text" name="unitIron" placeholder="Units"><br>
+					Hardness Level: <input type="number" name="hardnessLevel"><br>
+					Hardness Level Units: <input type="text" name="unitHardness" placeholder="Units"><br>
+					Sulfate/Sulfur Level: <input type="number" name="amtSulfur"><br>
+					Sulfate/Sulfur Level Units: <input type="text" name="unitSulfur" placeholder="Units"><br>
+					Chloride Level: <input type="number" name="amtChloride"><br>
+					Specific Conductance Level: <input type="number" name="amtConductance"><br>
+					Specific Conductance Level Units: <input type="text" name="unitConductance" placeholder="Units"><br>
+					Water Sample Passing Water Standard?  Yes<input type="radio" name="effluentTeeFilter" value=1>
+					No<input type="radio" name="effluentTeeFilter" value=0><br>
+					Submitted By: <input type="text" name="testerName" placeholder="e.g. Sam Smith"><br>
+					Additional Note: <input type="text" name="additionalNote" placeholder="Additional Note"><br>
+					
 					<button type="button">Save</button>
 					<input type="Submit" value="Search" Width="90px">
 					<input type="reset" value="Reset"><br>
