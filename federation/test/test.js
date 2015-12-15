@@ -8,7 +8,7 @@ var querystring = require('querystring');
 
 describe('User login', function() {
   describe('#userCreation()', function (done) {
-    it('Success should return true if account was successfully created', function () {
+    it('Success should return true if account was successfully created', function (done) {
       var user1 = querystring.stringify({
         username: "abc",
         passwordhash: "abc"
@@ -213,7 +213,7 @@ describe('Database add', function() {
 				});
 				rows.forEach(function(row) {
 					rowIds.push(row['ID']);
-					console.log(row);
+					//console.log(row);
 				});
 				done();	
 			});

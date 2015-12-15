@@ -31,29 +31,25 @@ exports.run = function(location, queryString, callback) {
 //	This is executed only for the first row returned
 exports.get = function(location, queryString, callback) {
 	var num = location.length;
-	var gotResult = false;
+	var result = -1;
 	var rows = [];
 	var cb = function(error, row) {
 		num -= 1;
 		rows.push({'error': error, 'row': row});
-		if (row != undefined) {
-			gotResult = true;
+		if (row != undefined && result == -1) {
+			result = rows.length - 1;
 		}
 
 		if (num == 0) {
 			if (rows.length == 0) {
-				callback("No such row found.", undefined);
+				callback(["No such row found."], undefined);
 			}
-			else if (gotResult) {
-				for (var entry in rows) {
-					if (entry.row != undefined) {
-						callback(entry.error, entry.row);
-						break;
-					}
-				}
+			else if (result != -1) {
+				//Asumes no error on successful return which should be true
+				callback([], rows[result].row);
 			}
 			else {
-				callback(rows[0].error, undefined);
+				callback([rows[0].error], undefined);
 			}		
 		}
 		

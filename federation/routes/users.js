@@ -25,27 +25,28 @@ passport.use(new Strategy(
       if (!user || user.password != hashed) { return cb(null, false, { message: "Invalid username, password combination"})}
       return cb(null, user);
     });
-  }));
+  }
+));
 
-  passport.serializeUser(function(user, cb) {
-    cb(null, user.id);
-  });
+passport.serializeUser(function(user, cb) {
+	cb(null, user.id);
+});
 
-  passport.deserializeUser(function(id, cb) {
-    db.users.findById(id, function (err, user) {
-      if (err) { return cb(err); }
-      cb(null, user);
-    });
-  });
+passport.deserializeUser(function(id, cb) {
+	db.users.findById(id, function (err, user) {
+		if (err) { return cb(err); }
+		cb(null, user);
+	});
+});
 
-  app.use(require('morgan')('combined'));
-  app.use(require('cookie-parser')());
-  app.use(require('body-parser').urlencoded({ extended: true }));
-  app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-  app.use(flash());
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(require('connect-flash')());
+app.use(require('morgan')('combined'));
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(require('connect-flash')());
 
 
 
@@ -75,11 +76,12 @@ function isValidObject(user){
 router.post('/register', function(req, res, next) {
 	var user = req.body;
 	var b = req.body.passwordhash;
-    var hashed = crypto.createHash('md5').update(b).digest('hex');
-    if(hashed.length > 10)
-        hashed = hashed.substring(0, 10);
-    user.passwordhash = hashed;
-    console.log(user.passwordhash);
+  var hashed = crypto.createHash('md5').update(b).digest('hex');
+  if(hashed.length > 10)
+    hashed = hashed.substring(0, 10);
+  user.passwordhash = hashed;
+  console.log(user.passwordhash);
+
 	var checkUserResult = isValidObject(user);
 	if(checkUserResult.success){
 		userController.registerNewUser(user, function(result){
@@ -106,8 +108,11 @@ router.post('/editpassword', function(req, res, next) {
 router.post('/login', function(req, res, next) {
 	var user = req.body;
 	var b = req.body.passwordhash;
-    var hashed = crypto.createHash('md5').update(b).digest('hex');
-    user.passwordhash = hashed;
+  var hashed = crypto.createHash('md5').update(b).digest('hex');
+	if (hashed.length > 10)
+		hashed = hashed.substring(0, 10);
+  user.passwordhash = hashed;
+
 	var checkUserResult = isValidObject(user);
 	if(checkUserResult.success){
 		userController.loginUser(user, function(result){

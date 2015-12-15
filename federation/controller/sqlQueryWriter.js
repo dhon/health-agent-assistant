@@ -79,7 +79,7 @@ exports.writeSQLGet = function(data) {
 		console.log(str);
 		return str;
 	}
-	console.log(str + '\n' + where);
+//	console.log(str + '\n' + where);
 	return str + '\n' + where;
 }
 
