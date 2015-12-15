@@ -25,7 +25,7 @@ router.post('/', function(req, res) {
 	{
 		searchType = searchTypes.septic;
 	}
-	else if(data.clientName != undefined)
+	else if(data.wellLocation != undefined)
 	{
 		searchType = searchTypes.well;
 	}
@@ -800,6 +800,165 @@ router.post('/', function(req, res) {
 	//if well
 	else if(searchType == searchTypes.well)
 	{
+		var queryBy = {
+			well:false, 
+			property:false, 
+			owner:false, 
+			waterQualityReport:false
+		};
+		
+		var query = {
+			well:"", 
+			property:"", 
+			owner:"", 
+			waterQualityReport:""
+		};
+		
+		var wellInfo = {};
+		wellInfo.location = ["Leverett", "Sunderland"];
+		wellInfo.type = "well";
+		query.well = JSON.stringify(wellInfo);
+		
+		
+		
+		var propertyInfo = {};
+		if(data.wellLocation != undefined){
+			propertyInfo.address = data.wellLocation;
+			queryBy.property = true;
+		}
+		if(data.wellTown != undefined){
+			propertyInfo.town = data.wellTown;
+			propertyInfo.location = [data.wellTown];
+			queryBy.property = true;
+		}
+		propertyInfo.type = "property";
+		if(propertyInfo.location == undefined){
+			propertyInfo.location = ["Leverett", "Sunderland"];
+		}
+		query.property = JSON.stringify(propertyInfo);
+		
+		
+		
+		var ownerInfo = {};
+		if(data.ownerName!= undefined){
+			ownerInfo.ownername = data.ownerName;
+			queryBy.owner = true;
+		}
+		if(data.ownerNumber != undefined){
+			ownerInfo.telephonenumber = data.ownerNumber
+			queryBy.owner = true;
+		}
+		ownerInfo.location = ["Leverett", "Sunderland"];
+		ownerInfo.type = "owner";
+		query.owner = JSON.stringify(ownerInfo);
+		
+		
+		var waterQualityReportInfo = {};
+		if(data.collectorName != undefined){
+			waterQualityReportInfo.collectedBy = data.collectorName;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.projctName != undefined){
+			waterQualityReportInfo.projectName = data.projectName;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.projectNumber != undefined){
+			waterQualityReportInfo.projectNumber = data.projectNumber;
+			queryBy.waterQualityReport = true;
+		}
+		//TODO: make sure that the dates are formated the same as in the DB
+		if(data.dateCollected != undefined){
+			waterQualityReportInfo.dateCollected = data.dateCollected;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.sampleID != undefined){
+			waterQualityReportInfo.sampleIdentification = data.sampleID;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.labNumber != undefined){
+			waterQualityReportInfo.labNumber = data.labNumber;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtColiformBac != undefined){
+			waterQualityReportInfo.TOTALCOLIFORMBACTERIA = data.amtColiformBac;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitColiformBac != undefined){
+			waterQualityReportInfo.TOTALCOLIFORMBACTERIAUNITS = data.unitColiformBac;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtNitrogen != undefined){
+			waterQualityReportInfo.NITRATENITROGEN = data.amtNitrogen;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitNitrogen != undefined){
+			waterQualityReportInfo.NITRATENITROGENUNITS = data.unitNitrogen;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.pHLevel != undefined){
+			waterQualityReportInfo.PH = data.pHLevel;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitpH != undefined){
+			waterQualityReportInfo.PHUNITS = data.unitpH;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtIron != undefined){
+			waterQualityReportInfo.IRON = data.amtIron;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitIron != undefined){
+			waterQualityReportInfo.IRONUNITS = data.unitIron;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.hardnessLevel != undefined){
+			waterQualityReportInfo.HARDNESSASCACO3 = data.hardnessLevel;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitHardness != undefined){
+			waterQualityReportInfo.HARDNESSASCACO3UNITS = data.unitHardness;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtSulfur != undefined){
+			waterQualityReportInfo.SULFATESULFUR = data.amtSulfur;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitSulfur != undefined){
+			waterQualityReportInfo.SULFATESULFUREUNITS = data.unitSulfur;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtChloride != undefined){
+			waterQualityReportInfo.CHLORIDE = data.amtChloride;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtConductance != undefined){
+			waterQualityReportInfo.SPECIFICCONDUCTANCE = data.amtConductance;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitConductance != undefined){
+			waterQualityReportInfo.SPECIFICCONDUCTANCEUNITS = data.unitConductance;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.testerName != undefined){
+			waterQualityReportInfo.SUBMITTEDBY = data.testerName;
+			queryBy.waterQualityReport = true;
+		}
+		//TODO: make it so the notes act as a keyword instead of only checking for equality
+		if(data.additionalNote != undefined){
+			waterQualityReportInfo.ADDITIONALNOTES = data.additionalNote;
+			queryBy.waterQualityReport = true;
+		}
+		
+		waterQualityReportInfo.location = ["Leverett", "Sunderland"];
+		waterQualityReportInfo.type = "waterQualityReport";
+		query.waterQualityReport = JSON.stringify(waterQualityReportInfo);
+		
+		
+		
+		var DBResults = queryDatabase(query);
+		
+		
+		
 		var fakeDBResults = {
 			well:[{ID:"", PROPERTYID:"", OWNERID:""}],
 			owner:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
@@ -835,7 +994,7 @@ router.post('/', function(req, res) {
 			}]
 		};
 		
-		var DBResults = fakeDBResults;
+		DBResults = fakeDBResults;
 		
 		results = {wells:[]};
 		
@@ -851,6 +1010,9 @@ router.post('/', function(req, res) {
 					break;
 				}
 			}
+			if(queryBy.owner && well.owner == undefined){
+				continue;
+			}
 			
 			for(k = 0; k<DBResults.property.length; k++)
 			{
@@ -860,15 +1022,21 @@ router.post('/', function(req, res) {
 					break;
 				}
 			}
+			if(queryBy.property && well.property == undefined){
+				continue;
+			}
 			
-			well.waterQualityReports = [];
+			well.waterQualityReport = [];
 			
 			for(k = 0; k<DBResults.waterQualityReport.length; k++)
 			{
 				if(DBResults.waterQualityReport[k].WELLID == well.ID)
 				{
-					well.waterQualityReports.push(DBResults.waterQualityReport[k]);
+					well.waterQualityReport.push(DBResults.waterQualityReport[k]);
 				}
+			}
+			if(queryBy.waterQualityReport && well.waterQualityReport.length == 0){
+				continue;
 			}
 			
 			
