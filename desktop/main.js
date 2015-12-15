@@ -63,6 +63,7 @@ app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(require('connect-flash')());
+app.use(express.static('public'));
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.

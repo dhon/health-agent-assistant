@@ -2,32 +2,38 @@
 
 <div class="container">
 	{{#each restaurant}}
-	<div class="collapsible">{{this.NAME}}
-		<div>
-			<!-- General restaurant information goes here -->
-			<div>{{this.property.ADDRESS}}</div>
-			<u>Inspections</u>
-			{{#if this.inspection}}
-				{{#each this.inspection}}
-					<div class="collapsible">{{this.date}}
-					<div>
-						<!-- General inspection information goes here -->
-						<u>Violations</u>
-						{{#if this.violation}}
-							{{#each this.violation}}
-								<div class="collapsible">{{this.CODEREFERENCE}}: {{this.DESCRIPTIONOFVIOLATIONCORRECTIONPLAN}}</div>
-							{{/each}}
-						{{else}}
-							<div class ="collapsible">No violations.</div>
-						{{/if}}
-					</div>
-					
-					</div>
-				{{/each}}
-			{{else}}
-				<div class="collapsible">No inspections found.</div>
-			{{/if}}
-		</div>
+	<div class="collapser"><img src="/images/collapse.png" />{{this.NAME}}</div>
+	<div class="collapsible">
+		<!-- General restaurant information goes here -->
+		<div>Address: {{this.property.ADDRESS}}</div>
+		<div>Person In Charge: {{this.PERSONINCHARGE}}</div>
+		{{#if this.inspection}}
+			{{#each this.inspection}}
+				<div class="collapser"><img src="/images/collapse.png" />Inspections</div>
+				<div class="collapsible">
+					<!-- General inspection information goes here -->
+					<div>Date: {{this.date}}</div>
+					<div>Inspector: {{this.INSPECTOR}}</div>
+					<div>Inspection Type: {{this.TYPEOFINSPECTION}}</div>
+					<div>Reasoning: {{this.REASONING}}</div>
+					<div>Additional Notes: {{this.ADDITIONALNOTES}}</div>
+					{{#if this.violation}}
+					{{#each this.violation}}
+						<div class="collapser"><img src="/images/collapse.png" />Violations</div>
+						<div class="collapsible">
+							<!-- Violation information goes here -->
+							<div>Code Reference: {{this.CODEREFERENCE}}</div>
+							<div>Correction plan: {{this.DESCRIPTIONOFVIOLATIONCORRECTIONPLAN}}</div>
+						</div>
+					{{/each}}
+					{{else}}
+						<div class ="collapsible">No violations.</div>
+					{{/if}}
+				</div>
+			{{/each}}
+		{{else}}
+			<div class="collapsible">No matching inspections found.</div>
+		{{/if}}
 	</div>
 	{{/each}}
 </div>
@@ -38,11 +44,20 @@
     }
 	.container{
         width: 800px;
+		padding:10px;
         margin: 0 auto;
+		background: #ededed;
     }
+	.collapser{
+		font-weight: bold;
+		font-size: 16px;
+	}
+	.collapser img{
+		margin-right: 6px;
+	}
 	.collapsible{
         padding:10px;
-        margin:10px 0;
+        margin:10px 0px 0px 0px;
         border:2px solid white;
 		background: #ededed;
     }
@@ -51,10 +66,12 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		$(".collapsible").click(function(e){ 
+		$(".collapser").click(function(e){
 			e.stopPropagation();
-			console.log("click");
-			$(this).find(".collapsible").toggle();
+			var collapsible = $(this).next(".collapsible");
+			collapsible.toggle();
+			var on = collapsible.is(':visible');
+			$(this).children("img").attr("src", "images/" + (on ? "collapse.png" : "expand.png"));
 		});
 	});
 
