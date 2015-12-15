@@ -545,6 +545,7 @@ router.post('/', function(req, res) {
 			septicPumpingRecord:[{ID:"", OPTION:""}],
 			septicInspection:[{
 				ID:"", 
+				SEPTICID:"",
 				NAMEOFINSPECTOR:"", 
 				COMPANYNAME:"", 
 				COMPANYADDRESS:"",
@@ -774,11 +775,24 @@ router.post('/', function(req, res) {
 					septic.systemPumpingRecords.push(DBResults.systemPumpingRecord[k]);
 				}
 			}
-			if(queryBy.systemPumpingRecords && septic.systemPumpingRecords.length == 0){
+			if(queryBy.systemPumpingRecord && septic.systemPumpingRecords.length == 0){
 				continue;
 			}
 			
-			//TODO: Need to link septic pumping records and septicinspection
+			//TODO: Need to link septic pumping records
+			
+			septic.septicInspection = [];
+			
+			for(k = 0; k<DBResults.septicInspection.length; k++)
+			{
+				if(DBResults.septicInspection[k].SEPTICID == septic.ID)
+				{
+					septic.septicInspection.push(DBResults.septicInspection[k]);
+				}
+			}
+			if(queryBy.septicInspection && septic.septicInspection.length == 0){
+				continue;
+			}
 			
 			results.septics.push(septic);
 		}
@@ -885,6 +899,7 @@ function queryDatabase(query)
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.open( "POST", 'http://localhost:3000/api/get', false ); // false for synchronous request
 		xmlHttp.setRequestHeader('Content-Type', 'application/json');
+		
 		console.log("Sending query:"+query[attribute]);
 		console.log();
 		xmlHttp.send( query[attribute] );
