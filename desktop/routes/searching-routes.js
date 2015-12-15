@@ -25,7 +25,7 @@ router.post('/', function(req, res) {
 	{
 		searchType = searchTypes.septic;
 	}
-	else if(data.clientName != undefined)
+	else if(data.wellLocation != undefined)
 	{
 		searchType = searchTypes.well;
 	}
@@ -48,8 +48,6 @@ router.post('/', function(req, res) {
 	//searched for restaurant
 	if(searchType == searchTypes.restaurant)
 	{
-		//TODO: Parse attributes into data types desired by DB
-		
 		//breaks up all of the searchable terms into queries to the DB tables they refer to
 		
 		//TODO: need to handle restDateBefore, restDateAfter, numviolation, and restKeyword
@@ -88,14 +86,16 @@ router.post('/', function(req, res) {
 			propertyInfo.address = data.restLocation;
 			queryBy.property = true;
 		}
-		if(data.restLocation != undefined){
+		if(data.restaurantTown != undefined){
 			propertyInfo.town = data.restaurantTown;
 			propertyInfo.location = [data.restaurantTown];
 			queryBy.property = true;
 		}
 		
 		propertyInfo.type = "property";
-		propertyInfo.location = ["Leverett", "Sunderland"];
+		if(propertyInfo.location == undefined){
+			propertyInfo.location = ["Leverett", "Sunderland"];
+		}
 		query.property = JSON.stringify(propertyInfo);
 		
 		
@@ -186,33 +186,11 @@ router.post('/', function(req, res) {
 		
 		//TODO: use attributes to query database and get relevant results
 		
-		var DBResults;
+		var DBResults = queryDatabase(query);
 		
 		
 		
-		for(var attribute in query)
-		{
-			var xmlHttp = new XMLHttpRequest();
-			xmlHttp.open( "POST", 'http://localhost:3000/api/get', false ); // false for synchronous request
-			xmlHttp.setRequestHeader('Content-Type', 'application/json');
-			console.log("Sending query:"+query[attribute]);
-			console.log();
-			xmlHttp.send( query[attribute] );
-			
-			console.log("Starting returned data");
-			console.log(xmlHttp.responseText);
-			console.log("Ending Returned data");
-			console.log();
-			
-			if(xmlHttp.responseText.success){
-				DBResults[attribute] = xmlHttp.resonseText.rows;
-			}
-			else{
-				console.log("Error getting information from DB");
-			}
-			console.log();
-			console.log();
-		}
+		
 		
 		
 		
@@ -406,6 +384,141 @@ router.post('/', function(req, res) {
 	//if septic tank
 	else if(searchType == searchTypes.septic)
 	{
+		var queryBy = {
+			septic:false, 
+			property:false, 
+			owner:false, 
+			systemPumpingRecord:false, 
+			septicPumpingRecord:false, 
+			septicInspection:false
+		};
+		
+		var query = {
+			septic:"", 
+			property:"", 
+			owner:"", 
+			systemPumpingRecord:"", 
+			septicPumpingRecord:"", 
+			septicInspection:""
+		};
+		
+		
+		var septicInfo = {};
+		septicInfo.location = ["Leverett", "Sunderland"];
+		septicInfo.type = "septic";
+		query.septic = JSON.stringify(septicInfo);
+		
+		
+		var propertyInfo = {};
+		
+		if(data.tankLocation != undefined){
+			propertyInfo.address = data.tankLocation;
+			queryBy.property = true;
+		}
+		if(data.septicTown != undefined){
+			propertyInfo.town = data.septicTown;
+			propertyInfo.location = [data.septicTown];
+			queryBy.property = true;
+		}
+		
+		propertyInfo.type = "property";
+		if(propertyInfo.location == undefined){
+			propertyInfo.location = ["Leverett", "Sunderland"];
+		}
+		query.property = JSON.stringify(propertyInfo);
+		
+		
+		var ownerInfo = {};
+		if(data.ownerName!= undefined){
+			ownerInfo.ownername = data.ownerName;
+			queryBy.owner = true;
+		}
+		ownerInfo.location = ["Leverett", "Sunderland"];
+		ownerInfo.type = "owner";
+		query.owner = JSON.stringify(ownerInfo);
+		
+		
+		//TODO: make sure date is in same format as DB uses
+		//TODO: Implement low/up boundQuantityPumped
+		//TODO: Make condition keyword work for cases besides being exactly equal
+		var systemPumpingRecordInfo = {};
+		if(data.pumpingDate != undefined){
+			systemPumpingRecordInfo.pumpingDate = data.pumpingDate;
+			queryBy.systemPumpingRecord = true;
+		}
+		if(data.systemQuality != undefined){
+			systemPumpingRecordInfo.systemQualityOther = data.systemQuality;
+			queryBy.systemPumpingRecord = true;
+		}
+		if(data.conditionKeyword != undefined){
+			systemPumpingRecordInfo.observedCondition = data.conditionKeyword;
+			queryBy.systemPumpingRecord = true;
+		}
+		if(data.systemPmpByName != undefined){
+			systemPumpingRecordInfo.systemPumpedByName = data.systemPmpByName;
+			queryBy.systemPumpingRecord = true;
+		}
+		if(data.systemPmpByLic != undefined){
+			systemPumpingRecordInfo.systemPumpedByLicense = data.systemPmpByLic;
+			queryBy.systemPumpingRecord = true;
+		}
+		if(data.systemPmpByCompany != undefined){
+			systemPumpingRecordInfo.systemPumpedByCompany = data.systemPmpByCompany;
+			queryBy.systemPumpingRecord = true;
+		}
+		if(data.disposalLocation != undefined){
+			systemPumpingRecordInfo.LOCATIONWHERECONTENTSWEREDISPOSED = data.disposalLocation;
+			queryBy.systemPumpingRecord = true;
+		}
+		if(data.hauler != undefined){
+			systemPumpingRecordInfo.hauler = data.hauler;
+			queryBy.systemPumpingRecord = true;
+		}
+		if(data.haulerDate != undefined){
+			systemPumpingRecordInfo.haulerDate = data.haulerDate;
+			queryBy.systemPumpingRecord = true;
+		}
+		if(data.receivingFacility != undefined){
+			systemPumpingRecordInfo.receivingFacility = data.receivingFacility;
+			queryBy.systemPumpingRecord = true;
+		}
+		if(data.receivingFacilityDate != undefined){
+			systemPumpingRecordInfo.receivingFacilityDate = data.receivingFacilityDate;
+			queryBy.systemPumpingRecord = true;
+		}
+		systemPumpingRecordInfo.location = ["Leverett", "Sunderland"];
+		systemPumpingRecordInfo.type = "systemPumpingRecord";
+		query.systemPumpingRecord = JSON.stringify(systemPumpingRecordInfo);
+		
+		
+		var septicPumpingRecordInfo = {};
+		if(data.option != undefined){
+			septicPumpingRecordInfo.option = data.option;
+			queryBy.septicPumpingRecord = true;
+		}
+		septicPumpingRecordInfo.location = ["Leverett", "Sunderland"];
+		septicPumpingRecordInfo.type = "septicPumpingRecord";
+		query.septicPumpingRecord = JSON.stringify(septicPumpingRecordInfo);
+		
+		
+		
+		var septicInspectionInfo = {};
+		septicInspectionInfo.location = ["Leverett", "Sunderland"];
+		septicInspectionInfo.type = "septicInspection";
+		query.septicInspection = JSON.stringify(septicInspectionInfo);
+		
+		
+		
+		
+		
+		
+		var DBResults = queryDatabase(query);
+		
+		
+		
+		
+		
+		//TODO: need to make sure that the fakeDBResults match latest DB
 		var fakeDBResults = {
 			septic:[{ID:"", PROPERTYID:"", OWNERID:""}],
 			owner:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
@@ -432,6 +545,7 @@ router.post('/', function(req, res) {
 			septicPumpingRecord:[{ID:"", OPTION:""}],
 			septicInspection:[{
 				ID:"", 
+				SEPTICID:"",
 				NAMEOFINSPECTOR:"", 
 				COMPANYNAME:"", 
 				COMPANYADDRESS:"",
@@ -635,6 +749,10 @@ router.post('/', function(req, res) {
 					break;
 				}
 			}
+			if(queryBy.owner && septic.owner == undefined){
+				continue;
+			}
+			
 			
 			for(k = 0; k<DBResults.property.length; k++)
 			{
@@ -643,6 +761,9 @@ router.post('/', function(req, res) {
 					septic.property = DBResults.property[k];
 					break;
 				}
+			}
+			if(queryBy.property && septic.property == undefined){
+				continue;
 			}
 			
 			septic.systemPumpingRecords = [];
@@ -654,8 +775,24 @@ router.post('/', function(req, res) {
 					septic.systemPumpingRecords.push(DBResults.systemPumpingRecord[k]);
 				}
 			}
+			if(queryBy.systemPumpingRecord && septic.systemPumpingRecords.length == 0){
+				continue;
+			}
 			
-			//TODO: Need to link septic pumping records and septicinspection
+			//TODO: Need to link septic pumping records
+			
+			septic.septicInspection = [];
+			
+			for(k = 0; k<DBResults.septicInspection.length; k++)
+			{
+				if(DBResults.septicInspection[k].SEPTICID == septic.ID)
+				{
+					septic.septicInspection.push(DBResults.septicInspection[k]);
+				}
+			}
+			if(queryBy.septicInspection && septic.septicInspection.length == 0){
+				continue;
+			}
 			
 			results.septics.push(septic);
 		}
@@ -663,6 +800,165 @@ router.post('/', function(req, res) {
 	//if well
 	else if(searchType == searchTypes.well)
 	{
+		var queryBy = {
+			well:false, 
+			property:false, 
+			owner:false, 
+			waterQualityReport:false
+		};
+		
+		var query = {
+			well:"", 
+			property:"", 
+			owner:"", 
+			waterQualityReport:""
+		};
+		
+		var wellInfo = {};
+		wellInfo.location = ["Leverett", "Sunderland"];
+		wellInfo.type = "well";
+		query.well = JSON.stringify(wellInfo);
+		
+		
+		
+		var propertyInfo = {};
+		if(data.wellLocation != undefined){
+			propertyInfo.address = data.wellLocation;
+			queryBy.property = true;
+		}
+		if(data.wellTown != undefined){
+			propertyInfo.town = data.wellTown;
+			propertyInfo.location = [data.wellTown];
+			queryBy.property = true;
+		}
+		propertyInfo.type = "property";
+		if(propertyInfo.location == undefined){
+			propertyInfo.location = ["Leverett", "Sunderland"];
+		}
+		query.property = JSON.stringify(propertyInfo);
+		
+		
+		
+		var ownerInfo = {};
+		if(data.ownerName!= undefined){
+			ownerInfo.ownername = data.ownerName;
+			queryBy.owner = true;
+		}
+		if(data.ownerNumber != undefined){
+			ownerInfo.telephonenumber = data.ownerNumber
+			queryBy.owner = true;
+		}
+		ownerInfo.location = ["Leverett", "Sunderland"];
+		ownerInfo.type = "owner";
+		query.owner = JSON.stringify(ownerInfo);
+		
+		
+		var waterQualityReportInfo = {};
+		if(data.collectorName != undefined){
+			waterQualityReportInfo.collectedBy = data.collectorName;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.projctName != undefined){
+			waterQualityReportInfo.projectName = data.projectName;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.projectNumber != undefined){
+			waterQualityReportInfo.projectNumber = data.projectNumber;
+			queryBy.waterQualityReport = true;
+		}
+		//TODO: make sure that the dates are formated the same as in the DB
+		if(data.dateCollected != undefined){
+			waterQualityReportInfo.dateCollected = data.dateCollected;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.sampleID != undefined){
+			waterQualityReportInfo.sampleIdentification = data.sampleID;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.labNumber != undefined){
+			waterQualityReportInfo.labNumber = data.labNumber;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtColiformBac != undefined){
+			waterQualityReportInfo.TOTALCOLIFORMBACTERIA = data.amtColiformBac;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitColiformBac != undefined){
+			waterQualityReportInfo.TOTALCOLIFORMBACTERIAUNITS = data.unitColiformBac;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtNitrogen != undefined){
+			waterQualityReportInfo.NITRATENITROGEN = data.amtNitrogen;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitNitrogen != undefined){
+			waterQualityReportInfo.NITRATENITROGENUNITS = data.unitNitrogen;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.pHLevel != undefined){
+			waterQualityReportInfo.PH = data.pHLevel;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitpH != undefined){
+			waterQualityReportInfo.PHUNITS = data.unitpH;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtIron != undefined){
+			waterQualityReportInfo.IRON = data.amtIron;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitIron != undefined){
+			waterQualityReportInfo.IRONUNITS = data.unitIron;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.hardnessLevel != undefined){
+			waterQualityReportInfo.HARDNESSASCACO3 = data.hardnessLevel;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitHardness != undefined){
+			waterQualityReportInfo.HARDNESSASCACO3UNITS = data.unitHardness;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtSulfur != undefined){
+			waterQualityReportInfo.SULFATESULFUR = data.amtSulfur;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitSulfur != undefined){
+			waterQualityReportInfo.SULFATESULFUREUNITS = data.unitSulfur;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtChloride != undefined){
+			waterQualityReportInfo.CHLORIDE = data.amtChloride;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.amtConductance != undefined){
+			waterQualityReportInfo.SPECIFICCONDUCTANCE = data.amtConductance;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.unitConductance != undefined){
+			waterQualityReportInfo.SPECIFICCONDUCTANCEUNITS = data.unitConductance;
+			queryBy.waterQualityReport = true;
+		}
+		if(data.testerName != undefined){
+			waterQualityReportInfo.SUBMITTEDBY = data.testerName;
+			queryBy.waterQualityReport = true;
+		}
+		//TODO: make it so the notes act as a keyword instead of only checking for equality
+		if(data.additionalNote != undefined){
+			waterQualityReportInfo.ADDITIONALNOTES = data.additionalNote;
+			queryBy.waterQualityReport = true;
+		}
+		
+		waterQualityReportInfo.location = ["Leverett", "Sunderland"];
+		waterQualityReportInfo.type = "waterQualityReport";
+		query.waterQualityReport = JSON.stringify(waterQualityReportInfo);
+		
+		
+		
+		var DBResults = queryDatabase(query);
+		
+		
+		
 		var fakeDBResults = {
 			well:[{ID:"", PROPERTYID:"", OWNERID:""}],
 			owner:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
@@ -698,7 +994,7 @@ router.post('/', function(req, res) {
 			}]
 		};
 		
-		var DBResults = fakeDBResults;
+		DBResults = fakeDBResults;
 		
 		results = {wells:[]};
 		
@@ -714,6 +1010,9 @@ router.post('/', function(req, res) {
 					break;
 				}
 			}
+			if(queryBy.owner && well.owner == undefined){
+				continue;
+			}
 			
 			for(k = 0; k<DBResults.property.length; k++)
 			{
@@ -723,15 +1022,21 @@ router.post('/', function(req, res) {
 					break;
 				}
 			}
+			if(queryBy.property && well.property == undefined){
+				continue;
+			}
 			
-			well.waterQualityReports = [];
+			well.waterQualityReport = [];
 			
 			for(k = 0; k<DBResults.waterQualityReport.length; k++)
 			{
 				if(DBResults.waterQualityReport[k].WELLID == well.ID)
 				{
-					well.waterQualityReports.push(DBResults.waterQualityReport[k]);
+					well.waterQualityReport.push(DBResults.waterQualityReport[k]);
 				}
+			}
+			if(queryBy.waterQualityReport && well.waterQualityReport.length == 0){
+				continue;
 			}
 			
 			
@@ -750,6 +1055,58 @@ router.post('/', function(req, res) {
 	// Test 
 	res.render('results', results);
 });
+
+
+
+
+function queryDatabase(query)
+{
+	var DBResults = {};
+	for(var attribute in query)
+	{
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( "POST", 'http://localhost:3000/api/get', false ); // false for synchronous request
+		xmlHttp.setRequestHeader('Content-Type', 'application/json');
+		
+		console.log("Sending query:"+query[attribute]);
+		console.log();
+		xmlHttp.send( query[attribute] );
+		
+		var data = JSON.parse(xmlHttp.responseText);
+		
+		console.log("Starting returned data");
+		console.log(data);
+		console.log("Ending Returned data");
+		console.log(data.success);
+		console.log();
+		
+		if(data.success){
+			if(data.rows == undefined){
+				data.rows = [];
+			}
+			DBResults[attribute] = data.rows;
+		}
+		else{
+			console.log("Error getting information from DB");
+		}
+		console.log();
+		console.log();
+	}
+	
+	return DBResults;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Example route
 router.get('/', function(req, res) {
