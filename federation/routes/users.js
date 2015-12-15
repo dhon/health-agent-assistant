@@ -84,7 +84,7 @@ router.post('/register', function(req, res, next) {
 	if(checkUserResult.success){
 		userController.registerNewUser(user, function(result){
 			res.json(result);
-			console.log(result, "result result result");
+			//console.log(result, "result result result");
 		});
 	} else {
 		res.json(checkUserResult);
