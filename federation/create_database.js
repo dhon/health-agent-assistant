@@ -137,12 +137,13 @@ var db = new sqlite3.Database('database/' + town);
   db.get("SELECT * FROM SEPTICPUMPINGRECORD", function(error, row) {
     if(error && error.errno === 1){
         db.serialize(function(){
-        db.run(properties_array["SEPTICPUMPINGRECORD"]);
-	db.run("INSERT INTO REASONING(REASONING) VALUES ('Cesspool')");
-	db.run("INSERT INTO REASONING(REASONING) VALUES ('Septic Tank')");
-	db.run("INSERT INTO REASONING(REASONING) VALUES ('Tight Tank')");
-	db.run("INSERT INTO REASONING(REASONING) VALUES ('Grease Trap')");
-	db.run("INSERT INTO REASONING(REASONING) VALUES ('Other')");
+			db.run(properties_array["SEPTICPUMPINGRECORD"]);
+			db.run("INSERT INTO REASONING(REASONING) VALUES ('Cesspool')");
+			db.run("INSERT INTO REASONING(REASONING) VALUES ('Septic Tank')");
+			db.run("INSERT INTO REASONING(REASONING) VALUES ('Tight Tank')");
+			db.run("INSERT INTO REASONING(REASONING) VALUES ('Grease Trap')");
+			db.run("INSERT INTO REASONING(REASONING) VALUES ('Other')");
+		});
     }
   });
 
