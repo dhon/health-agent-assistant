@@ -4,7 +4,9 @@ var express = require('express');
 // particular routes from the main application.
 var router = express.Router();
 
-// Example route
+// Example post
+router.post('/post', (req, res) => {console.log("posted");});
+
 router.get('/', function(req, res) {
 	console.log("routed");
 	res.render('admin');
