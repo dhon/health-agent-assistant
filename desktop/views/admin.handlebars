@@ -1,10 +1,10 @@
 <head>
-  <title>UMass 320 WebApp Admin</title>
+  <title>UMass 320 WebApp</title>
   <style>
-    div {
+    .create {
       text-align: center;
     }
-    .table {
+    #table-container {
       padding-top: 50px;
     }
     table, th, td {
@@ -13,26 +13,52 @@
     }
     th, td {
       padding: 5px;
-      text-align: center;
     }
     th{
-      background-color: black;
-      color: white;
+      background-color: #ADADAD;
+      color: black;
+      text-align: center;
     }
     table tr:nth-child(even) {
       background-color: #eee;
     }
     table tr:nth-child(odd) {
-      background-color:#fff;
+      background-color: #fff;
+    }
+    #usertable {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h3#title {
+      text-align: center;
+    }
+    #usertable thead {
+      cursor: pointer;
+    
+    }
+    #usertable thead tr th.headerSortUp span {
+      background-image: url('up-arrow.png');
+    }
+    #usertable thead tr th.headerSortDown span {
+      background-image: url('down-arrow.png');
     }
   </style>
+
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="/jquery-latest.js"></script>
+  <script type="text/javascript" src="/jquery.tablesorter.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $("#usertable").tablesorter();
+    });
+  </script>
 </head>
 
 <body>
-  <div>
+  <div class="create">
     <h1>Admin</h1>
     <h3>Create An Account</h3>
-    <form method="post" action="http://localhost:3000/api/user/register">
+    <form method="post" action="http://localhost:3000/api/user/register"> {{!-- <--- THIS MAY NOT BE THE RIGHT ACTION --}}
       Username: <input type="text" name="username"> <br>
       Password:  <input type="password" name="passwordhash"> <br>
       Admin:
@@ -45,29 +71,49 @@
     </form>
   </div>
 
-  <div class="table">
-    <h3>Account List</h3>
+  <div id="table-container">
+    <h3 id="title">Account List</h3>
 
     {{!-- THIS WILL NEED TO BE REDONE USING THE TABLE IN db/users.js --}}
-    <table style="width:100%">
-      <tr>
-        <th>Username</th>
-        <th>Password (THIS MAY BE REMOVED)</th>
-        <th>ID</th>
-        <th>Display Name</th>
-        <th>Email</th>
-        <th>Permissions</th>
-        <th>Actions</th>
-      </tr>
-      <tr>
-        <td>admintest</td>
-        <td>passwordtest</td>
-        <td>0</td>
-        <td>displaynametest</td>
-        <td>test@test.com</td>
-        <td>test</td>
-        <td>actionstest</td>
-      </tr>
+    {{!-- STRAIGHT FROM DATABASE - USER ATTRIBUTES? --}}
+    {{!-- properties_array["USER"] = "CREATE TABLE USER( ID INTEGER PRIMARY KEY NOT NULL, USERNAME TEXT NOT NULL, PASSWORDHASH NOT NULL, FOREIGN KEY(ID) references SAVEDSEARCHES(USERID), FOREIGN KEY(ID) references PRIVILEGES(USERID) )"; --}}
+    <table style="width:95%" id="usertable" class="tablesorter">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Password Hash</th> {{!-- THIS COULD BE REMOVED --}}
+          <th>Saved Searches</th> {{!-- THIS COULD BE REMOVED --}}
+          <th>Privileges</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>usernametest</td>
+          <td>dbasdjdah</td>
+          <td>63</td>
+          <td>73</td>
+          <td>actions</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>alphausernametest</td>
+          <td>jfabobe</td>
+          <td>24</td>
+          <td>6</td>
+          <td>actions</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>gammausernametest</td>
+          <td>aonadjd</td>
+          <td>257</td>
+          <td>27</td>
+          <td>actions</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </body>
