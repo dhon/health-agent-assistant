@@ -11,7 +11,7 @@ describe('User login', function() {
     it('Success should return true if account was successfully created', function (done) {
       var user1 = querystring.stringify({
         username: "dhon2",
-        passwordhash: "hello"
+        passwordhash: "5d41402abc4b2a76b9719d911017c592"
       });
 
       var post_options = {
@@ -41,7 +41,7 @@ describe('User login', function() {
     it('Success should return true since user:dhon password: hello exists in DB', function (done) {
       var user2 = querystring.stringify({
         username: "dhon2",
-        passwordhash: "hello"
+        passwordhash: "5d41402abc4b2a76b9719d911017c592"
       });
 
       var post_options = {
@@ -72,7 +72,7 @@ describe('User login', function() {
     it('Success should return false since user:dhon pass:wordpress does not exists in DB', function (done) {
       var user3 = querystring.stringify({
         username: "dhon3",
-        passwordhash: "wordpress"
+        passwordhash: "1870a829d9bc69abf500eca6f00241fe"
       });
 
       var post_options = {
