@@ -415,6 +415,7 @@ router.post('/', function(req, res) {
 				SEPTICID:"", 
 				PUMPINGDATE:"", 
 				QUANTITYPUMPED:"", 
+				COMPONENT:"",
 				SYSTEMQUALITYOTHER:"", 
 				EFFLUENTTEEFILTERPRESENT:"", 
 				IFYESWASITCLEANED:"", 
