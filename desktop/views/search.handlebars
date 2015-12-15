@@ -25,13 +25,13 @@
 		.tabInner {
 			clear: both;
 			border: 1px solid #aaa;
-			height: 750px;
+			height: 800px;
 			overflow: hidden;
 			background: #eee;
 		}
 
 		.tabInner div {
-			height: 750px;
+			height: 800px;
 			padding: 50px;
 		}
 		
@@ -145,6 +145,13 @@
             
 			<div id="water_wells">
                 <form method="post" id="wellForm">
+					Street Address: <input type="text" name="wellLocation" placeholder="e.g. 5 A Street">
+					Town:  <select name="restaurantTown">
+						<option value="">Select</option>
+						<option value="sunderland">Sunderland</option>
+						<option value="leverett">Leverett</option>
+					</select><br>
+					
 					Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
 					Owner's Telephone Number: <input type="text" name="ownerNumber" placeholder="e.g. 403-416-5987"><br>
 					Collected By: <input type="text" name="collectorName" placeholder="e.g. Sam Smith"><br>
