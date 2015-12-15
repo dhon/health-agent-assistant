@@ -78,6 +78,8 @@
     {{!-- THIS WILL NEED TO BE REDONE USING THE TABLE IN db/users.js --}}
     {{!-- STRAIGHT FROM DATABASE - USER ATTRIBUTES? --}}
     {{!-- properties_array["USER"] = "CREATE TABLE USER( ID INTEGER PRIMARY KEY NOT NULL, USERNAME TEXT NOT NULL, PASSWORDHASH NOT NULL, FOREIGN KEY(ID) references SAVEDSEARCHES(USERID), FOREIGN KEY(ID) references PRIVILEGES(USERID) )"; --}}
+
+    {{!-- We'll need to do account actions somewhere else. --}}
     <table id="usertable" class="display" cellspacing="0" width="100%">
       <thead>
         <tr>
@@ -86,7 +88,6 @@
           <th>Password Hash</th> {{!-- THIS COULD BE REMOVED --}}
           <th>Saved Searches</th> {{!-- THIS COULD BE REMOVED --}}
           <th>Privileges</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -96,7 +97,6 @@
           <td>dbasdjdah</td>
           <td>63</td>
           <td>73</td>
-          <td>actions</td>
         </tr>
         <tr>
           <td>2</td>
@@ -104,7 +104,6 @@
           <td>jfabobe</td>
           <td>24</td>
           <td>6</td>
-          <td>actions</td>
         </tr>
         <tr>
           <td>3</td>
@@ -112,7 +111,6 @@
           <td>aonadjd</td>
           <td>257</td>
           <td>27</td>
-          <td>actions</td>
         </tr>
       </tbody>
     </table>
