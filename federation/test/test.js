@@ -7,11 +7,11 @@ var http = require('http');
 var querystring = require('querystring');
 
 describe('User login', function() {
-  describe('#userCreation()', function (done) {
-    it('Success should return true if account was successfully created', function () {
+  describe('#userCreation()', function () {
+    it('Success should return true if account was successfully created', function (done) {
       var user1 = querystring.stringify({
-        username: "abc",
-        passwordhash: "abc"
+        username: "dhon2",
+        passwordhash: "hello"
       });
 
       var post_options = {
@@ -24,14 +24,12 @@ describe('User login', function() {
             'Content-Length': Buffer.byteLength(user1)
         }
       };
-
       var post_req = http.request(post_options, function(res) {
         res.setEncoding('utf8');
         res.on('data', function (data) {
         var jsonResponse = JSON.parse(data);
-         assert.equal(jsonResponse.success,true);
-         console.log(jsonResponse);
-          done();
+        assert.equal(jsonResponse.success, true);
+        done();
         });
       });
 
@@ -56,12 +54,13 @@ describe('User login', function() {
             'Content-Length': Buffer.byteLength(user2)
         }
       };
+
       var post_req = http.request(post_options, function(res) {
         res.setEncoding('utf8');
         res.on('data', function (data) {
         var jsonResponse = JSON.parse(data);
-         assert.equal(jsonResponse.success,true);
-          done();
+        assert.equal(jsonResponse.success,true);
+        done();
         });
       });
 
@@ -122,7 +121,6 @@ describe('User login', function() {
         res.on('data', function (data) {
          var jsonResponse = JSON.parse(data);
           assert.equal(jsonResponse.success,false);
-          console.log("NO SYNCH BUG!!!!!!!!");
            done();
         });
       });

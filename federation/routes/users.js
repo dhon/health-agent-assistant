@@ -75,8 +75,8 @@ function isValidObject(user){
 router.post('/register', function(req, res, next) {
 	var user = req.body;
 	var b = req.body.passwordhash;
-    var hashed = crypto.createHash('md5').update(b).digest('hex');
-    if(hashed.length > 10)
+   var hashed = crypto.createHash('md5').update(b).digest('hex');
+   if(hashed.length > 10)
         hashed = hashed.substring(0, 10);
     user.passwordhash = hashed;
     console.log(user.passwordhash);
