@@ -1,96 +1,62 @@
-<html>
-<head>
-	<title>Search Results</title>
-</head>
-<body>
-	<style>
-		.results
-		{
-			border-radius: 10px;
-			border: 1px solid #aaa;
-			padding: 10px;
-			overflow: hidden;
-			background: #eee;
-		}
-		.restaurant
-		{
-			border-radius: 10px;
-			border: 1px solid #aaa;
-			background: #eee;
-			padding: 10px;
-		}
-		.inspection
-		{
-			border-radius: 10px;
-			border: 1px solid #aaa;
-			background: #ccc;
-			padding-top: 5px;
-			padding-bottom: 5px;
-		}
-		.violation
-		{
-			border-radius: 10px;
-			border: 1px solid #aaa;
-			background: #bbb;
-			padding-top: 5px;
-			padding-bottom: 5px;
-		}
-	</style>
-	<ul class="results">
-		Search Results
-		{{#each restaurant}}
-		<li class="restaurant"><span>{{this.NAME}}</span>
-			<ul>
-				<!-- General restaurant information goes here -->
-				<div>{{this.property.ADDRESS}}</div>
-				<u>Inspections</u>
-				{{#if this.inspection}}
+<h1>Search Results</h1>
+
+<div class="container">
+	{{#each restaurant}}
+	<div class="collapsible">{{this.NAME}}
+		<div>
+			<!-- General restaurant information goes here -->
+			<div>{{this.property.ADDRESS}}</div>
+			<u>Inspections</u>
+			{{#if this.inspection}}
 				{{#each this.inspection}}
-					<li class="inspection"><span>{{this.date}}</span>
-					<ul>
+					<div class="collapsible">{{this.date}}
+					<div>
 						<!-- General inspection information goes here -->
 						<u>Violations</u>
 						{{#if this.violation}}
-						{{#each this.violation}}
-							<li class="violation"><span>{{this.CODEREFERENCE}}: {{this.DESCRIPTIONOFVIOLATIONCORRECTIONPLAN}}</span></li>
-						{{/each}}
+							{{#each this.violation}}
+								<div class="collapsible">{{this.CODEREFERENCE}}: {{this.DESCRIPTIONOFVIOLATIONCORRECTIONPLAN}}</div>
+							{{/each}}
 						{{else}}
-							<li class ="violation"><span>No violations.</span></li>
+							<div class ="collapsible">No violations.</div>
 						{{/if}}
-					</ul>
+					</div>
 					
-					</li>
+					</div>
 				{{/each}}
-				{{else}}
-					<li class="inspections"><span>No inspections found.</span></li>
-				{{/if}}
-			</ul>
-			
-		</li>
-		{{/each}}
-	</ul>
-</body>
+			{{else}}
+				<div class="collapsible">No inspections found.</div>
+			{{/if}}
+		</div>
+	</div>
+	{{/each}}
+</div>
+
+<style>
+    h1{
+        text-align: center;
+    }
+	.container{
+        width: 800px;
+        margin: 0 auto;
+    }
+	.collapsible{
+        padding:10px;
+        margin:10px 0;
+        border:2px solid white;
+		background: #ededed;
+    }
+</style>
 
 <script type="text/javascript">
 
+	$(document).ready(function(){
+		$(".collapsible").click(function(e){ 
+			e.stopPropagation();
+			console.log("click");
+			$(this).find(".collapsible").toggle();
+		});
+	});
 
-// http://www.justexample.com/wp/expand-and-collapse-html-list/
-var allSpan = document.getElementsByTagName('span');
-for(var i = 0; i < allSpan.length; i++){
-	allSpan[i].onclick=function(){
-		if(this.parentNode){
-			var childList = this.parentNode.getElementsByTagName('ul');
-			for(var j = 0; j< childList.length;j++){
-				var currentState = childList[j].style.display;
-				if(currentState=="none"){
-					childList[j].style.display="block";
-				}else{
-					childList[j].style.display="none";
-				}
-			}
-		}
-	}
-}
 </script>
-</html>
 

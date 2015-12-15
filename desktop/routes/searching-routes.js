@@ -1072,25 +1072,28 @@ function queryDatabase(query)
 		console.log();
 		xmlHttp.send( query[attribute] );
 		
-		var data = JSON.parse(xmlHttp.responseText);
-		
-		console.log("Starting returned data");
-		console.log(data);
-		console.log("Ending Returned data");
-		console.log(data.success);
-		console.log();
-		
-		if(data.success){
-			if(data.rows == undefined){
-				data.rows = [];
+		if(xmlHttp.responseText)
+		{
+			var data = JSON.parse(xmlHttp.responseText);
+			
+			console.log("Starting returned data");
+			console.log(data);
+			console.log("Ending Returned data");
+			console.log(data.success);
+			console.log();
+			
+			if(data.success){
+				if(data.rows == undefined){
+					data.rows = [];
+				}
+				DBResults[attribute] = data.rows;
 			}
-			DBResults[attribute] = data.rows;
+			else{
+				console.log("Error getting information from DB");
+			}
+			console.log();
+			console.log();
 		}
-		else{
-			console.log("Error getting information from DB");
-		}
-		console.log();
-		console.log();
 	}
 	
 	return DBResults;

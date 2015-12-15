@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 
 // Example post
-router.post('/post', (req, res) => {console.log("posted");});
+router.post('/post', function(req, res) {console.log("posted");});
 
 router.get('/', function(req, res) {
 	console.log("routed");
