@@ -68,6 +68,7 @@ router.post('/', function(req, res) {
 			violation:""
 		};
 		
+		//Restuarant Info query
 		var restaurantInfo = {};
 		if(data.restName!=undefined){
 			restaurantInfo.name = data.restName;
@@ -80,7 +81,7 @@ router.post('/', function(req, res) {
 		
 		
 		
-		
+		//Property Info query
 		var propertyInfo = {};
 		if(data.restLocation != undefined){
 			propertyInfo.address = data.restLocation;
@@ -98,7 +99,7 @@ router.post('/', function(req, res) {
 		}
 		query.property = JSON.stringify(propertyInfo);
 		
-		
+		//Owner Info query
 		var ownerInfo = {};
 		if(data.ownerName!= undefined){
 			ownerInfo.ownername = data.ownerName;
@@ -112,7 +113,7 @@ router.post('/', function(req, res) {
 		ownerInfo.type = "owner";
 		query.owner = JSON.stringify(ownerInfo);
 		
-		
+		//Inspection info query
 		var inspectionInfo = {};
 		if(data.inspectorname != undefined){
 			inspectionInfo.inspector = data.inspectorname;
