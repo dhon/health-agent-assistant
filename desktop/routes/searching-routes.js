@@ -1,6 +1,7 @@
 var express = require('express');
 var querystring = require('querystring');
 var http = require('http');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 // This creates an express "router" that allows us to separate
 // particular routes from the main application.
@@ -10,10 +11,10 @@ var router = express.Router();
 router.post('/', function(req, res) {
 	var data = req.body; //Data takes type of json object
 	
-	for(var attribute in data){
-		console.log(attribute+": "+data[attribute]);
-	}
-	console.log();
+	// for(var attribute in data){
+		// console.log(attribute+": "+data[attribute]);
+	// }
+	// console.log();
 	
 	var searchTypes = {restaurant:0, septic:1, well:2};
 	var searchType = -1;
@@ -40,10 +41,7 @@ router.post('/', function(req, res) {
 		}
 	}
 	
-	for(var attribute in data){
-		console.log(attribute+": "+data[attribute]);
-	}
-	console.log();
+	
 	var results;
 	//TODO: Validate attributes? May be someone else's job
 	
@@ -75,106 +73,154 @@ router.post('/', function(req, res) {
 		var restaurantInfo = {};
 		if(data.restName!=undefined){
 			restaurantInfo.name = data.restName;
-		}
-		
-		query.restaurant = querystring.stringify(restaurantInfo);
-		
-		if(query.restaurant != ""){
 			queryBy.restaurant = true;
 		}
+		
+		restaurantInfo.location = ["Leverett", "Sunderland"];
+		restaurantInfo.type = "restaurant";
+		query.restaurant = JSON.stringify(restaurantInfo);
+		
+		
 		
 		
 		var propertyInfo = {};
 		if(data.restLocation != undefined){
 			propertyInfo.address = data.restLocation;
+			queryBy.property = true;
 		}
 		if(data.restLocation != undefined){
 			propertyInfo.town = data.restaurantTown;
-		}
-		query.property = querystring.stringify(propertyInfo);
-		if(query.property != ""){
+			propertyInfo.location = [data.restaurantTown];
 			queryBy.property = true;
 		}
+		
+		propertyInfo.type = "property";
+		propertyInfo.location = ["Leverett", "Sunderland"];
+		query.property = JSON.stringify(propertyInfo);
 		
 		
 		var ownerInfo = {};
 		if(data.ownerName!= undefined){
 			ownerInfo.ownername = data.ownerName;
+			queryBy.owner = true;
 		}
 		if(data.ownerNumber != undefined){
 			ownerInfo.telephonenumber = data.ownerNumber
-		}
-		query.owner = querystring.stringify(ownerInfo);
-		if(query.owner != ""){
 			queryBy.owner = true;
 		}
+		ownerInfo.location = ["Leverett", "Sunderland"];
+		ownerInfo.type = "owner";
+		query.owner = JSON.stringify(ownerInfo);
+		
 		
 		var inspectionInfo = {};
 		if(data.inspectorname != undefined){
 			inspectionInfo.inspector = data.inspectorname;
+			queryBy.inspection = true;
 		}
 		if(data.time_in != undefined){
 			inspectionInfo.timein=data.time_in;
+			queryBy.inspection = true;
 		}
 		if(data.time_out != undefined){
 			inspectionInfo.timeout=data.time_out;
+			queryBy.inspection = true;
 		}
 		if(data.HACCP != undefined){
 			inspectionInfo.haccp=data.HACCP;
+			queryBy.inspection = true;
 		}
 		if(data.operation != undefined){
 			inspectionInfo.typeofoperation= data.operation;
+			queryBy.inspection = true;
 		}
 		if(data.inspection != undefined){
 			inspectionInfo.typeofinspection = data.inspection;
+			queryBy.inspection = true;
 		}
 		if(data.correctiveAcction != undefined){
 			inspectionInfo.correctiveactionrequired = data.correctiveAction;
+			queryBy.inspection = true;
 		}
 		if(data.voluntaryCompliance != undefined){
 			inspectionInfo.voluntaryCompliance = data.voluntaryCompliance;
+			queryBy.inspection = true;
 		}
 		if(data.reinspectionScheduled != undefined){
 			inspectionInfo.reinspectionScheduled = data.reinspectionScheduled;
+			queryBy.inspection = true;
 		}
 		if(data.voluntaryDisposal != undefined){
 			inspectionInfo.voluntaryDisposal = data.voluntaryDisposal;
+			queryBy.inspection = true;
 		}
 		if(data.employeeRestriction != undefined){
 			inspectionInfo.employeeRestrictionExclusion = data.employeeRestriction;
+			queryBy.inspection = true;
 		}
 		if(data.emergencySuspension != undefined){
 			inspectionInfo.emergencySuspension = data.emergencySuspension;
+			queryBy.inspection = true;
 		}
 		if(data.emergencyClosure != undefined){
 			inspectionInfo.emergecyClosure = data.emergencyClosure;
-		}
-			
-		query.inspection = querystring.stringify(inspectionInfo);
-		if(query.inspection != ""){
 			queryBy.inspection = true;
 		}
+		
+		inspectionInfo.location = ["Leverett", "Sunderland"];
+		inspectionInfo.type = "restaurant inspection";
+		query.inspection = JSON.stringify(inspectionInfo);
+		
 		
 		//TODO: need to parse the codeviolation incase there are multiple codes seperated by spaces or commas
 		var violationInfo = {};
 		if(data.codeviolation!= undefined){
 			violationInfo.codeReference = data.codeviolation;
+			queryBy.violation = true;
 		}
-		query.violation = querystring.stringify(violationInfo);
-		if(query.violation != ""){
-			queryBy.violation = false
-		}
+		
+		violationInfo.location = ["Leverett", "Sunderland"];
+		violationInfo.type = "violation";
+		query.violation = JSON.stringify(violationInfo);
+		
 		
 		//TODO: use attributes to query database and get relevant results
 		
 		var DBResults;
 		
 		
+		
+		for(var attribute in query)
+		{
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( "POST", 'http://localhost:3000/api/get', false ); // false for synchronous request
+			xmlHttp.setRequestHeader('Content-Type', 'application/json');
+			console.log("Sending query:"+query[attribute]);
+			console.log();
+			xmlHttp.send( query[attribute] );
+			
+			console.log("Starting returned data");
+			console.log(xmlHttp.responseText);
+			console.log("Ending Returned data");
+			console.log();
+			
+			if(xmlHttp.responseText.success){
+				DBResults[attribute] = xmlHttp.resonseText.rows;
+			}
+			else{
+				console.log("Error getting information from DB");
+			}
+			console.log();
+			console.log();
+		}
+		
+		
+		
 		// var post_options = {
 			// host: 'localhost',
 			// port: '3000',
 			// path: '/api/get',
-			// method: 'GET',
+			// method: 'POST',
 			// headers: {
 				// 'Content-Type': 'application/x-www-form-urlencoded',
 				// 'Content-Length': Buffer.byteLength(query.property)
@@ -184,12 +230,18 @@ router.post('/', function(req, res) {
 		// var post_req = http.request(post_options, function(res) {
 			// res.setEncoding('utf8');
 			// res.on('data', function (jsonResponse) {
-				// assert.equal(jsonResponse.success,true);
-				// done();
+				
+				
+				// console.log("Starting returned data");
+				// console.log(jsonResponse);
+				
+				// console.log("Ending Returned data");
+				
+				// // done();
 			// });
 		// });
-
-		// post_req.write(user1);
+		// console.log(query.property);
+		// post_req.write(query.property);
 		// post_req.end();
 		
 		
@@ -243,8 +295,7 @@ router.post('/', function(req, res) {
 				OTHER1:"",
 				ADDITIONALNOTES:""}
 				],
-			violation:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"123", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"Here is some text", DATEVERIFIED:""}
-				],
+			violation:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"123", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"Here is some text", DATEVERIFIED:""}],
 			owner:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
 			property:[{ID:"0", GPSCOORDINATES:"", ADDRESS:"1234 1st Street", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""}],
 			typeOfOperations:[{ID:"0", OPERATIONTYPE:""}],
@@ -338,7 +389,6 @@ router.post('/', function(req, res) {
 				}
 				
 				if(!queryBy.violation || inspection.violation.length != 0){
-					console.log("Inspection pushed");
 					restaurant.inspection.push(inspection);
 				}
 				
