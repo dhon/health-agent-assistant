@@ -6,12 +6,10 @@ exports.registerNewUser = function(user, callback) {
 	var result = {};
 	user.location = ['Sunderland', 'Leverett'];
 	user.type = 'USER';
-	//TODO: Fix privilege level
-	// user.privilegeLevel = 1;
+	//TODO: Add privilege level
 	var query = sqlQuery.writeSQLAdd(user);
 	db.run(user.location, query, function(err) {
-		if (err) {
-			//TODO: return only the error message, not the object
+		if (err.length > 0) {
 			console.log(err);
 			result.error = err;
 			result.success = false;
@@ -30,7 +28,7 @@ exports.editPassword = function(user, callback){
 	var query = sqlQuery.writeSQLEdit(user);
 
 	db.run(user.location, query, function(err) {
-		if (err) {
+		if (err.length > 0) {
 			result.error = err;
 			result.success = false;
 		}
@@ -47,10 +45,10 @@ exports.loginUser = function(user, callback){
 	user.type = 'User';
 	var query = sqlQuery.writeSQLGet(user);
 	var result = {};
-	console.log("exports.longUser");
+//	console.log("exports.longUser");
 	db.get(user.location, query, function(err, row) {
-	    console.log("db callback", row);
-		if (err) {
+//	  console.log("db callback", row);
+		if (err.length > 0) {
 			result.error = err;
 			result.success = false;
 		}
@@ -66,6 +64,9 @@ exports.loginUser = function(user, callback){
 	});
 }
 
+//NOTE: Saved Searches are not currently present in the database
+//	None of the following API calls are functional
+
 exports.addSearch = function(user, callback){
 	user.location = ['Sunderland', 'Leverett'];
 	//TODO: Ensure correct query generation, etc. for Multi-Word tables
@@ -73,7 +74,7 @@ exports.addSearch = function(user, callback){
 	var query = sqlQuery.writeSQLAdd(user);
 
 	db.run(user.location, query, function(err) {
-		if (err) {
+		if (err.length > 0) {
 			result.error = err;
 			result.success = false;
 		}
@@ -91,7 +92,7 @@ exports.removeSearch = function(user, callback){
 	var query = sqlQuery.writeSQLRemove(user);
 
 	db.get(user.location, query, function(err, row) {
-		if (err) {
+		if (err.length > 0) {
 			result.error = err;
 			result.success = false;
 		}
@@ -109,7 +110,7 @@ exports.getSearches = function(user, callback){
 	var query = sqlQuery.writeSQLGet(user);
 
 	db.all(user.location, query, function(err, rows) {
-		if (err) {
+		if (err.length > 0) {
 			result.error = err;
 			result.success = false;
 		}

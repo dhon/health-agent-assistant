@@ -180,7 +180,7 @@ router.post('/', function(req, res) {
 		}
 		
 		violationInfo.location = ["Leverett", "Sunderland"];
-		violationInfo.type = "violation";
+		violationInfo.type = "violations";
 		query.violation = JSON.stringify(violationInfo);
 		
 		
@@ -415,6 +415,7 @@ router.post('/', function(req, res) {
 				SEPTICID:"", 
 				PUMPINGDATE:"", 
 				QUANTITYPUMPED:"", 
+				COMPONENT:"",
 				SYSTEMQUALITYOTHER:"", 
 				EFFLUENTTEEFILTERPRESENT:"", 
 				IFYESWASITCLEANED:"", 
