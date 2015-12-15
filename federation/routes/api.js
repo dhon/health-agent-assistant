@@ -30,7 +30,7 @@ router.post('/add', function(req, res, next) {
 	//TODO: Check permissions
 	var query = sqlQuery.writeSQLAdd(req.body);
 	db.run(req.body.location, query, function(err, lastId) {
-		if (err.length == 0) {
+		if (err.length > 0) {
 			res.json({'success': false, 'error': err});
 		}
 		else {
@@ -50,7 +50,7 @@ router.post('/edit', function(req, res, next) {
 
 	var query = sqlQuery.writeSQLEdit(req.body);
 	db.run(req.body.location, query, function(err) {
-		if (err.length == 0) {
+		if (err.length > 0) {
 			res.json({'success': false, 'error': err});
 		}
 		else {
@@ -70,7 +70,7 @@ router.post('/remove', function(req, res, next) {
 
 	var query = sqlQuery.writeSQLRemove(req.body);
 	db.run(req.body.location, query, function(err) {
-		if (err.length == 0) {
+		if (err.length > 0) {
 			res.json({'success': false, 'error': err});
 		}
 		else {
@@ -93,7 +93,7 @@ router.post('/get', function(req, res, next) {
 	var query = sqlQuery.writeSQLGet(req.body);
 	db.all(req.body.location, query, function(err, rows) {
 		console.log("Got callback");
-		if (err.length == 0) {
+		if (err.length > 0) {
 			res.json({'success': false, 'error': err});
 		}
 		else {
