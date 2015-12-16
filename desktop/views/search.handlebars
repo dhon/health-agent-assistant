@@ -1,192 +1,208 @@
-<head>
-	<title>Tabs are fun</title>
-	
-	
-	<style>
-		
-		.tabs ul {
-			list-style: none;
-		}
+<h1>Search</h1>
 
-		.tabs ul li {
-			float: left;
-			background: #eee;
-			border: 1px #aaa solid;
-			border-bottom: none;
-			margin-right: 10px;
-			padding: 5px; 
-		}
-
-		.tabs ul li.active {
-			margin-bottom: -1px;
-			padding-bottom: 5px; 
-		}
-
-		.tabInner {
-			clear: both;
-			border: 1px solid #aaa;
-			height: 800px;
-			overflow: hidden;
-			background: #eee;
-		}
-
-		.tabInner div {
-			height: 800px;
-			padding: 50px;
-		}
-		
-	</style>
-
-	
-</head>
-
-<body>
-    <div class="tabs">
-	
-		<nav>
-			<ul>
-				<li><a href="#restaurants">Restaurants</a></li>
-				<li class="active"><a href="#septic_tanks">Septic Tanks</a></li>
-				<li><a href="#water_wells">Water Wells</a></li>
-			</ul>
-		</nav>
-		
-        <div class="tabInner">
-           
-		   <div id="restaurants">
-				<form method="post" id="restForm">
-					Restaurant Name: <input type="text" name="restName" placeholder="Restaurant Name"><br>
-					Street Address: <input type="text" name="restLocation" placeholder="e.g. 5 A Street">
-					Town:  <select name="restaurantTown">
-						<option value="">Select</option>
-						<option value="sunderland">Sunderland</option>
-						<option value="leverett">Leverett</option>
-					</select><br>
-					Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
-					Owner's Telephone Number: <input type="text" name="ownerNumber" placeholder="e.g. 403-416-5987"><br>
-					
-					Inspection Range: <input type="date" name="restDateAfter" placeholder="DD/MM/YY"> - <input type="date" name="restDateBefore" placeholder="DD/MM/YY"><br>
-					Inspector Name: <input type="text" name="inspectorName" placeholder="e.g. Sam Smith"><br>
-					HACCP: <input type="number" name="HACCP" min="0"><br>
-					Time In:  <input type="text" name="time_in"> <br>
-					Time Out: <input type="text" name="time_out"> <br>
-					Type of Operation: <select name="operation">
-						<option value="">Select</option>
-						<option value="1">Food Service</option>
-						<option value="2">Retail</option>
-						<option value="3">Residential Kitchen</option>
-						<option value="4">Mobile</option>
-						<option value="5">Temporary</option>
-						<option value="6">Caterer</option>
-						<option value="7">Bed & Breakfast</option>
-					</select><br>
-					Type of Inspection: <select name="inspection">
-						<option value="">Select</option>
-						<option value="1">Routine</option>
-						<option value="2">Re-inspection</option>
-					</select><br>
-					Corrective Action Required?  Yes <input type="radio" name="correctiveAction" value=1>
-					No<input type="radio" name="correctiveAction" value=0><br>
-					Voluntary Compliance?  Yes<input type="radio" name="voluntaryCompliance" value=1>
-					No<input type="radio" name="voluntaryCompliance" value=0><br>
-					Reinspection Scheduled?  Yes<input type="radio" name="needReinspection" value=1>
-					No<input type="radio" name="needReinspection" value=0><br>
-					Voluntary Disposal?  Yes<input type="radio" name="voluntaryDisposal" value=1>
-					No<input type="radio" name="voluntaryDisposal" value=0><br>
-					Employee Restriction Exclusion?  Yes<input type="radio" name="employeeRestriction" value=1>
-					No<input type="radio" name="employeeRestriction" value=0><br>
-					Emergency Suspension?  Yes<input type="radio" name="emergencySuspension" value=1>
-					No<input type="radio" name="emergencySuspension" value=0><br>
-					Emergency Closure?  Yes<input type="radio" name="emergencyClosure" value=1>
-					No<input type="radio" name="emergencyClosure" value=0><br>
-					Number of Violations: <input type="number" name="numViolations" min="0"><br>
-					Violation Codes: <input type="text" name="codeViolations" placeholder="Ex. Violation Codes"><br>
-					Keywords: <input type="text" name="restKeyword" placeholder="Keywords"><br>
-					<button type="button">Save</button>
-					<input type="Submit" value="Search" Width="90px">
-					<input type="reset" value="Reset"><br>
-				</form>
-            </div>
-            
-			<div id="septic_tanks" id="septicForm">
-				<form method="post">
-					
-					Location: <input type="text" name="tankLocation" placeholder="Address">
-					Town:  <select name="septicTown">
-						<option value="">Select</option>
-						<option value="sunderland">Sunderland</option>
-						<option value="leverett">Leverett</option>
-					</select><br>
-					Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
-					Option: <input type="text" name="option" placeholder="Option"><br> 
-					Pumping Date: <input type="date" name="pumpingDate"><br>
-					Range of Quantity Pumped: <input type="number" name="lowBoundQuantityPumped" min="0">
-					 - <input type="number" name="upBoundQuantityPumped" min="0"><br>
-					
-					System Quality Other: <input type="text" name="systemQuality" placeholder="System Quality"><br>
-					Effluent Tee Filter Present: Yes<input type="radio" name="effluentTeeFilter" value=1>
-					No<input type="radio" name="effluentTeeFilter" value=0><br>
-					Was it cleaned: Yes<input type="radio" name="isCleaned" value=1>
-					No<input type="radio" name="isCleaned" value=0><br>
-					Observe Condition Keywords: <input type="text" name="conditionKeyword" placeholder="Keywords"><br>
-					System Pumped by Name: <input type="text" name="systemPmpByName" placeholder=""><br>
-					System Pumped by License: <input type="text" name="systemPmpByLic" placeholder=""><br>
-					System Pumped by Company: <input type="text" name="systemPmpByCompany" placeholder=""><br>
-					Location Where Contents Were Disposed: <input type="text" name="disposalLocation" placeholder="Location of Disposal"><br>
-					Hauler: <input type="text" name="hauler"><br>
-					Hauler Date; <input type="date" name="haulerDate"><br> 
-					Receiving Facility: <input type="text" name="receivingFacility"><br>
-					Receiving Facility Date; <input type="date" name="receivingFacilityDate"><br>
-					<button type="button">Save</button>
-					<input type="Submit" value="Search" Width="90px">
-					<input type="reset" value="Reset"><br>
-				</form>
-			</div>
-            
-			<div id="water_wells">
-                <form method="post" id="wellForm">
-					Street Address: <input type="text" name="wellLocation" placeholder="e.g. 5 A Street">
-					Town:  <select name="wellTown">
-						<option value="">Select</option>
-						<option value="sunderland">Sunderland</option>
-						<option value="leverett">Leverett</option>
-					</select><br>
-					
-					Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
-					Owner's Telephone Number: <input type="text" name="ownerNumber" placeholder="e.g. 403-416-5987"><br>
-					Collected By: <input type="text" name="collectorName" placeholder="e.g. Sam Smith"><br>
-					Project Name: <input type="text" name="projectName" placeholder="Project Name"><br>
-					Project Number: <input type="number" name="projectNumber"><br>
-					Date Collected: <input type="date" name="dateCollected" placeholder="MM/DD/YY"><br>
-					Sample Identification: <input type="text" name="sampleID" placeholder="Sample ID"><br>
-					Lab Number: <input type="number" name="labNumber"><br>
-					Total Coliform Bacteria: <input type="number" name="amtColiformBac"><br>
-					Total Coliform Bacteria Units: <input type="text" name="unitColiformBac" placeholder="Units"><br>
-					Nitrate/Nitrogen Level: <input type="number" name="amtNitrogen"><br>
-					Nitrate/Nitrogen Level Units: <input type="text" name="unitNitrogen" placeholder="Units"><br>
-					pH Level: <input type="number" name="pHLevel"><br>
-					pH Units: <input type="text" name="unitpH" placeholder="Units"><br>
-					Iron Level: <input type="number" name="amtIron"><br>
-					Iron Level Units: <input type="text" name="unitIron" placeholder="Units"><br>
-					Hardness Level: <input type="number" name="hardnessLevel"><br>
-					Hardness Level Units: <input type="text" name="unitHardness" placeholder="Units"><br>
-					Sulfate/Sulfur Level: <input type="number" name="amtSulfur"><br>
-					Sulfate/Sulfur Level Units: <input type="text" name="unitSulfur" placeholder="Units"><br>
-					Chloride Level: <input type="number" name="amtChloride"><br>
-					Specific Conductance Level: <input type="number" name="amtConductance"><br>
-					Specific Conductance Level Units: <input type="text" name="unitConductance" placeholder="Units"><br>
-					Water Sample Passing Water Standard?  Yes<input type="radio" name="effluentTeeFilter" value=1>
-					No<input type="radio" name="effluentTeeFilter" value=0><br>
-					Submitted By: <input type="text" name="testerName" placeholder="e.g. Sam Smith"><br>
-					Additional Note: <input type="text" name="additionalNote" placeholder="Additional Note"><br>
-					
-					<button type="button">Save</button>
-					<input type="Submit" value="Search" Width="90px">
-					<input type="reset" value="Reset"><br>
-				</form>
-			</div>
+<div class="container">
+	<nav>
+	<ul class="tabs">
+		<li class="restaurantTab current" data-tab="tab-1">Restaurants</li>
+		<li class="septicTab" data-tab="tab-2">Septic Tanks</li>
+		<li class="wellTab" data-tab="tab-3">Water Wells</li>
+	</ul>
+	</nav>
+	<div id="tab-1" class="tab-content current">
+		<form method="post" id="restForm">
+			Restaurant Name: <input type="text" name="restName" placeholder="Restaurant Name"><br>
+			Street Address: <input type="text" name="restLocation" placeholder="e.g. 5 A Street">
+			Town:  <select name="restaurantTown">
+				<option value="">Select</option>
+				<option value="sunderland">Sunderland</option>
+				<option value="leverett">Leverett</option>
+			</select><br>
+			Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
+			Owner's Telephone Number: <input type="text" name="ownerNumber" placeholder="e.g. 403-416-5987"><br>
 			
+			Inspection Range: <input type="date" name="restDateAfter" placeholder="DD/MM/YY"> - <input type="date" name="restDateBefore" placeholder="DD/MM/YY"><br>
+			Inspector Name: <input type="text" name="inspectorName" placeholder="e.g. Sam Smith"><br>
+			HACCP: <input type="number" name="HACCP" min="0"><br>
+			Time In:  <input type="text" name="time_in"> <br>
+			Time Out: <input type="text" name="time_out"> <br>
+			Type of Operation: <select name="operation">
+				<option value="">Select</option>
+				<option value="1">Food Service</option>
+				<option value="2">Retail</option>
+				<option value="3">Residential Kitchen</option>
+				<option value="4">Mobile</option>
+				<option value="5">Temporary</option>
+				<option value="6">Caterer</option>
+				<option value="7">Bed & Breakfast</option>
+			</select><br>
+			Type of Inspection: <select name="inspection">
+				<option value="">Select</option>
+				<option value="1">Routine</option>
+				<option value="2">Re-inspection</option>
+			</select><br>
+			Corrective Action Required?  Yes <input type="radio" name="correctiveAction" value=1>
+			No<input type="radio" name="correctiveAction" value=0><br>
+			Voluntary Compliance?  Yes<input type="radio" name="voluntaryCompliance" value=1>
+			No<input type="radio" name="voluntaryCompliance" value=0><br>
+			Reinspection Scheduled?  Yes<input type="radio" name="needReinspection" value=1>
+			No<input type="radio" name="needReinspection" value=0><br>
+			Voluntary Disposal?  Yes<input type="radio" name="voluntaryDisposal" value=1>
+			No<input type="radio" name="voluntaryDisposal" value=0><br>
+			Employee Restriction Exclusion?  Yes<input type="radio" name="employeeRestriction" value=1>
+			No<input type="radio" name="employeeRestriction" value=0><br>
+			Emergency Suspension?  Yes<input type="radio" name="emergencySuspension" value=1>
+			No<input type="radio" name="emergencySuspension" value=0><br>
+			Emergency Closure?  Yes<input type="radio" name="emergencyClosure" value=1>
+			No<input type="radio" name="emergencyClosure" value=0><br>
+			Number of Violations: <input type="number" name="numViolations" min="0"><br>
+			Violation Codes: <input type="text" name="codeViolations" placeholder="Ex. Violation Codes"><br>
+			Keywords: <input type="text" name="restKeyword" placeholder="Keywords"><br>
+			<button type="button">Save</button>
+			<input type="Submit" value="Search" Width="90px">
+			<input type="reset" value="Reset"><br>
+		</form>
+	</div>
+
+	<div id="tab-2" class="tab-content">
+		<form method="post">
 			
-		</div>
-    </div>
-</body>
+			Location: <input type="text" name="tankLocation" placeholder="Address">
+			Town:  <select name="septicTown">
+				<option value="">Select</option>
+				<option value="sunderland">Sunderland</option>
+				<option value="leverett">Leverett</option>
+			</select><br>
+			Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
+			Option: <input type="text" name="option" placeholder="Option"><br> 
+			Pumping Date: <input type="date" name="pumpingDate"><br>
+			Range of Quantity Pumped: <input type="number" name="lowBoundQuantityPumped" min="0">
+			 - <input type="number" name="upBoundQuantityPumped" min="0"><br>
+			
+			System Quality Other: <input type="text" name="systemQuality" placeholder="System Quality"><br>
+			Effluent Tee Filter Present: Yes<input type="radio" name="effluentTeeFilter" value=1>
+			No<input type="radio" name="effluentTeeFilter" value=0><br>
+			Was it cleaned: Yes<input type="radio" name="isCleaned" value=1>
+			No<input type="radio" name="isCleaned" value=0><br>
+			Observe Condition Keywords: <input type="text" name="conditionKeyword" placeholder="Keywords"><br>
+			System Pumped by Name: <input type="text" name="systemPmpByName" placeholder=""><br>
+			System Pumped by License: <input type="text" name="systemPmpByLic" placeholder=""><br>
+			System Pumped by Company: <input type="text" name="systemPmpByCompany" placeholder=""><br>
+			Location Where Contents Were Disposed: <input type="text" name="disposalLocation" placeholder="Location of Disposal"><br>
+			Hauler: <input type="text" name="hauler"><br>
+			Hauler Date; <input type="date" name="haulerDate"><br> 
+			Receiving Facility: <input type="text" name="receivingFacility"><br>
+			Receiving Facility Date; <input type="date" name="receivingFacilityDate"><br>
+			<button type="button">Save</button>
+			<input type="Submit" value="Search" Width="90px">
+			<input type="reset" value="Reset"><br>
+		</form>
+	</div>
+
+	<div id="tab-3" class="tab-content">
+		<form method="post" id="wellForm">
+			Street Address: <input type="text" name="wellLocation" placeholder="e.g. 5 A Street">
+			Town:  <select name="wellTown">
+				<option value="">Select</option>
+				<option value="sunderland">Sunderland</option>
+				<option value="leverett">Leverett</option>
+			</select><br>
+			
+			Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
+			Owner's Telephone Number: <input type="text" name="ownerNumber" placeholder="e.g. 403-416-5987"><br>
+			Collected By: <input type="text" name="collectorName" placeholder="e.g. Sam Smith"><br>
+			Project Name: <input type="text" name="projectName" placeholder="Project Name"><br>
+			Project Number: <input type="number" name="projectNumber"><br>
+			Date Collected: <input type="date" name="dateCollected" placeholder="MM/DD/YY"><br>
+			Sample Identification: <input type="text" name="sampleID" placeholder="Sample ID"><br>
+			Lab Number: <input type="number" name="labNumber"><br>
+			Total Coliform Bacteria: <input type="number" name="amtColiformBac"><br>
+			Total Coliform Bacteria Units: <input type="text" name="unitColiformBac" placeholder="Units"><br>
+			Nitrate/Nitrogen Level: <input type="number" name="amtNitrogen"><br>
+			Nitrate/Nitrogen Level Units: <input type="text" name="unitNitrogen" placeholder="Units"><br>
+			pH Level: <input type="number" name="pHLevel"><br>
+			pH Units: <input type="text" name="unitpH" placeholder="Units"><br>
+			Iron Level: <input type="number" name="amtIron"><br>
+			Iron Level Units: <input type="text" name="unitIron" placeholder="Units"><br>
+			Hardness Level: <input type="number" name="hardnessLevel"><br>
+			Hardness Level Units: <input type="text" name="unitHardness" placeholder="Units"><br>
+			Sulfate/Sulfur Level: <input type="number" name="amtSulfur"><br>
+			Sulfate/Sulfur Level Units: <input type="text" name="unitSulfur" placeholder="Units"><br>
+			Chloride Level: <input type="number" name="amtChloride"><br>
+			Specific Conductance Level: <input type="number" name="amtConductance"><br>
+			Specific Conductance Level Units: <input type="text" name="unitConductance" placeholder="Units"><br>
+			Water Sample Passing Water Standard?  Yes<input type="radio" name="effluentTeeFilter" value=1>
+			No<input type="radio" name="effluentTeeFilter" value=0><br>
+			Submitted By: <input type="text" name="testerName" placeholder="e.g. Sam Smith"><br>
+			Additional Note: <input type="text" name="additionalNote" placeholder="Additional Note"><br>
+			
+			<button type="button">Save</button>
+			<input type="Submit" value="Search" Width="90px">
+			<input type="reset" value="Reset"><br>
+		</form>
+	</div>
+</div>
+	
+<style>
+	
+	h1{
+        text-align: center;
+    }
+	
+	.container{
+        width: 800px;
+        margin: 0 auto;
+    }
+	
+	ul.tabs{
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+    }
+	
+    ul.tabs li{
+        background: none;
+        color: #222;
+        display: inline-block;
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+
+    ul.tabs li.current{
+        background: #ededed;
+        color: #222;
+    }
+
+	
+	.tab-content{
+        display: none;
+        background: #ededed;
+        padding: 15px;
+    }
+
+    .tab-content.current{
+        display: inherit;
+    }
+	
+	form{
+        padding:10px;
+        margin:10px 0;
+        border:2px solid white;
+    }
+	
+</style>
+
+<script>
+    $(document).ready(function(){
+
+        $('ul.tabs li').click(function(){
+            var tab_id = $(this).attr('data-tab');
+
+            $('ul.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $("#"+tab_id).addClass('current');
+        });
+
+    });
+</script>

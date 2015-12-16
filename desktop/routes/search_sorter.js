@@ -55,7 +55,7 @@ function sort(data, sortBy, attributeType) {
 //TODO: check for multiple types
 function getType(data) {
 	if(data.restaurant != undefined) return "restaurant";
-	if(data.septic != undefined) return "septic";
+	if(data.septics != undefined) return "septic";
 	if(data.well != undefined) return "well";
 	else {
 		console.log("JSON " + JSON.stringify(data) + " does not have valid type");
