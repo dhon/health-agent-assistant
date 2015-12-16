@@ -18,31 +18,28 @@
 <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
 
 <style>
-ul {
+.navbar ul {
+	top: 0px;
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    border: 1px solid #ededed;
-}
-
-li {
-    float: left;
-    cursor: pointer;
-}
-
-li a {
-    display: block;
-    color: Black;
-    text-align: center;
-    padding: 14px 16px;
-}
-
-li a:hover:not(.active) {
     background-color: #ededed;
 }
 
-.active {
+.navbar li {
+    float: left;
+}
+
+.navbar li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar li a:hover:not(.active) {
     background-color: #ededed;
 }
 </style>
@@ -50,14 +47,7 @@ li a:hover:not(.active) {
 	</head>
 
 	<body>
-{{!--       <a href="/data">DataEntry</a>
-      <a href="/mapping">Mapping</a>
-      <a href="/searching">Searching</a>
-	  <a href="/admin">Admin</a>
-	  <a href="/profile">Profile</a>
-      {{{body}}} --}}
-
-
+	<div class="navbar">
 		<ul>
 		  <li><a href="/data">Data</a></li>
 		  <li><a href="/mapping">Mapping</a></li>
@@ -65,6 +55,7 @@ li a:hover:not(.active) {
 		  <li><a href="/admin">Admin</a></li>
 		  <li><a href="/profile">Profile</a></li>
 		</ul>
+	</div>
 		{{{body}}}
 	</body>
 </html>
