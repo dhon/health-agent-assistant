@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 
 // Example post
-router.post('/post', (req, res) => {console.log("posted");});
+router.post('/post', function(req, res) {console.log("posted");});
 
 // fake data
 	var restaurants = [	{"name":"WcDonalds", "id":"123", "address":"54 Maple Street"},

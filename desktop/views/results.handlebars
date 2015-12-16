@@ -1,6 +1,8 @@
 <h1>Search Results</h1>
 
 <div class="container">
+	<!-- Restaurant results -->
+	{{#if restaurant}}
 	<form method="post" id="sortForm">
 		Sort by:
 		<button type="submit" name="sort" value="NAME">Name</button>
@@ -14,34 +16,107 @@
 		<div>Address: {{this.property.ADDRESS}}</div>
 		<div>Person In Charge: {{this.PERSONINCHARGE}}</div>
 		{{#if this.inspection}}
-			{{#each this.inspection}}
-				<div class="collapser"><img src="/images/collapse.png" />Inspections</div>
-				<div class="collapsible">
-					<!-- General inspection information goes here -->
-					<div>Date: {{this.date}}</div>
-					<div>Inspector: {{this.INSPECTOR}}</div>
-					<div>Inspection Type: {{this.TYPEOFINSPECTION}}</div>
-					<div>Reasoning: {{this.REASONING}}</div>
-					<div>Additional Notes: {{this.ADDITIONALNOTES}}</div>
-					{{#if this.violation}}
-					{{#each this.violation}}
-						<div class="collapser"><img src="/images/collapse.png" />Violations</div>
-						<div class="collapsible">
-							<!-- Violation information goes here -->
-							<div>Code Reference: {{this.CODEREFERENCE}}</div>
-							<div>Correction plan: {{this.DESCRIPTIONOFVIOLATIONCORRECTIONPLAN}}</div>
-						</div>
-					{{/each}}
-					{{else}}
-						<div class ="collapsible">No violations.</div>
-					{{/if}}
-				</div>
-			{{/each}}
+		{{#each this.inspection}}
+			<div class="collapser"><img src="/images/collapse.png" />Inspections</div>
+			<div class="collapsible">
+				<!-- General inspection information goes here -->
+				<div>Date: {{this.date}}</div>
+				<div>Inspector: {{this.INSPECTOR}}</div>
+				<div>Inspection Type: {{this.TYPEOFINSPECTION}}</div>
+				<div>Reasoning: {{this.REASONING}}</div>
+				<div>Additional Notes: {{this.ADDITIONALNOTES}}</div>
+				{{#if this.violation}}
+				{{#each this.violation}}
+					<div class="collapser"><img src="/images/collapse.png" />Violations</div>
+					<div class="collapsible">
+						<!-- Violation information goes here -->
+						<div>Code Reference: {{this.CODEREFERENCE}}</div>
+						<div>Correction plan: {{this.DESCRIPTIONOFVIOLATIONCORRECTIONPLAN}}</div>
+					</div>
+				{{/each}}
+				{{else}}
+					<div class ="collapsible">No violations.</div>
+				{{/if}}
+			</div>
+		{{/each}}
 		{{else}}
 			<div class="collapsible">No matching inspections found.</div>
 		{{/if}}
 	</div>
 	{{/each}}
+	
+	<!-- Septic results -->
+	{{else if septics}}
+	{{#each septics}}
+	<div class="collapser"><img src="/images/collapse.png" />{{this.property.ADDRESS}}</div>
+	<div class="collapsible">
+		<!-- General site information goes here -->
+		<div>Town: {{this.property.TOWN}}</div>
+		<div>State: {{this.property.STATE}}</div>
+		<div>Zip Code:{{this.property.ZIPCODE}}</div>
+		<div>Plot Number: {{this.property.PLOTNUMBER}}</div>
+		{{#if this.systemPumpingRecords}}
+		{{#each this.systemPumpingRecords}}
+			<div class="collapser"><img src="/images/collapse.png" />Pumping Records</div>
+			<div class ="collapsible">
+				<!-- Pumping record information goes here -->
+				<div>Date: {{this.PUMPINGDATE}}</div>
+				<div>Quanity Pumped: {{this.QUANTITYPUMPED}}</div>
+				<div>Observed Condition: {{this.OBSERVEDCONDITION}}</div>
+				<div>Pumped by: {{this.SYSTEMPUMPEDBYNAME}}</div>
+			</div>
+		{{/each}}
+		{{else}}
+			<div class ="collapsible">No pumping records.</div>
+		{{/if}}
+		{{#if this.septicInspection}}
+		{{#each this.septicInspection}}
+			<div class="collapser"><img src="/images/collapse.png" />Inspections</div>
+			<div class ="collapsible">
+				<!-- Inspection information goes here -->
+				<div>Name of Inspector: {{this.NAMEOFINSPECTOR}}</div>
+				<div>License Number: {{this.LICENSENUMBER}}</div>
+				<div>DEP Approval: {{this.DEPAPPROVAL}}</div>
+			</div>
+		{{/each}}
+		{{else}}
+			<div class ="collapsible">No inspections.</div>
+		{{/if}}
+	</div>
+	{{/each}}
+	
+	
+	<!-- Well results -->
+	{{else if wells}}
+	{{#each wells}}
+	<div class="collapser"><img src="/images/collapse.png" />{{this.property.ADDRESS}}</div>
+	<div class="collapsible">
+		<!-- General site information goes here -->
+		<div>Town: {{this.property.TOWN}}</div>
+		<div>State: {{this.property.STATE}}</div>
+		<div>Zip Code:{{this.property.ZIPCODE}}</div>
+		<div>Plot Number: {{this.property.PLOTNUMBER}}</div>
+		{{#if this.waterQualityReport}}
+		{{#each this.waterQualityReport}}
+			<div class="collapser"><img src="/images/collapse.png" />Water Quality Reports</div>
+			<div class ="collapsible">
+				<!-- Water quality report information goes here -->
+				<div>Collected by: {{this.COLLECTEDBY}}</div>
+				<div>Date Collected: {{this.DATECOLLECTED}}</div>
+				<div>Date Collected: {{this.DATECOLLECTED}}</div>
+				<div>PH: {{this.PH}}</div>
+				<div>Passes Drinking Water Standards: {{this.THISWATERSAMPLEPASSESDRINKINGWATERSTANDARDS}}</div>
+			</div>
+		{{/each}}
+		{{else}}
+			<div class ="collapsible">No water quality reports.</div>
+		{{/if}}
+	</div>
+	{{/each}}
+	{{else}}
+	<div> No results found.</div>
+	{{/if}}
+	
 </div>
 
 <style>
