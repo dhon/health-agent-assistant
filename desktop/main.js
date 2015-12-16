@@ -129,6 +129,30 @@ app.get('/profile',
     res.render('profile', { user: req.user,id:req.user.id, username:req.user.username,displayName:req.user.displayName,emails:req.user.emails });
   });
 
+/*app.get('/data',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    res.render('data_entry', { user: req.user,id:req.user.id, username:req.user.username,displayName:req.user.displayName,emails:req.user.emails });
+  });
+
+app.get('/mapping',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    res.render('map', { user: req.user,id:req.user.id, username:req.user.username,displayName:req.user.displayName,emails:req.user.emails });
+  });
+
+app.get('/searching',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    res.render('search', { user: req.user,id:req.user.id, username:req.user.username,displayName:req.user.displayName,emails:req.user.emails });
+  });
+
+app.get('/admin',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    res.render('admin', { user: req.user,id:req.user.id, username:req.user.username,displayName:req.user.displayName,emails:req.user.emails });
+  });*/
+
 //// API calls to and from database
 function addLocation(location){
 $.ajax({
