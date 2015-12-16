@@ -74,6 +74,8 @@ app.use('/data', require('./routes/data-routes'));
 app.use('/mapping', require('./routes/mapping-routes'));
 app.use('/searching', require('./routes/searching-routes'));
 app.use('/admin', require('./routes/admin-routes'));
+app.use('/api', require('../federation/routes/api'));
+
 
 // Define routes.
 app.get('/',
