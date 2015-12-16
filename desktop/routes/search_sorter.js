@@ -1,5 +1,7 @@
 //data: JSON array
 //sortBy: string or array of strings. If array, strings must be in order of attributes
+//The array of strings is used as a path to get to the attribute to sortBy
+//E.g. [attr1, attr2, attr3] would sort by the attr1.attr2.attr3 values in the JSON
 //attributeType: typeof sortBy (e.g. number, string). Can be found using typeof
 //Throws JSONTypeError, missingParameterError
 function sort(data, sortBy, attributeType) {
