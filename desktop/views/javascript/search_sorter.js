@@ -22,6 +22,20 @@ function sort(data, sortBy, attributeType) {
 	var unsorted = data[type];
 	console.log(unsorted);
 	
+	//do not call compareNoErrors directly, use compare instead.
+	//compareNoErrors has no errorChecking
+	var compareNoErrors;
+			if(attributeType == "number") {
+				compareNoErrors = function(val1, val2) {return val1 - val2;};
+			}
+			else if(attributeType == "string") {
+				compareNoErrors = function(val1, val2) {return val1.localeCompare(val2);};
+			}
+			else {
+				//TODO Do something if attributeType is not known besides return 0 on compare
+				compareNoErrors = function(val1, val2) {return 0};
+			}
+	
 	function compare(field1, field2) {
 		val1= field1[sortBy]
 		val2= field2[sortBy]
@@ -32,8 +46,8 @@ function sort(data, sortBy, attributeType) {
 		else if(val2 == undefined) {
 			return 1; //field1 has attribute, field2 does not
 		}
-		if(attributeType == "number") {console.log("number"); return val1 - val2;}
-		else return val1.localeCompare(val2); //compare strings
+
+		return compareNoErrors(val1, val2);
 	}
 
 		return unsorted.sort(compare);
