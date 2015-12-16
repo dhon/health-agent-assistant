@@ -9,12 +9,35 @@ router.post('/post', function(req, res) {console.log("posted");});
 
 // Example route
 router.get('/', function(req, res) {
-	console.log("routed");
 	res.render("map");
 });
 
-router.get('/welldemo', function(req, res) {
-	res.render("welldemo");
+var bodyParser = require('body-parser');
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+	extended: true
+}));
+
+router.get('/fetchMapData', function(req, res) {
+	// need the data in this format :
+	// { #Wells and septic tanks
+	//	name : #some name to identify the well or septic tank
+	//	location : {latitude, longitude}
+	//	lot_number : #don't know about this one, but if u can get it
+	//	status : #status of the water quality or septic quality
+	//	## Septic tank specific, but use the same object
+	//	lastpump : #date
+	//	## well specific
+	//	waterQuality : [{date, quality}] #quality over time
+	//
+	// }
+	var data; // This get sent to the client
+	var success = () => {
+		// Put success Code here
+		res.send(data);
+	};
+	//remove this once you implement it
+	res.send({error : true});
 });
 
 // remove this, and replace any calls to this with the correct query codes
