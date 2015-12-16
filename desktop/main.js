@@ -5,6 +5,7 @@ var Strategy = require('passport-local').Strategy;
 var db = require('./db');
 var es = require('./node_modules/connect-ensure-login/lib/ensureLoggedIn')
 var crypto = require('crypto');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 // Configure the local strategy for use by Passport.
 //
@@ -12,18 +13,30 @@ var crypto = require('crypto');
 // (`username` and `password`) submitted by the user.  The function must verify
 // that the password is correct and then invoke `cb` with a user object, which
 // will be set at `req.user` in route handlers after authentication.
+
+
 passport.use(new Strategy(
   function(username, password, cb) {
 
     var hashed = crypto.createHash('md5').update(password).digest('hex');
 
-    db.users.findByUsername(username, function(err, user) {
-      if (err) { return cb(err); }
-      //if (!user) { return cb(null, false, { message: 'Invalid username ' + username }); }
-      //if (user.password != password) { return cb(null, false, { message: 'Invalid password' }); }
-      if (!user || user.password != hashed) { return cb(null, false, { message: "Invalid username, password combination"})}
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "POST", 'http://localhost:3000/api/user/login', false ); // false for synchronous request
+    xmlHttp.setRequestHeader('Content-Type', 'application/json');
+    var data = {username: username, passwordhash:password};
+    xmlHttp.send( JSON.stringify(data) );
+
+    console.log(xmlHttp.responseText);
+    var response = JSON.parse(xmlHttp.responseText);
+
+    console.log(response.success);
+      if (response.success == false) { return cb(null, false, { message: "Invalid username, password combination"})}
+
+      var idNum = parseInt(response.ID);
+      var user = {id:1, username:response.USERNAME, password:response.PASSWORDHASH, displayName:response.USERNAME, emails:[{value:" "}]};
+      //var user = { id: idNum, username: response.USERNAME, password: response.PASSWORDHASH, displayName: response.USERNAME, emails: [ { value: '' } ] };
+
       return cb(null, user);
-    });
   }));
 
 // Configure Passport authenticated session persistence.
@@ -38,6 +51,12 @@ passport.serializeUser(function(user, cb) {
 });
 
 passport.deserializeUser(function(id, cb) {
+  // var xmlHttp = new XMLHttpRequest();
+  //   xmlHttp.open( "POST", 'http://localhost:3000/api/get', false ); // false for synchronous request
+  //   xmlHttp.setRequestHeader('Content-Type', 'application/json');
+  //   var data = {location:["Leverett", "Sunderland"], type:"user", id:id};
+  //   xmlHttp.send( JSON.stringify(data) );
+  //   console.log(xmlHttp.responseText);
   db.users.findById(id, function (err, user) {
     if (err) { return cb(err); }
     cb(null, user);
@@ -75,7 +94,6 @@ app.use('/mapping', require('./routes/mapping-routes'));
 app.use('/searching', require('./routes/searching-routes'));
 app.use('/admin', require('./routes/admin-routes'));
 app.use('/api', require('../federation/routes/api'));
-
 
 // Define routes.
 app.get('/',
