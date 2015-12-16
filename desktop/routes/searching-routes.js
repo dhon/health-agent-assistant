@@ -18,6 +18,11 @@ router.post('/', function(req, res) {
 		if(req.session.results_cache == undefined){
 			return;
 		}
+		// sort param comes in as 'prop.subprob', split this into an array ['prop', 'subprop']
+		// Unless if there is one property, in which case pass that directly
+		data.sort = data.sort.split('.');
+		if(data.sort.length == 1)
+			data.sort = data.sort[0];
 		sort(req.session.results_cache, data.sort);
 		res.render('results', req.session.results_cache);
 		return;
@@ -255,7 +260,7 @@ router.post('/', function(req, res) {
 				},
 				{
 					ID:"1", 
-					PROPERTYID:"0", 
+					PROPERTYID:"1", 
 					NAME:"Test1", 
 					ADDRESS:"", 
 					OWNERID:"", 
@@ -296,7 +301,10 @@ router.post('/', function(req, res) {
 				],
 			violation:[{ID:"0", RESTRAUNTINSPETIONID:"0", CODEREFERENCE:"123", CRITICALORREDITEM:"", DESCRIPTIONOFVIOLATIONCORRECTIONPLAN:"Here is some text", DATEVERIFIED:""}],
 			owner:[{ID:"0", OWNERNAME:"", TELEPHONENUMBER:""}],
-			property:[{ID:"0", GPSCOORDINATES:"", ADDRESS:"1234 1st Street", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""}],
+			property:[
+				{ID:"0", GPSCOORDINATES:"", ADDRESS:"1234 1st Street", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""},
+				{ID:"1", GPSCOORDINATES:"", ADDRESS:"4567 2nd Street", TOWN:"", STATE:"", ZIPCODE:"", PLOTNUMBER:""}
+			],
 			typeOfOperations:[{ID:"0", OPERATIONTYPE:""}],
 			typeOfInspections:[{ID:"0", INSPECTIONTYPE:""}],
 			reasonings:[{ID:"0", REASONING:"Because"}]

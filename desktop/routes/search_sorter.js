@@ -95,5 +95,5 @@ data = { restaurant:
 		} 
 	   ] }
 // sort(data, "NAME");
-console.log("test");
-document.getElementById('test'). addEventListener('click', function() {console.log(sort(data, ['TEST', 'Test']));}, false);
+// console.log("test");
+// document.getElementById('test'). addEventListener('click', function() {console.log(sort(data, ['TEST', 'Test']));}, false);
