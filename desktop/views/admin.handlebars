@@ -51,13 +51,15 @@
         $("#usertable").DataTable({
 
         });
+        $("#usertable2").DataTable({
+
+        });
     });
   </script>
 </head>
 
 <body>
   <div class="create">
-    <h1>Admin</h1>
     <h3>Create An Account</h3>
     <form method="post" action="http://localhost:3000/api/user/register"> {{!-- <--- THIS MAY NOT BE THE RIGHT ACTION --}}
       Username: <input type="text" name="username"> <br>
@@ -80,14 +82,52 @@
     {{!-- properties_array["USER"] = "CREATE TABLE USER( ID INTEGER PRIMARY KEY NOT NULL, USERNAME TEXT NOT NULL, PASSWORDHASH NOT NULL, FOREIGN KEY(ID) references SAVEDSEARCHES(USERID), FOREIGN KEY(ID) references PRIVILEGES(USERID) )"; --}}
 
     {{!-- We'll need to do account actions somewhere else. --}}
+
+    {{!-- WE'LL NEED TO REDO THIS FOR ALL ACCOUNTS IN THE DATABASE --}}
     <table id="usertable" class="display" cellspacing="0" width="100%">
       <thead>
         <tr>
           <th>ID</th>
           <th>Username</th>
           <th>Password Hash</th> {{!-- THIS COULD BE REMOVED --}}
-          <th>Saved Searches</th> {{!-- THIS COULD BE REMOVED --}}
-          <th>Privileges</th>
+          <th>Saved Searches</th> {{!-- THIS COULD BE REMOVED --}} {{!-- PROBABLY NOT AN INT? --}}
+          <th>Privileges</th> {{!-- PROBABLY NOT AN INT? --}}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>usernametest</td>
+          <td>dbasdjdah</td>
+          <td>63</td>
+          <td>73</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>alphausernametest</td>
+          <td>jfabobe</td>
+          <td>24</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>gammausernametest</td>
+          <td>aonadjd</td>
+          <td>257</td>
+          <td>27</td>
+        </tr>
+      </tbody>
+    </table>
+
+   {{!--  THIS IS THE LOCAL TESTING TABLE --}}
+    <table id="usertable2" class="display" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Password Hash</th> {{!-- THIS COULD BE REMOVED --}}
+          <th>Saved Searches</th> {{!-- THIS COULD BE REMOVED --}} {{!-- PROBABLY NOT AN INT? --}}
+          <th>Privileges</th> {{!-- PROBABLY NOT AN INT? --}}
         </tr>
       </thead>
       <tbody>
