@@ -1,13 +1,14 @@
 //data: JSON array
-//sortBy: string
+//sortBy: string or array of strings
 //attributeType: typeof sortBy (e.g. number, string). Can be found using typeof
-//Throws JSONTypeErorr
+//Throws JSONTypeError, missingParameterError
 function sort(data, sortBy, attributeType) {
 	if(data == undefined || sortBy == undefined){
 		var e = new Error('Missing parameters');
 		e.name = 'missingParameterError';
 		throw e;
 	}
+	
 	attributeType = typeof attributeType !== 'undefined' ?  b : "string"; //If attributeType not included, default is string
 	console.log("Sort " + JSON.stringify(data) + " by " + sortBy);
 	
@@ -20,21 +21,20 @@ function sort(data, sortBy, attributeType) {
 		throw e; //Recieved bad data, cannot continue
 	}
 	var unsorted = data[type];
-	console.log(unsorted);
 	
 	//do not call compareNoErrors directly, use compare instead.
 	//compareNoErrors has no errorChecking
 	var compareNoErrors;
-			if(attributeType == "number") {
-				compareNoErrors = function(val1, val2) {return val1 - val2;};
-			}
-			else if(attributeType == "string") {
-				compareNoErrors = function(val1, val2) {return val1.localeCompare(val2);};
-			}
-			else {
-				//TODO Do something if attributeType is not known besides return 0 on compare
-				compareNoErrors = function(val1, val2) {return 0};
-			}
+		if(attributeType == "number") {
+			compareNoErrors = function(val1, val2) {return val1 - val2;};
+		}
+		else if(attributeType == "string") {
+			compareNoErrors = function(val1, val2) {return val1.localeCompare(val2);};
+		}
+		else {
+			//TODO Do something if attributeType is not known besides return 0 on compare
+			compareNoErrors = function(val1, val2) {return 0};
+		}
 	
 	function compare(field1, field2) {
 		val1= field1[sortBy]
@@ -66,9 +66,9 @@ function getType(data) {
 	}
 }
 
-module.exports = {
+/* module.exports = {
 	sort : sort
-};
+}; */
 
 //TODO: delete following test data
 data = { restaurant:
@@ -79,7 +79,9 @@ data = { restaurant:
        OWNERID: '',
        PERSONINCHARGE: '',
        property: [Object],
-       inspection: [Object] }, 
+       inspection: [Object],
+		TEST: {Test:'b'}
+		}, 
 	   
 	   { ID: '1',
        PROPERTYID: '1',
@@ -88,6 +90,10 @@ data = { restaurant:
        OWNERID: '',
        PERSONINCHARGE: '',
        property: [Object],
-       inspection: [Object] } 
+       inspection: [Object],
+		TEST: {Test:'a'}
+		} 
 	   ] }
 // sort(data, "NAME");
+console.log("test");
+document.getElementById('test'). addEventListener('click', function() {console.log(sort(data, ['TEST', 'Test']));}, false);
