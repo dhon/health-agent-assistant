@@ -36,8 +36,7 @@ function sort(data, sortBy, attributeType) {
 		else return val1.localeCompare(val2); //compare strings
 	}
 
-	console.log("fields: " + JSON.stringify(unsorted[0]) + " " + JSON.stringify(unsorted[1]) + " " + compare(unsorted[0], unsorted[1]));
-	
+		return unsorted.sort(compare);
 }
 //TODO: check for multiple types
 function getType(data) {
