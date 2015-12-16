@@ -66,6 +66,9 @@ function getType(data) {
 	}
 }
 
+module.exports = {
+	sort : sort
+};
 
 //TODO: delete following test data
 data = { restaurant:
@@ -87,4 +90,4 @@ data = { restaurant:
        property: [Object],
        inspection: [Object] } 
 	   ] }
-sort(data, "NAME");
+// sort(data, "NAME");
