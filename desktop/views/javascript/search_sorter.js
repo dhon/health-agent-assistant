@@ -1,7 +1,7 @@
 //data: JSON array
 //sortBy: string
 //attributeType: typeof sortBy (e.g. number, string). Can be found using typeof
-//Throws JSONTypeEror, 
+//Throws JSONTypeErorr
 function sort(data, sortBy, attributeType) {
 	if(data == undefined || sortBy == undefined){
 		var e = new Error('Missing parameters');
@@ -67,6 +67,7 @@ function getType(data) {
 }
 
 
+//TODO: delete following test data
 data = { restaurant:
    [ { ID: '0',
        PROPERTYID: '0',
