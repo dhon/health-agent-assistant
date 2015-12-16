@@ -11,9 +11,11 @@
     </ul>
 
     <div id="tab-1" class="tab-content current">
+
         <div class="form add_new_form" >
             <label>Add a New Restaurant</label>
-            <form method="post" action="/api/add">
+            <iframe style="display:none" name="silent-submit"></iframe>
+            <form method="post" action="/api/add" target="silent-submit">
                  <input type="text" name="type" value="restaurant" style="display:none"> <br>
                  Location: <select name="location[]">
                 <option value="sunderland">Sunderland</option>
@@ -52,15 +54,22 @@
         </div>
         <div class="form">
             <label>Inspection</label>
-            <form method="post" action="#">
+            <form method="post" action="/api/add">
                 <div class="form">
                 <h5>Basic Information</h5>
-                1. Inspector: <input type="text" name="inspector" value="{{formdata.inspector}}" required> <br>
-                2. Risk Level:  <input type="text" name="risk_level"> <br>
-                3. HACCP: <input type="text" name="haccp"> <br>
-                4. Time In:  <input type="text" name="time_in"> <br>
-                5. Time Out: <input type="text" name="time_out"> <br>
-                6. Type of Operation: <select name="operation">
+                <input type="text" name="type" value="restaurantinspections" style="display:none"> <br>
+                 Location: <select name="location[]">
+                <option value="sunderland">Sunderland</option>
+                <option value="leverett">Leverett</option>
+                
+                </select><br>
+                0. Restaurant ID: <input type="number" name="RESTAURANTID"  required> <br>
+                1. Inspector: <input type="text" name="inspector"  required> <br>
+                2. Risk Level:  <input type="text" name="risklevel"> <br>
+                3. HACCP: <input type="number" name="haccp"> <br>
+                4. Time In:  <input type="number" name="timein"> <br>
+                5. Time Out: <input type="number" name="timeout"> <br>
+                6. Type of Operation: <select name="typeofoperation">
                 <option value="1">Food Service</option>
                 <option value="2">Retail</option>
                 <option value="3">Residential Kitchen</option>
@@ -69,11 +78,11 @@
                 <option value="6">Caterer</option>
                 <option value="7">Bed & Breakfast</option>
                 </select><br>
-                7. Type of Inspection: <select name="inspection">
+                7. Type of Inspection: <select name="typeofinspection">
                 <option value="1">Routine</option>
                 <option value="2">Re-inspection</option>
                 </select><br>
-                8. Previous Inspection Date:  <input type="text" name="previous_inspection_date"> <br>
+                8. Previous Inspection Date:  <input type="number" name="previousinspectiondate"> <br>
                 9. Reasoning: <select name="reasoning">
                 <option value="1">Pre-operation</option>
                 <option value="2">Suspect Illness</option>
@@ -81,64 +90,108 @@
                 <option value="4">HACCP</option>
                 <option value="5">Other</option>
                 </select><br>
-                10. Other Reasoning:  <input type="text" name="other_reasoning"> <br>
+                10. Other Reasoning:  <input type="text" name="otherreasoning"> <br>
                 </div>
 
                 <div class="form">
                 <h5>Violation Related to Good retail Practices</h5>
-                1. Management and Personal: <fieldset id="group1">
-                            <input type="radio" value="" name="group1">Critical
-                            <input type="radio" value="" name="group1">Non-critical
-                </fieldset>
-                2. Food and Food Protection: <fieldset id="group2">
-                            <input type="radio" value="" name="group2">Critical
-                            <input type="radio" value="" name="group2">Non-critical
-                </fieldset>
-                3. Equipment and Utensils: <fieldset id="group3">
-                            <input type="radio" value="" name="group3">Critical
-                            <input type="radio" value="" name="group3">Non-critical
-                </fieldset>
-                4. Water, Plumbing and Waste: <fieldset id="group4">
-                            <input type="radio" value="" name="group4">Critical
-                            <input type="radio" value="" name="group4">Non-critical
-                </fieldset>
-                5. Phisical Facility: <fieldset id="group5">
-                            <input type="radio" value="" name="group5">Critical
-                            <input type="radio" value="" name="group5">Non-critical
-                </fieldset>
-                6. Poisonous or Toxic Materials: <fieldset id="group6">
-                            <input type="radio" value="" name="group6">Critical
-                            <input type="radio" value="" name="group6">Non-critical
-                </fieldset>
-                7. Special requirements: <fieldset id="group7">
-                            <input type="radio" value="" name="group7">Critical
-                            <input type="radio" value="" name="group7">Non-critical
-                </fieldset>
-                8. Other: <input type="text" name="other2"> <fieldset id="group8">
-                            <input type="radio" value="" name="group8">Critical
-                            <input type="radio" value="" name="group8">Non-critical
-                </fieldset>
+                1. Management and Personal: 
+                <select name="managementandpersonnel">
+                <option value="Critical">Critical</option>
+                <option value="Non-critical">Non-critical</option>
+                </select><br>
+                2. Food and Food Protection: 
+                <select name="FoodandFoodProtection">
+                <option value="Critical">Critical</option>
+                <option value="Non-critical">Non-critical</option>
+                </select><br>
+                3. Equipment and Utensils:
+                <select name="EquipmentandUtensils">
+                <option value="Critical">Critical</option>
+                <option value="Non-critical">Non-critical</option>
+                </select><br>
+                4. Water, Plumbing and Waste:
+                <select name="WaterPlumbingandWaste">
+                <option value="Critical">Critical</option>
+                <option value="Non-critical">Non-critical</option>
+                </select><br>
+                5. Phisical Facility:
+                <select name="PhisicalFacility">
+                <option value="Critical">Critical</option>
+                <option value="Non-critical">Non-critical</option>
+                </select><br>
+                6. Poisonous or Toxic Materials: 
+                <select name="PoisonousorToxicMaterials">
+                <option value="Critical">Critical</option>
+                <option value="Non-critical">Non-critical</option>
+                </select><br>
+                7. Special requirements: 
+                <select name="Specialrequirements">
+                <option value="Critical">Critical</option>
+                <option value="Non-critical">Non-critical</option>
+                </select><br>
+                8. Other: 
+                <select name="Other0">
+                <option value="Critical">Critical</option>
+                <option value="Non-critical">Non-critical</option>
+                </select><br>
                 </div>
 
                 <div class="form">
                 <h5>Extra Violation Information</h5>
-                1. <input type="checkbox" name="ex1" value="y">Discussion with Person in Charge<br>
-                2. <input type="checkbox" name="ex2" value="y">Corrective Action Required<br>
-                3. <input type="checkbox" name="ex3" value="y">Voluntary Compliance<br>
-                4. <input type="checkbox" name="ex4" value="y">Re-inspection Scheduled <br>
-                5. <input type="checkbox" name="ex5" value="y">Voluntary Disposal<br>
-                6. <input type="checkbox" name="ex6" value="y">Employee Restriction/Exclusion<br>
-                7. <input type="checkbox" name="ex7" value="y">Eergency Suspension<br>
-                8. <input type="checkbox" name="ex8" value="y">Emergency Closure<br>
-                9. <input type="checkbox" name="ex9" value="y">Other<input type="text" name="other3"><br>
+                1. Discussion with Person in Charge:
+                <select name="DiscussionwithPersoninCharge">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+                </select><br>
+                2. Corrective Action Required:
+                <select name="CorrectiveActionRequired">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+                </select><br>
+                3. Voluntary Compliance:
+                <select name="VoluntaryCompliance">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+                </select><br>
+                4. Re-inspection Scheduled:
+                <select name="ReinspectionScheduled">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+                </select><br>
+                5. Voluntary Disposal:
+                <select name="VoluntaryDisposal">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+                </select><br>
+                6. Employee Restriction/Exclusion:
+                <select name="EmployeeRestrictionExclusion">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+                </select><br>
+                7. Emergency Suspension:
+                <select name="EmergencySuspension">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+                </select><br>
+                8. Emergency Closure:
+                <select name="EmergencyClosure">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+                </select><br>
+                9. Other:
+                <select name="Other1">
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+                </select><br>
                 </div>
 
                 <div class="form">
                 <h5>Additional Notes</h5>
-                <textarea cols="80" rows="5" name="myname"></textarea>
+                <textarea cols="80" rows="5" name="additionalnotes"></textarea>
                 </div>
 
-                <div class="form">
+                <!--<div class="form">
                     <label>Violation</label>
                     <div >
                         <input autocomplete="off" id="field1" name="field1" type="text" placeholder="Input Violation" />
@@ -146,6 +199,7 @@
                     </div>
 
                 </div>
+                -->
                 <button>Submit</button><button>Delete</button>
             </form>
         </div>
