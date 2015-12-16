@@ -40,38 +40,38 @@ router.get('/', function(req, res) {
 function getAllUsers(query)
 {
 	var userDBResults = {};
-	for(var attribute in query)
+	var xmlHttp = new XMLHttpRequest();
+	
+	var query = JSON.stringify({location:["Sunderland", "Leverett"], type:"user"});
+	
+	xmlHttp.open( "POST", 'http://localhost:3000/api/get', false ); // false for synchronous request
+	xmlHttp.setRequestHeader('Content-Type', 'application/json');
+		
+	console.log("Sending query:"+query);
+	console.log();
+	xmlHttp.send( query );
+		
+	if(xmlHttp.responseText)
 	{
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( "POST", 'http://localhost:3000/api/get', false ); // false for synchronous request
-		xmlHttp.setRequestHeader('Content-Type', 'application/json');
+		var data = JSON.parse(xmlHttp.responseText);
 		
-		console.log("Sending query:"+query[attribute]);
+		console.log("Starting returned data");
+		console.log(data);
+		console.log("Ending Returned data");
+		console.log(data.success);
 		console.log();
-		xmlHttp.send( query[attribute] );
 		
-		if(xmlHttp.responseText)
-		{
-			var data = JSON.parse(xmlHttp.responseText);
-			
-			console.log("Starting returned data");
-			console.log(data);
-			console.log("Ending Returned data");
-			console.log(data.success);
-			console.log();
-			
-			if(data.success){
-				if(data.rows == undefined){
-					data.rows = [];
-				}
-				userDBResults[attribute] = data.rows;
+		if(data.success){
+			if(data.rows == undefined){
+				data.rows = [];
 			}
-			else{
-				console.log("Error getting information from DB");
-			}
-			console.log();
-			console.log();
+			userDBResults = data.rows;
 		}
+		else{
+			console.log("Error getting information from DB");
+		}
+		console.log();
+		console.log();
 	}
 	return userDBResults;
 }
