@@ -17,14 +17,53 @@
 <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
 <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
 
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ededed;
+}
+
+li {
+    float: left;
+    cursor: pointer;
+}
+
+li a {
+    display: block;
+    color: Black;
+    text-align: center;
+    padding: 14px 16px;
+}
+
+li a:hover:not(.active) {
+    background-color: #ededed;
+}
+
+.active {
+    background-color: #ededed;
+}
+</style>
 
 	</head>
+
 	<body>
-      <a href="/data">DataEntry</a>
+{{!--       <a href="/data">DataEntry</a>
       <a href="/mapping">Mapping</a>
       <a href="/searching">Searching</a>
 	  <a href="/admin">Admin</a>
 	  <a href="/profile">Profile</a>
-      {{{body}}}
+      {{{body}}} --}}
+
+
+		<ul>
+		  <li><a href="/data">Data</a></li>
+		  <li><a href="/mapping">Mapping</a></li>
+		  <li><a href="/admin">Admin</a></li>
+		  <li><a href="/login">Profile</a></li>
+		</ul>
+		{{{body}}}
 	</body>
 </html>
