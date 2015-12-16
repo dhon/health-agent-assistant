@@ -1,0 +1,457 @@
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+<h1>Data Entry</h1>
+
+<div class="container">
+
+    <ul class="tabs">
+        <li class="tab-link current" data-tab="tab-1">Health Inspection</li>
+        <li class="tab-link" data-tab="tab-2">Water Well</li>
+        <li class="tab-link" data-tab="tab-3">Septic System</li>
+
+    </ul>
+
+    <div id="tab-1" class="tab-content current">
+        <div class="form add_new_form" >
+            <label>Add a New Restaurant</label>
+
+			<form class="pure-form pure-form-aligned">
+				<fieldset>
+					<div class="pure-control-group">
+						<label for="name">Name:</label>
+                        <input id="name" type="name" placeholder="Name">
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="address">Address:</label>
+                        <input id="address" type="address" placeholder="Address">
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="telephone">Telephone:</label>
+                        <input id="telephone" type="telephone" placeholder="Telephone">
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="owner">Owner:</label>
+                        <input id="owner" type="owner" placeholder="Owner">
+                    </div>
+					<div class="pure-control-group">
+                        <label for="Person in Charge">Person in Charge:</label>
+                        <input id="Person in Charge" type="Person in Charge" placeholder="Person in Charge">
+                    </div>
+					<button>Add</button><button type="button" class="add_new_btn">Cancel</button>
+                </fieldset>
+            </form>
+
+        </div>
+        <div class="form">
+            <label>Restaurant Info</label>
+			<form class="pure-form pure-form-aligned">
+				<fieldset>
+					<div class="pure-control-group">
+						<label for="name">Name:</label>
+                        <input id="name" type="name" placeholder="Name">
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="address">Address:</label>
+                        <input id="address" type="address" placeholder="Address">
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="telephone">Telephone:</label>
+                        <input id="telephone" type="telephone" placeholder="Telephone">
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="owner">Owner:</label>
+                        <input id="owner" type="owner" placeholder="Owner">
+                    </div>
+					<div class="pure-control-group">
+                        <label for="Person in Charge">Person in Charge:</label>
+                        <input id="Person in Charge" type="Person in Charge" placeholder="Person in Charge">
+                    </div>
+					<div class="pure-control-group">
+						<label for="choose">Choose:</label>
+						<select id="choose" class="pure-input-1-2">
+							<option>Volvo</option>
+							<option>Saab</option>
+							<option>Mercedes</option>
+							<option>Audi</option>
+					</select>
+						<button>Choose</button>
+					</div>
+                </fieldset>
+            </form>
+            <button class="add_new_btn" type="button">Add New Restaurant</button>
+        </div>
+
+        <div class="form">
+            <label>Inspection</label>
+			<form class="pure-form pure-form-stacked" style="padding-left:22%">
+				<fieldset>
+					<div class="pure-control-group">
+						<label for="name">1. Inspector:</label>
+                        <input id="inspector" type="inspector" placeholder="Inspector">
+                    </div>
+					
+                    <div class="pure-control-group">
+                        <label for="risk level">2. Risk Level:</label>
+                        <input id="risk level" type="risk level" placeholder="Risk Level">
+                    </div>
+					
+                    <div class="pure-control-group">
+                        <label for="HACCP">3. HACCP:</label>
+                        <input id="HACCP" type="HACCP" placeholder="HACCP">
+                    </div>
+					
+                    <div class="pure-control-group">
+                        <label for="Time In">4. Time In:</label>
+                        <input id="Time In" type="Time In" placeholder="Time In">
+                    </div>
+					
+					<div class="pure-control-group">
+                        <label for="Time Out">5. Time Out:</label>
+                        <input id="Time Out" type="Time Out" placeholder="Time Out">
+                    </div>
+					
+					<div class="pure-control-group">
+						<label for="Type Of Operation">6. Type Of Operation:</label>
+						<select id="Type Of Operation" class="pure-input-1-2">
+							<option>Food Service</option>
+							<option>Retail</option>
+							<option>Residential Kitchen</option>
+							<option>Mobile</option>
+							<option>Temporary</option>
+							<option>Caterer</option>
+							<option>Bed & Breakfast</option>
+					</select>
+					</div>
+					
+					<div class="pure-control-group">
+						<label for="Type Of Inspection">7. Type Of Inspection:</label>
+						<select id="Type Of Inspection" class="pure-input-1-2">
+							<option>Routine</option>
+							<option>Retail</option>
+					</select>
+					</div>
+					
+					<div class="pure-control-group">
+                        <label for="Previous Inspection Date">8. Previous Inspection Date:</label>
+                        <input id="Previous Inspection Date" type="Previous Inspection Date" placeholder="Previous Inspection Date">
+                    </div>
+					
+					<div class="pure-control-group">
+						<label for="Reasoning">9. Reasoning:</label>
+						<select id="Reasoning" class="pure-input-1-2">
+							<option>Pre-operation</option>
+							<option>Suspect Illness</option>
+							<option>General Complaint</option>
+							<option>HACCP</option>
+							<option>Other</option>
+					</select>
+					</div>
+					
+					<div class="pure-control-group">
+                        <label for="Other Reasoning">10. Other Reasoning:</label>
+                        <input id="Other Reasoning" type="Other Reasoning" placeholder="Other Reasoning">
+                    </div>
+					
+                </fieldset>
+            </form>
+        </div>
+
+                <div class="form" >
+                <h5 style="font-size:1em;color:#333;font-weight:bold;">Violation Related to Good retail Practices</h5>
+                <label style="font-size:1em;color:#333;font-weight:bold;"> 1. Management and Personal: </label> <fieldset id="group1" style="background-color:#FFFFFF;">
+                            <input type="radio" value="" name="group1"style="font-size:0.875em;color:#666;">Critical
+                            <input type="radio" value="" name="group1">Non-critical
+                </fieldset>
+                <label style="font-size:1em;color:#333;font-weight:bold;">2. Food and Food Protection: </label><fieldset id="group2" style="background-color:#FFFFFF;">
+                            <input type="radio" value="" name="group2">Critical
+                            <input type="radio" value="" name="group2">Non-critical
+                </fieldset>
+                <label style="font-size:1em;color:#333;font-weight:bold;">3. Equipment and Utensils: </label><fieldset id="group3" style="background-color:#FFFFFF;">
+                            <input type="radio" value="" name="group3">Critical
+                            <input type="radio" value="" name="group3">Non-critical
+                </fieldset>
+                <label style="font-size:1em;color:#333;font-weight:bold;">4. Water, Plumbing and Waste: </label><fieldset id="group4" style="background-color:#FFFFFF;">
+                            <input type="radio" value="" name="group4">Critical
+                            <input type="radio" value="" name="group4">Non-critical
+                </fieldset>
+                <label style="font-size:1em;color:#333;font-weight:bold;">5. Phisical Facility: </label><fieldset id="group5" style="background-color:#FFFFFF;">
+                            <input type="radio" value="" name="group5">Critical
+                            <input type="radio" value="" name="group5">Non-critical
+                </fieldset>
+                <label style="font-size:1em;color:#333;font-weight:bold;">6. Poisonous or Toxic Materials: </label><fieldset id="group6" style="background-color:#FFFFFF;">
+                            <input type="radio" value="" name="group6">Critical
+                            <input type="radio" value="" name="group6">Non-critical
+                </fieldset>
+                <label style="font-size:1em;color:#333;font-weight:bold;">7. Special requirements: </label><fieldset id="group7" style="background-color:#FFFFFF;">
+                            <input type="radio" value="" name="group7">Critical
+                            <input type="radio" value="" name="group7">Non-critical
+                </fieldset>
+                <label style="font-size:1em;color:#333;font-weight:bold;">8. Other: </label><input type="text" name="other2"> <fieldset id="group8" style="background-color:#FFFFFF;">
+                            <input type="radio" value="" name="group8">Critical
+                            <input type="radio" value="" name="group8">Non-critical
+                </fieldset>
+                </div>
+
+                <div class="form" style="font-size:1em;color:#333;font-weight:bold;">
+                <h5 style="font-size:1em;color:#333;font-weight:bold;">Extra Violation Information</h5>
+                1. <input type="checkbox" name="ex1" value="y">Discussion with Person in Charge<br><br>
+                2. <input type="checkbox" name="ex2" value="y">Corrective Action Required<br><br>
+                3. <input type="checkbox" name="ex3" value="y">Voluntary Compliance<br><br>
+                4. <input type="checkbox" name="ex4" value="y">Re-inspection Scheduled <br><br>
+                5. <input type="checkbox" name="ex5" value="y">Voluntary Disposal<br><br>
+                6. <input type="checkbox" name="ex6" value="y">Employee Restriction/Exclusion<br><br>
+                7. <input type="checkbox" name="ex7" value="y">Emergency Suspension<br><br>
+                8. <input type="checkbox" name="ex8" value="y">Emergency Closure<br><br>
+                9. <input type="checkbox" name="ex9" value="y">Other<input type="text" name="other3"><br>
+                </div>
+
+                <div class="form">
+                <h5 style="font-size:1em;color:#333;font-weight:bold;">Additional Notes</h5>
+                <textarea cols="80" rows="5" name="myname"></textarea>
+                </div>
+
+                <div class="form">
+                    <label>Violation</label>
+                    <div >
+                        <input autocomplete="off" id="field1" name="field1" type="text" placeholder="Input Violation" />
+                        <button id="b1" class="add-more" type="button">+</button>
+                    </div>
+
+                </div>
+                <button>Submit</button><button>Delete</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="tab-2" class="tab-content">
+        <div class="form add_new_form" style="font-size:1em;color:#333;font-weight:bold;">
+            <label>Add a New Well</label>
+            <form method="post" action="#">
+                Duis aute: <input type="text" name="name"> <br>
+                Duis aute:  <input type="text" name="name"> <br>
+                <button>Add</button><button class="add_new_btn" type="button">Cancel</button>
+            </form>
+        </div>
+		
+        <div class="form">
+            <label style="font-size:1em;color:#333;font-weight:bold;">Well Info</label>
+            <form method="post" action="#">
+                <label style="font-size:1em;color:#333;font-weight:bold;">Duis aute: </label><input type="text" name="name" placeholder="Duis aute"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">Duis aute:  </label><input type="text" name="name" placeholder="Duis aute"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">Choose:  </label><select>
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+            </select><br>
+                <button class="add_new_btn" type="button">Add New</button>
+            </form>
+        </div>
+		
+        <div class="form">
+            <label>Report</label>
+            <div class=""pure-control-group" >
+                <h5 style="font-size:1em;color:#333;font-weight:bold;">General Information</h5>
+				<form class="pure-form pure-form-stacked">
+					<label style="font-size:1em;color:#333;font-weight:bold;">1. Client's Name: </label> <input type="text" name="name" placeholder="Client's Name"> <br>
+					<label style="font-size:1em;color:#333;font-weight:bold;">2. Collected by:  </label><input type="text" name="name" placeholder="Collected by"> <br>
+					<label style="font-size:1em;color:#333;font-weight:bold;">3. Project: </label><input type="text" name="name" placeholder="Project"> <br>
+					<label style="font-size:1em;color:#333;font-weight:bold;">4. Project Number: </label><input type="text" name="name" placeholder="Project Number"> <br>
+					<label style="font-size:1em;color:#333;font-weight:bold;">5. Date Collected: </label><input type="text" name="name" placeholder="Date Collected"> <br>
+					<label style="font-size:1em;color:#333;font-weight:bold;">6. Sample Identification: </label><input type="text" name="name" placeholder="Sample Identification"> <br>
+					<label style="font-size:1em;color:#333;font-weight:bold;">7. Lab Number: </label><input type="text" name="name" placeholder="Lab Number"> <br>
+					</form>
+			</div>
+				
+        <div class="form">
+				<div class=""pure-control-group" >
+                    <h5 "font-size:1em;color:#333;font-weight:bold;">Analysis</h5>
+					<form class="pure-form pure-form-stacked">
+                    <label style="font-size:1em;color:#333;font-weight:bold;">1. Total Coliform Bacteria: </label> <input type="text" name="name" placeholder="Total Coliform Bacteria"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">2. Total Coliform Bacteria units: </label> <input type="text" name="name" placeholder="Total Coliform Bacteria units"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">3. Nitrate-Nitrogen: </label> <input type="text" name="name" placeholder=""Nitrate-Nitrogen> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">4. Nitrate-Nitrogen units: </label> <input type="text" name="name" placeholder="Nitrate-Nitrogen units"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">5. pH: </label> <input type="text" name="name" placeholder="pH"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">6. pH units: </label> <input type="text" name="name" placeholder="pH units"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">7. Iron: </label> <input type="text" name="name" placeholder="Iron"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">8. Iron units: </label> <input type="text" name="name" placeholder="Iron units"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">9. Hardness as CaCO3: </label> <input type="text" name="name" placeholder="Hardness as CaCO3"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">10. Hardness as CacO3 units: </label> <input type="text" name="name" placeholder="Hardness as CaCO3 units"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">11. Sulfare Sulfur: </label> <input type="text" name="name" placeholder="Sulfare Sulfur"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">12. Sulfare Sulfur units: </label> <input type="text" name="name" placeholder="Sulfare Sulfur units"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">13. Chloride: </label> <input type="text" name="name" placeholder="Chloride"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">14. Chloride units: </label> <input type="text" name="name" placeholder="Chloride units"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">15. Specific Conductance: </label> <input type="text" name="name" placeholder="Specific Conductance"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">16. Specific Conductance units: </label> <input type="text" name="name" placeholder="Specific Conductance units"> <br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">17. </label><input type="checkbox" name="pass" value="y"> <label style="font-size:1em;color:#333;font-weight:bold;">This water sample passes drinking water standards. </label><br><br>
+                    <label style="font-size:1em;color:#333;font-weight:bold;">18. Submitted by: </label> <input type="text" name="name" placeholder="Submitted by"> <br>
+					</form>
+				</div>
+                </div>
+				
+                <div class="form">
+                    <h5 style="font-size:1em;color:#333;font-weight:bold;">Additional Notes</h5>
+                    <textarea cols="80" rows="5" name="notes"></textarea>
+                </div>
+                <button>Submit</button><button>Delete</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="tab-3" class="tab-content">
+        <div class="form add_new_form">
+            <label>Add a New Tank</label>
+            <form method="post" action="#">
+                <label style="font-size:1em;color:#333;font-weight:bold;">Duis aute: </label><input type="text" name="name" placeholder="Duis aute"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">Duis aute: </label><input type="text" name="name" placeholder="Duis aute"> <br>
+                <button>Add</button><button class="add_new_btn" type="button">Cancel</button>
+            </form>
+        </div>
+
+        <div class="form">
+            <label>Tank Info</label>
+            <form method="post" action="#">
+                <label style="font-size:1em;color:#333;font-weight:bold;">Duis aute: </label><input type="text" name="name" placeholder="Duis aute"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">Duis aute:  </label><input type="text" name="name" placeholder="Duis aute"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">Choose:  </label><select>
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+            </select><br>
+                <button class="add_new_btn" type="button">Add New</button>
+            </form>
+        </div>
+        <div class="form">
+			<div class=""pure-control-group" >
+            <label>Report</label>
+            <form class="pure-form pure-form-stacked">
+                <label style="font-size:1em;color:#333;font-weight:bold;">1. Pumping Date: </label><input type="text" name="name" placeholder="Pumping Date"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">2. Quantity Pumped(gallons): </label><input type="text" name="name" placeholder="Quantity Pumped(gallons)"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">3. Component: </label><input type="text" name="name" placeholder="Component"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">4. Other: </label><input type="text" name="name" placeholder="Other"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">5. Effluent Tee Filter Present: </label><fieldset id="group1">
+                            <input type="radio" value="" name="group1">Yes
+                            <input type="radio" value="" name="group1">No
+                </fieldset>
+                <label style="font-size:1em;color:#333;font-weight:bold;">6. If yes, was it cleaned? </label><fieldset id="group2">
+                            <input type="radio" value="" name="group2">Yes
+                            <input type="radio" value="" name="group2">No
+                </fieldset>
+                <label style="font-size:1em;color:#333;font-weight:bold;">7. Observed condition of component pumbed: </label><input type="text" name="name" placeholder="Observed condition"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">8. System pumbed by(name): </label><input type="text" name="name" placeholder="Name"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">9. System pumbed by(License): </label><input type="text" name="name" placeholder="License"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">10. System pumbed by(company): </label><input type="text" name="name" placeholder="Company"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">11. Location where contents were disposed: </label><input type="text" name="name" placeholder="Location"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">12. Hauler: </label><input type="text" name="name" placeholder="Hauler"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">13. Hauler date: </label><input type="text" name="name" placeholder="Hauler Date"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">14. Receiving Facility: </label><input type="text" name="name" placeholder="Receiving Facility"> <br>
+                <label style="font-size:1em;color:#333;font-weight:bold;">15. Receiving Facility Date: </label><input type="text" name="name" placeholder="Receiving Facility Date"> <br>
+                <button>Submit</button><button>Delete</button>
+            </form>
+			</div>
+        </div>
+    </div>
+
+</div><!-- container -->
+
+
+<style>
+
+    .container{
+        width: 800px;
+        margin: 0 auto;
+    }
+
+
+
+    ul.tabs{
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+    }
+    ul.tabs li{
+        background: none;
+        color: #222;
+        display: inline-block;
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+
+    ul.tabs li.current{
+        background: #ededed;
+        color: #222;
+    }
+
+    .tab-content{
+        display: none;
+        background: #ededed;
+        padding: 15px;
+    }
+
+    .tab-content.current{
+        display: inherit;
+    }
+    .form{
+        padding:10px;
+        margin:10px 0;
+        border:2px solid white;
+    }
+
+    .add_new_form{
+        display:none;
+    }
+    h1{
+        text-align: center;
+    }
+</style>
+
+<script>
+    $(document).ready(function(){
+
+        $('ul.tabs li').click(function(){
+            var tab_id = $(this).attr('data-tab');
+
+            $('ul.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $("#"+tab_id).addClass('current');
+        });
+
+    });
+
+
+    $(document).ready(function(){
+        var next = 1;
+        $(".add-more").click(function(e){
+            e.preventDefault();
+            var addto = "#field" + next;
+            var addRemove = "#field" + (next);
+            next = next + 1;
+            var newIn = '<input autocomplete="off" id="field' + next + '" name="field' + next + '" type="text" placeholder="Input Violation">';
+            var newInput = $(newIn);
+            var removeBtn = '<button id="remove' + (next - 1) + '" class="remove-me" >-</button></div><div id="field">';
+            var removeButton = $(removeBtn);
+            $(addto).after(newInput);
+            $(addRemove).after(removeButton);
+            $("#field" + next).attr('data-source',$(addto).attr('data-source'));
+            $("#count").val(next);
+
+            $('.remove-me').click(function(e){
+                e.preventDefault();
+                var fieldNum = this.id.charAt(this.id.length-1);
+                var fieldID = "#field" + fieldNum;
+                $(this).remove();
+                $(fieldID).remove();
+            });
+        });
+    });
+
+
+    $(function(){
+        $('.add_new_btn').on('click',function(){
+            $('.add_new_form').slideToggle(1000);
+        });
+    });
+
+</script>
