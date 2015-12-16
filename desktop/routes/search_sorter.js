@@ -123,7 +123,7 @@ data = { restaurant:
 	   ] }
 console.log(sort(data, "NAME"));
 
-document.getElementById('test').addEventListener('click', function() {console.log(sort(data, ['TEST', 'Test']));}, false);
+//document.getElementById('test').addEventListener('click', function() {console.log(sort(data, ['TEST', 'Test']));}, false);
 
 
 //End testing area
