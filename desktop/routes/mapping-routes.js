@@ -19,24 +19,12 @@ router.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 
 router.get('/fetchMapData', function(req, res) {
-	// need the data in this format :
-	// { #Wells and septic tanks
-	//	name : #some name to identify the well or septic tank
-	//	location : {latitude, longitude}
-	//	lot_number : #don't know about this one, but if u can get it
-	//	status : #status of the water quality or septic quality
-	//	## Septic tank specific, but use the same object
-	//	lastpump : #date
-	//	## well specific
-	//	waterQuality : [{date, quality}] #quality over time
-	//
-	// }
 	var data; // This get sent to the client
 	var success = () => {
 		// Put success Code here
 		res.send(data);
 	};
-	//remove this once you implement it
+	//remove this once you implement it. Take the error from the error object
 	res.send({error : true});
 });
 

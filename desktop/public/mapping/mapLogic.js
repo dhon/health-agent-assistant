@@ -38,8 +38,9 @@ function addPin(data) {
 
 function populateMap(data) {
   for (var i = 0; i<data.length; i++) {
-    pin = data[i];
-    addPin({name : pin.name, type : "water",  innerHTML : "<center>Placeholder</center>"});
+    var pin = data[i];
+    console.log(pin);
+    addPin({name : pin.name, type : "water",  innerHTML : "<center>Placeholder</center>", coords: pin.coords});
   }
 }
 
@@ -49,23 +50,30 @@ function clearMap() {
   pins = [];
   featureLayer = L.mapbox.featureLayer().addTo(map);
 }
+
 function ajaxError(code) { console.log(code); }
 
 function updateMap() {
-  $.ajax({
-   url: '/mapping/fetchMapData',
-   error: ajaxError,
-   dataType: 'json',
-   success: function(data) {
-     console.log("Map data retrieved");
-     if (data.error)
-        console.log("INVALID DATA ERROR");
-     else {
-       clearMap();
-       populateMap(data);
-     }
-   },
-   type: 'GET'
+  // need the data in this format :
+  // { #Wells and septic tanks
+  //  name : #some name to identify the well or septic tank
+  //  location : {latitude, longitude}
+  //  lot_number : #don't know about this one, but if u can get it
+  //  status : #status of the water quality or septic quality
+  //  ## Septic tank specific, but use the same object
+  //  lastpump : #date
+  //  ## well specific
+  //  waterQuality : [{date, quality}] #quality over time
+  //
+  // }
+  clearMap();
+  getDatabase(function(result){
+    var data = [];
+    for(var i = 0; i < result.length; i++){
+      //will have to fix the data we pass %%%
+      data[i] = result[i];
+    }
+    populateMap(data);
   });
 }
 

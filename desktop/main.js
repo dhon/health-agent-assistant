@@ -55,11 +55,6 @@ app.use(flash());
 //// End Middleware Setup
 
 
-
-
-
-
-
 //// Begin User Routes
 
 // This adds the external router defined routes to the app.
@@ -69,8 +64,6 @@ app.use('/', require('./routes/general-routes'));
 app.use('/data', require('./routes/data-routes'));
 app.use('/mapping', require('./routes/mapping-routes'));
 app.use('/searching', require('./routes/searching-routes'));
-
-//// End User Routes
 
 //// Server Startup
 app.listen(app.get('port'), function() {
