@@ -1,6 +1,9 @@
 <head>
   <title>UMass 320 WebApp</title>
   <style>
+    h1 {
+      text-align: center;
+    }
     .create {
       text-align: center;
     }
@@ -59,11 +62,12 @@
 </head>
 
 <body>
+  <h1>Admin</h1>
   <div class="create">
     <h3>Create An Account</h3>
     <form method="post" action="http://localhost:3000/api/user/register"> {{!-- <--- THIS MAY NOT BE THE RIGHT ACTION --}}
-      Username: <input type="text" name="username"> <br>
-      Password:  <input type="password" name="passwordhash"> <br>
+      Username: <input type="text" name="username" placeholder="Username"> <br>
+      Password:  <input type="password" name="passwordhash" placeholder="Password"> <br>
       Admin:
       <select name="admin">
         <option value="yes">Yes</option>
@@ -92,30 +96,20 @@
           <th>Password Hash</th> {{!-- THIS COULD BE REMOVED --}}
           <th>Saved Searches</th> {{!-- THIS COULD BE REMOVED --}} {{!-- PROBABLY NOT AN INT? --}}
           <th>Privileges</th> {{!-- PROBABLY NOT AN INT? --}}
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
+        {{#each users}}
         <tr>
-          <td>1</td>
-          <td>usernametest</td>
-          <td>dbasdjdah</td>
-          <td>63</td>
-          <td>73</td>
+          <td>{{this.id}}</td>
+          <td>{{this.username}}</td>
+          <td>{{this.passwordhash}}</td>
+          <td>{{this.savedsearches}}</td>
+          <td>{{this.privileges}}</td>
+          <td>Edit Delete</td> {{!-- will include link to form to edit or delete user attributes --}}
         </tr>
-        <tr>
-          <td>2</td>
-          <td>alphausernametest</td>
-          <td>jfabobe</td>
-          <td>24</td>
-          <td>6</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>gammausernametest</td>
-          <td>aonadjd</td>
-          <td>257</td>
-          <td>27</td>
-        </tr>
+        {{/each}}
       </tbody>
     </table>
 
