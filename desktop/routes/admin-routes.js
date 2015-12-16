@@ -17,9 +17,63 @@ router.get('/', function(req, res) {
   	 	{ id: 3, username: 'ben', passwordhash: '0u09hjdh09hdhadhubuicbuiahdphahd', savedsearches: '3', privileges: '41' }
 	];
 
+	var userArray = {user:[]};
+
+	var user = {
+		id:"",
+		username:"",
+		passwordhash:"",
+		savedsearches:"",
+		privileges:""
+	};
+
+	var userDBResults = getAllUsers(user);
+	userArray = userDBResults;
+
 	res.render('admin', {
-		users: userArray2
+		users: userArray // replace with userArray2 to test local array
 	});
 });
+
+
+// Originally from searching-routes.js and remade for users retrieval from DB
+function getAllUsers(query)
+{
+	var userDBResults = {};
+	for(var attribute in query)
+	{
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( "POST", 'http://localhost:3000/api/get', false ); // false for synchronous request
+		xmlHttp.setRequestHeader('Content-Type', 'application/json');
+		
+		console.log("Sending query:"+query[attribute]);
+		console.log();
+		xmlHttp.send( query[attribute] );
+		
+		if(xmlHttp.responseText)
+		{
+			var data = JSON.parse(xmlHttp.responseText);
+			
+			console.log("Starting returned data");
+			console.log(data);
+			console.log("Ending Returned data");
+			console.log(data.success);
+			console.log();
+			
+			if(data.success){
+				if(data.rows == undefined){
+					data.rows = [];
+				}
+				userDBResults[attribute] = data.rows;
+			}
+			else{
+				console.log("Error getting information from DB");
+			}
+			console.log();
+			console.log();
+		}
+	}
+	return userDBResults;
+}
 
 module.exports = router;
