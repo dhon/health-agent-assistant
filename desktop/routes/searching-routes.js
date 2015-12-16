@@ -2,6 +2,7 @@ var express = require('express');
 var querystring = require('querystring');
 var http = require('http');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var sort = require("./search_sorter").sort;
 
 // This creates an express "router" that allows us to separate
 // particular routes from the main application.
@@ -9,7 +10,18 @@ var router = express.Router();
 
 // Example post
 router.post('/', function(req, res) {
+
 	var data = req.body; //Data takes type of json object
+	
+	// A sort request sorts cached results and re-renders the view
+	if(data.sort !== undefined){
+		if(req.session.results_cache == undefined){
+			return;
+		}
+		sort(req.session.results_cache, data.sort);
+		res.render('results', req.session.results_cache);
+		return;
+	}
 	
 	// for(var attribute in data){
 		// console.log(attribute+": "+data[attribute]);
@@ -239,7 +251,15 @@ router.post('/', function(req, res) {
 					NAME:"Test0", 
 					ADDRESS:"", 
 					OWNERID:"", 
-					PERSONINCHARGE:""
+					PERSONINCHARGE:"Jim"
+				},
+				{
+					ID:"1", 
+					PROPERTYID:"0", 
+					NAME:"Test1", 
+					ADDRESS:"", 
+					OWNERID:"", 
+					PERSONINCHARGE:"Bob"
 				}
 			],
 			
@@ -377,8 +397,6 @@ router.post('/', function(req, res) {
 				results.restaurant.push(restaurant);
 			}
 		}
-		
-		console.log(results);
 		
 		//TODO: Sort formated results
 	}
@@ -1051,7 +1069,8 @@ router.post('/', function(req, res) {
 	
 	
 	
-	
+	// Save the results to be sorted later
+	req.session.results_cache = results;
 	
 	// Test 
 	res.render('results', results);
