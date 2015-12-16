@@ -13,12 +13,19 @@
     <div id="tab-1" class="tab-content current">
         <div class="form add_new_form" >
             <label>Add a New Restaurant</label>
-            <form method="post" action="#">
+            <form method="post" action="/api/add">
+                 <input type="text" name="type" value="restaurant" style="display:none"> <br>
+                 Location: <select name="location[]">
+                <option value="sunderland">Sunderland</option>
+                <option value="leverett">Leverett</option>
+                
+                </select><br>
+                 Property ID: <input type="number" name="propertyid" required> <br>
                 Name: <input type="text" name="name"> <br>
-                Address:  <input type="text" name="address"> <br>
-                Telephone: <input type="text" name="telephone"> <br>
-                Owner:  <input type="text" name="owner"> <br>
-                Person in Charge: <input type="text" name="person_in_charge"> <br>
+                Address:  <input type="text" name="address" required> <br>
+               <!-- Telephone: <input type="text" name="telephone"> <br>-->
+                Owner ID:  <input type="number" name="ownerid" required> (Database requires ID) <br>
+                Person in Charge: <input type="text" name="personincharge" required> <br>
                 <button>Add</button><button type="button" class="add_new_btn">Cancel</button>
             </form>
             
@@ -147,9 +154,14 @@
     <div id="tab-2" class="tab-content">
         <div class="form add_new_form">
             <label>Add a New Well</label>
-            <form method="post" action="#">
-                Duis aute: <input type="text" name="name"> <br>
-                Duis aute:  <input type="text" name="name"> <br>
+            <form method="post" action="/api/add">
+                 <input type="text" name="type" value="well" style="display:none"> <br>
+                 Location: <select name="location[]">
+                <option value="sunderland">Sunderland</option>
+                <option value="leverett">Leverett</option>
+                </select><br>
+                Property ID: <input type="number" name="propertyid"> <br>
+                Owner ID:  <input type="number" name="ownerid"> <br>
                 <button>Add</button><button class="add_new_btn" type="button">Cancel</button>
             </form>
         </div>
@@ -213,9 +225,14 @@
     <div id="tab-3" class="tab-content">
         <div class="form add_new_form">
             <label>Add a New Tank</label>
-            <form method="post" action="#">
-                Duis aute: <input type="text" name="name"> <br>
-                Duis aute:  <input type="text" name="name"> <br>
+            <form method="post" action="/api/add">
+                 <input type="text" name="type" value="septic" style="display:none"> <br>
+                 Location: <select name="location[]">
+                <option value="sunderland">Sunderland</option>
+                <option value="leverett">Leverett</option>
+                </select><br>
+                Property ID: <input type="number" name="propertyid"> <br>
+                Owner ID:  <input type="number" name="ownerid"> <br>
                 <button>Add</button><button class="add_new_btn" type="button">Cancel</button>
             </form>
         </div>
