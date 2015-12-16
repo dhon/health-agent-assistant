@@ -66,9 +66,9 @@ function getType(data) {
 	}
 }
 
-/* module.exports = {
+module.exports = {
 	sort : sort
-}; */
+}; 
 
 //TODO: delete following test data
 data = { restaurant:
