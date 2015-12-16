@@ -1128,7 +1128,29 @@ function queryDatabase(query)
 }
 
 
+function saveSearch(query)
+{
+	var savedSearchMessage = {};
+	savedSearchMessage.SAVEDSEARCH = JSON.stringify(query);
+	savedSearchMessage.USERID = 1;
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.open( "POST", 'http://localhost:3000/api/add', false ); // false for synchronous request
+	xmlHttp.setRequestHeader('Content-Type', 'application/json');
+	
+	console.log("Saving Search:"+query[attribute]);
+	console.log();
+	xmlHttp.send( query[attribute] );
+	
+	if(xmlHttp.responseText)
+	{
+		if(xmlHttp.responseText < 0) {
+			//TODO: Failed to save search, do something
+		}
+		console.log("Recieved: " + xmlHttp.responseText + " after saving search");
+	}
 
+	return DBResults;
+}
 
 
 
