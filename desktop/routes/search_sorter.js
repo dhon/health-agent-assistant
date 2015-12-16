@@ -1,5 +1,5 @@
 //data: JSON array
-//sortBy: string or array of strings
+//sortBy: string or array of strings. If array, strings must be in order of attributes
 //attributeType: typeof sortBy (e.g. number, string). Can be found using typeof
 //Throws JSONTypeError, missingParameterError
 function sort(data, sortBy, attributeType) {
@@ -22,6 +22,26 @@ function sort(data, sortBy, attributeType) {
 	}
 	var unsorted = data[type];
 	
+	//Create function to get sort by value from each field or piece of data
+	//Different because sortBy can be string or string array
+	var getVal;
+		if (typeof sortBy == 'string') {
+			getVal = function(field) {return field[sortBy];};
+		}
+		else if (Array.isArray(sortBy)) {
+			getVal = function(field) {
+				var val = field;
+				for (var v in sortBy) {
+					if (sortBy[v] == undefined) return undefined;
+					val = val[sortBy[v]];
+				}
+
+				return val;
+			}
+		}
+		else {
+			//TODO: Throw some error or some other error checking
+		}
 	//do not call compareNoErrors directly, use compare instead.
 	//compareNoErrors has no errorChecking
 	var compareNoErrors;
@@ -35,10 +55,11 @@ function sort(data, sortBy, attributeType) {
 			//TODO Do something if attributeType is not known besides return 0 on compare
 			compareNoErrors = function(val1, val2) {return 0};
 		}
+		
 	
 	function compare(field1, field2) {
-		val1= field1[sortBy]
-		val2= field2[sortBy]
+		val1= getVal(field1, sortBy);
+		val2= getVal(field2, sortBy);
 		if(val1 == undefined){
 			if(val2 == undefined) return 0; //Both missing field
 			else return -1; //since field2 has attribute and field1 does not
@@ -49,6 +70,7 @@ function sort(data, sortBy, attributeType) {
 
 		return compareNoErrors(val1, val2);
 	}
+	
 
 		return unsorted.sort(compare);
 }
@@ -66,10 +88,13 @@ function getType(data) {
 	}
 }
 
-module.exports = {
-	sort : sort
-}; 
 
+//Compatibility with older browsers
+if (!Array.isArray) {
+    Array.isArray = function(obj) {
+      return Object.prototype.toString.call(obj) == '[object Array]';
+    }
+}
 //TODO: delete following test data
 data = { restaurant:
    [ { ID: '0',
@@ -94,6 +119,13 @@ data = { restaurant:
 		TEST: {Test:'a'}
 		} 
 	   ] }
-// sort(data, "NAME");
-console.log("test");
-document.getElementById('test'). addEventListener('click', function() {console.log(sort(data, ['TEST', 'Test']));}, false);
+console.log(sort(data, "NAME"));
+
+document.getElementById('test').addEventListener('click', function() {console.log(sort(data, ['TEST', 'Test']));}, false);
+
+
+//End testing area
+
+module.exports = {
+	sort : sort
+}; 
