@@ -378,7 +378,7 @@ router.post('/', function(req, res) {
 			}
 		}
 		
-		
+		console.log(results);
 		
 		//TODO: Sort formated results
 	}
