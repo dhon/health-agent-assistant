@@ -1,4 +1,5 @@
 var express = require('express');
+var api = require('../../federation/routes/api.js');
 var router = express.Router();
 var sqlQuery = require('../controller/sqlQueryWriter')
 var db = require('../controller/dbCommunicator')

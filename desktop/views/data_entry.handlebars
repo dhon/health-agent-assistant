@@ -1,11 +1,12 @@
+<html>
 <h1>Data Entry</h1>
 
 <div class="container">
 
     <ul class="tabs">
-        <li class="tab-link current" data-tab="tab-1">Health Inspection</li>
-        <li class="tab-link" data-tab="tab-2">Water Well</li>
-        <li class="tab-link" data-tab="tab-3">Septic System</li>
+        <li class="{{healthtabclass}}" data-tab="tab-1">Health Inspection</li>
+        <li class="{{watertabclass}}" data-tab="tab-2">Water Well</li>
+        <li class="{{septictabclass}}" data-tab="tab-3">Septic System</li>
 
     </ul>
 
@@ -20,21 +21,23 @@
                 Person in Charge: <input type="text" name="person_in_charge"> <br>
                 <button>Add</button><button type="button" class="add_new_btn">Cancel</button>
             </form>
-
+            
         </div>
         <div class="form">
-            <label>Restaurant Info</label>
+            <label>Restaurant Information</label>
             <form method="post" action="#">
-                Name: <input type="text" name="name2"> <br>
+            <!--    Name: <input type="text" name="name2"> <br>
                 Address:  <input type="text" name="address2"> <br>
                 Telephone: <input type="text" name="telephone2"> <br>
                 Owner:  <input type="text" name="owner2"> <br>
                 Person in Charge: <input type="text" name="person_in_charge2"> <br>
+            -->
                 Choose a Restaurant:  <select name="choose_restaurant">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+               {{#each list}}
+
+                <option value={{id}}>{{name}} - {{address}}</option>
+               {{/each}}
+
             </select>
                 <button>Choose</button>
             </form>
@@ -45,7 +48,7 @@
             <form method="post" action="#">
                 <div class="form">
                 <h5>Basic Information</h5>
-                1. Inspector: <input type="text" name="inspector"> <br>
+                1. Inspector: <input type="text" name="inspector" value="{{formdata.inspector}}" required> <br>
                 2. Risk Level:  <input type="text" name="risk_level"> <br>
                 3. HACCP: <input type="text" name="haccp"> <br>
                 4. Time In:  <input type="text" name="time_in"> <br>
@@ -255,7 +258,7 @@
                 13. Hauler date: <input type="text" name="name"> <br>
                 14. Receiving Facility: <input type="text" name="name"> <br>
                 15. Receiving Facility Date: <input type="text" name="name"> <br>
-                <button>Submit</button><button>Delete</button>
+                <button>{{submit_string}}</button><button>Delete</button>
             </form>
         </div>
     </div>
@@ -269,8 +272,6 @@
         width: 800px;
         margin: 0 auto;
     }
-
-
 
     ul.tabs{
         margin: 0px;
@@ -307,9 +308,6 @@
 
     .add_new_form{
         display:none;
-    }
-    h1{
-        text-align: center;
     }
 </style>
 
@@ -363,3 +361,4 @@
     });
 
 </script>
+</html>
