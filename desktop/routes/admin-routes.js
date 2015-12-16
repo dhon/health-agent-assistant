@@ -12,23 +12,23 @@ router.get('/', function(req, res) {
 
 	// Fake array for testing
 	var userArray2 = [
-    	{ id: 1, username: 'jack', passwordhash: '5ebe2294ecd0e0f08eab7690d2a6ee69', savedsearches: '72', privileges: '5' },
-  		{ id: 2, username: 'jill', passwordhash: '51075igaf89fafh98d8ghav8gh8av89g', savedsearches: '22', privileges: '1' },
-  	 	{ id: 3, username: 'ben', passwordhash: '0u09hjdh09hdhadhubuicbuiahdphahd', savedsearches: '3', privileges: '41' }
+    	{ ID: 1, USERNAME: 'jack', PASSWORDHASH: '5ebe2294ecd0e0f08eab7690d2a6ee69', savedsearches: '72', privileges: '5' },
+  		{ ID: 2, USERNAME: 'jill', PASSWORDHASH: '51075igaf89fafh98d8ghav8gh8av89g', savedsearches: '22', privileges: '1' },
+  	 	{ ID: 3, USERNAME: 'ben', PASSWORDHASH: '0u09hjdh09hdhadhubuicbuiahdphahd', savedsearches: '3', privileges: '41' }
 	];
 
-	var userArray = {user:[]};
+	var userArray = {};
 
 	var user = {
-		id:"",
-		username:"",
-		passwordhash:"",
-		savedsearches:"",
-		privileges:""
+		ID:"",
+		USERNAME:"",
+		PASSWORDHASH:""
+		// savedsearches:"",
+		// privileges:""
 	};
 
-	var userDBResults = getAllUsers(user);
-	userArray = userDBResults;
+	var userResults = getAllUsers(user);
+	userArray = userResults.data;
 
 	res.render('admin', {
 		users: userArray // replace with userArray2 to test local array
@@ -65,7 +65,7 @@ function getAllUsers(query)
 			if(data.rows == undefined){
 				data.rows = [];
 			}
-			userDBResults = data.rows;
+			userDBResults = data;
 		}
 		else{
 			console.log("Error getting information from DB");

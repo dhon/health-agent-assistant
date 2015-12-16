@@ -8,9 +8,10 @@
       text-align: center;
     }
     #table-container {
-      padding-top: 50px;
+      padding-top: 10px;
       margin-left: auto;
       margin-right: auto;
+      margin-bottom: 50px;
       width: 95%;
     }
     table, th, td {
@@ -63,9 +64,10 @@
 
 <body>
   <h1>Admin</h1>
-  <div class="create">
+
+{{!--   <div class="create">
     <h3>Create An Account</h3>
-    <form method="post" action="http://localhost:3000/api/user/register"> {{!-- <--- THIS MAY NOT BE THE RIGHT ACTION --}}
+    <form method="post" action="http://localhost:3000/api/user/register">
       Username: <input type="text" name="username" placeholder="Username"> <br>
       Password:  <input type="password" name="passwordhash" placeholder="Password"> <br>
       Admin:
@@ -76,7 +78,7 @@
       <br>
       <button>Add Account</button>
     </form>
-  </div>
+  </div> --}}
 
   <div id="table-container">
     <h3 id="title">Account List</h3>
@@ -93,59 +95,23 @@
         <tr>
           <th>ID</th>
           <th>Username</th>
-          <th>Password Hash</th> {{!-- THIS COULD BE REMOVED --}}
-          <th>Saved Searches</th> {{!-- THIS COULD BE REMOVED --}} {{!-- PROBABLY NOT AN INT? --}}
-          <th>Privileges</th> {{!-- PROBABLY NOT AN INT? --}}
-          <th>Actions</th>
+          <th>Password Hash</th>
+{{!--           <th>Saved Searches</th>
+          <th>Privileges</th>
+          <th>Actions</th> --}}
         </tr>
       </thead>
       <tbody>
         {{#each users}}
         <tr>
-          <td>{{this.id}}</td>
-          <td>{{this.username}}</td>
-          <td>{{this.passwordhash}}</td>
-          <td>{{this.savedsearches}}</td>
-          <td>{{this.privileges}}</td>
-          <td>Edit Delete</td> {{!-- will include link to form to edit or delete user attributes --}}
+          <td>{{this.ID}}</td>
+          <td>{{this.USERNAME}}</td>
+          <td>{{this.PASSWORDHASH}}</td>
+{{!--           <td>2</td>
+          <td>2</td>
+          <td>Edit Delete</td> --}}
         </tr>
         {{/each}}
-      </tbody>
-    </table>
-
-   {{!--  THIS IS THE LOCAL TESTING TABLE --}}
-    <table id="usertable2" class="display" cellspacing="0" width="100%">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Username</th>
-          <th>Password Hash</th> {{!-- THIS COULD BE REMOVED --}}
-          <th>Saved Searches</th> {{!-- THIS COULD BE REMOVED --}} {{!-- PROBABLY NOT AN INT? --}}
-          <th>Privileges</th> {{!-- PROBABLY NOT AN INT? --}}
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>usernametest</td>
-          <td>dbasdjdah</td>
-          <td>63</td>
-          <td>73</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>alphausernametest</td>
-          <td>jfabobe</td>
-          <td>24</td>
-          <td>6</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>gammausernametest</td>
-          <td>aonadjd</td>
-          <td>257</td>
-          <td>27</td>
-        </tr>
       </tbody>
     </table>
   </div>
