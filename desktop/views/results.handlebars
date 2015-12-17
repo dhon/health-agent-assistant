@@ -17,20 +17,19 @@
 		<div>Person In Charge: {{this.PERSONINCHARGE}}</div>
 		{{#if this.inspection}}
 		{{#each this.inspection}}
-			<div class="collapser"><img src="/images/collapse.png" />Inspections</div>
+			<div class="collapser"><img src="/images/collapse.png" />Inspection on {{this.date}}</div>
 			<div class="collapsible">
 				<!-- General inspection information goes here -->
-				<div>Date: {{this.date}}</div>
+				
 				<div>Inspector: {{this.INSPECTOR}}</div>
 				<div>Inspection Type: {{this.TYPEOFINSPECTION}}</div>
 				<div>Reasoning: {{this.REASONING}}</div>
 				<div>Additional Notes: {{this.ADDITIONALNOTES}}</div>
 				{{#if this.violation}}
 				{{#each this.violation}}
-					<div class="collapser"><img src="/images/collapse.png" />Violations</div>
+					<div class="collapser"><img src="/images/collapse.png" />Violation Code: {{this.CODEREFERENCE}}</div>
 					<div class="collapsible">
 						<!-- Violation information goes here -->
-						<div>Code Reference: {{this.CODEREFERENCE}}</div>
 						<div>Correction plan: {{this.DESCRIPTIONOFVIOLATIONCORRECTIONPLAN}}</div>
 					</div>
 				{{/each}}
