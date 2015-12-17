@@ -17,7 +17,7 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 passport.use(new Strategy(
   function(username, password, cb) {
-
+	
     var hashed = crypto.createHash('md5').update(password).digest('hex');
 
     var xmlHttp = new XMLHttpRequest();
@@ -30,13 +30,14 @@ passport.use(new Strategy(
     var response = JSON.parse(xmlHttp.responseText);
 
     console.log(response.success);
-      if (response.success == false) { return cb(null, false, { message: "Invalid username, password combination"})}
+    if (response.success == false) { return cb(null, false, { message: "Invalid username, password combination"})}
 
-      var idNum = parseInt(response.ID);
-      var user = {id:1, username:response.USERNAME, password:response.PASSWORDHASH, displayName:response.USERNAME, emails:[{value:" "}]};
-      //var user = { id: idNum, username: response.USERNAME, password: response.PASSWORDHASH, displayName: response.USERNAME, emails: [ { value: '' } ] };
+    var idNum = parseInt(response.data.ID);
+	
+    var user = {id:1, username:response.USERNAME, password:response.PASSWORDHASH, displayName:response.USERNAME, emails:[{value:" "}]};
+    //var user = { id: idNum, username: response.USERNAME, password: response.PASSWORDHASH, displayName: response.USERNAME, emails: [ { value: '' } ] };
 
-      return cb(null, user);
+    return cb(null, user);
   }));
 
 // Configure Passport authenticated session persistence.
@@ -93,6 +94,7 @@ app.use('/data', require('./routes/data-routes'));
 app.use('/mapping', require('./routes/mapping-routes'));
 app.use('/searching', require('./routes/searching-routes'));
 app.use('/admin', require('./routes/admin-routes'));
+app.use('/profile', require('./routes/profile-routes'));
 app.use('/api', require('../federation/routes/api'));
 
 // Define routes.
@@ -123,13 +125,13 @@ app.get('/logout',
     res.redirect('/');
   });
 
-app.get('/profile',
+/*app.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),
   function(req, res){
     res.render('profile', { user: req.user,id:req.user.id, username:req.user.username,displayName:req.user.displayName,emails:req.user.emails });
   });
 
-/*app.get('/data',
+app.get('/data',
   require('connect-ensure-login').ensureLoggedIn(),
   function(req, res){
     res.render('data_entry', { user: req.user,id:req.user.id, username:req.user.username,displayName:req.user.displayName,emails:req.user.emails });
