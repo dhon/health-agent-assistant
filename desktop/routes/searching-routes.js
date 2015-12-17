@@ -1158,11 +1158,15 @@ function saveSearch(query)
 
 
 
-
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/login');
+}
 
 
 // Example route
-router.get('/', function(req, res) {
+router.get('/', isAuthenticated, function(req, res) {
 	res.render('search');
 });
 

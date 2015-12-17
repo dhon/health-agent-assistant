@@ -11,8 +11,16 @@ router.post('/post', function(req, res) {console.log("posted");});
 	var restaurants = [	{"name":"WcDonalds", "id":"123", "address":"54 Maple Street"},
 						{"name":"Dunkin Donuts", "id":"456", "address":"100 Main Street"}];
 
+
+						
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/login');
+}
+						
 // Route via search results
-router.get('/edit', function(req, res){
+router.get('/edit', isAuthenticated, function(req, res){
 
 	var completed_form = "";
 
@@ -45,7 +53,7 @@ router.get('/edit', function(req, res){
 });
 
 // Main route
-router.get('/', function(req, res) {
+router.get('/', isAuthenticated, function(req, res) {
 
 	var healthtab = "tab-link current";
 	var watertab = "tab-link";

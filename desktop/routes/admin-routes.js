@@ -7,7 +7,13 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 // particular routes from the main application.
 var router = express.Router();
 
-router.get('/', function(req, res) {
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/login');
+}
+
+router.get('/', isAuthenticated, function(req, res) {
 	console.log("routed");
 
 	// Fake array for testing
