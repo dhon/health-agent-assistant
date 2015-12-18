@@ -97,36 +97,6 @@ if (!Array.isArray) {
       return Object.prototype.toString.call(obj) == '[object Array]';
     }
 }
-//TODO: delete following test data
-data = { restaurant:
-   [ { ID: '0',
-       PROPERTYID: '0',
-       NAME: 'Test0',
-       ADDRESS: '',
-       OWNERID: '',
-       PERSONINCHARGE: '',
-       property: [Object],
-       inspection: [Object],
-		TEST: {Test:'b'}
-		}, 
-	   
-	   { ID: '1',
-       PROPERTYID: '1',
-       NAME: 'Test1',
-       ADDRESS: '',
-       OWNERID: '',
-       PERSONINCHARGE: '',
-       property: [Object],
-       inspection: [Object],
-		TEST: {Test:'a'}
-		} 
-	   ] }
-console.log(sort(data, "NAME"));
-
-//document.getElementById('test').addEventListener('click', function() {console.log(sort(data, ['TEST', 'Test']));}, false);
-
-
-//End testing area
 
 module.exports = {
 	sort : sort
