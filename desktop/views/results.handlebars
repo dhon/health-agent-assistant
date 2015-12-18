@@ -17,7 +17,7 @@
 		<div>Person In Charge: {{this.PERSONINCHARGE}}</div>
 		{{#if this.inspection}}
 		{{#each this.inspection}}
-			<div class="collapser"><img src="/images/collapse.png" />Inspection on {{this.date}}</div>
+			<div class="collapser"><img src="/images/collapse.png" />Inspection: {{this.date}}</div>
 			<div class="collapsible">
 				<!-- General inspection information goes here -->
 				
@@ -56,10 +56,9 @@
 		<div>Plot Number: {{this.property.PLOTNUMBER}}</div>
 		{{#if this.systemPumpingRecords}}
 		{{#each this.systemPumpingRecords}}
-			<div class="collapser"><img src="/images/collapse.png" />Pumping Records</div>
+			<div class="collapser"><img src="/images/collapse.png" />Pumping Record: {{this.PUMPINGDATE}}</div>
 			<div class ="collapsible">
 				<!-- Pumping record information goes here -->
-				<div>Date: {{this.PUMPINGDATE}}</div>
 				<div>Quanity Pumped: {{this.QUANTITYPUMPED}}</div>
 				<div>Observed Condition: {{this.OBSERVEDCONDITION}}</div>
 				<div>Pumped by: {{this.SYSTEMPUMPEDBYNAME}}</div>
@@ -97,14 +96,16 @@
 		<div>Plot Number: {{this.property.PLOTNUMBER}}</div>
 		{{#if this.waterQualityReport}}
 		{{#each this.waterQualityReport}}
-			<div class="collapser"><img src="/images/collapse.png" />Water Quality Reports</div>
+			<div class="collapser"><img src="/images/collapse.png" />Water Quality Report {{this.DATECOLLECTED}}</div>
 			<div class ="collapsible">
 				<!-- Water quality report information goes here -->
 				<div>Collected by: {{this.COLLECTEDBY}}</div>
-				<div>Date Collected: {{this.DATECOLLECTED}}</div>
-				<div>Date Collected: {{this.DATECOLLECTED}}</div>
-				<div>PH: {{this.PH}}</div>
 				<div>Passes Drinking Water Standards: {{this.THISWATERSAMPLEPASSESDRINKINGWATERSTANDARDS}}</div>
+				<div>PH: {{this.PH}}</div>
+				<div>IRON: {{this.IRON}}</div>
+				<div>SULFATESULFUR: {{this.SULFATESULFUR}}</div>
+				<div>CHLORIDE: {{this.CHLORIDE}}</div>
+				<div>Notes: {{this.ADDITIONALNOTES}}</div>
 			</div>
 		{{/each}}
 		{{else}}
