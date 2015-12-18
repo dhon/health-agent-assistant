@@ -1,4 +1,5 @@
 <html>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 <h1>Data Entry</h1>
 
 <div class="container">
@@ -15,7 +16,9 @@
         <div class="form add_new_form" >
             <label>Add a New Restaurant</label>
             <iframe style="display:none" name="silent-submit"></iframe>
-            <form method="post" action="/api/add" target="silent-submit">
+
+            <form method="post" action="/api/add" target="silent-submit" class="pure-form pure-form-aligned">
+            <div class="pure-control-group">
                  <input type="text" name="type" value="restaurant" style="display:none"> <br>
                  Location: <select name="location[]">
                 <option value="sunderland">Sunderland</option>
@@ -23,18 +26,19 @@
                 
                 </select><br>
                  Property ID: <input type="number" name="propertyid" required> <br>
-                Name: <input type="text" name="name"> <br>
+                Name: <input type="text" name="name" required> <br>
                 Address:  <input type="text" name="address" required> <br>
                <!-- Telephone: <input type="text" name="telephone"> <br>-->
-                Owner ID:  <input type="number" name="ownerid" required> (Database requires ID) <br>
+                Owner ID:  <input type="number" name="ownerid" required>  <br>
                 Person in Charge: <input type="text" name="personincharge" required> <br>
+                </div>
                 <button>Add</button><button type="button" class="add_new_btn">Cancel</button>
             </form>
             
         </div>
-        <div class="form">
+        <div class="form" >
             <label>Restaurant Information</label>
-            <form method="post" action="#">
+            <form method="post" action="#" class="pure-form pure-form-aligned">
             <!--    Name: <input type="text" name="name2"> <br>
                 Address:  <input type="text" name="address2"> <br>
                 Telephone: <input type="text" name="telephone2"> <br>
@@ -42,6 +46,7 @@
                 Person in Charge: <input type="text" name="person_in_charge2"> <br>
             -->
                 Choose a Restaurant:  <select name="choose_restaurant">
+                <option value="--select one--" >--select one--</option>
                {{#each list}}
 
                 <option value={{id}}>{{name}} - {{address}}</option>
@@ -49,12 +54,13 @@
 
             </select>
                 <button>Choose</button>
+                <button class="add_new_btn" type="button">Add New Restaurant</button>
             </form>
-            <button class="add_new_btn" type="button">Add New Restaurant</button>
+            
         </div>
         <div class="form">
             <label>Inspection</label>
-            <form method="post" action="/api/add">
+            <form method="post" action="/api/add" class="pure-form pure-form-aligned">
                 <div class="form">
                 <h5>Basic Information</h5>
                 <input type="text" name="type" value="restaurantinspections" style="display:none"> <br>
@@ -191,7 +197,7 @@
                 <textarea cols="80" rows="5" name="additionalnotes"></textarea>
                 </div>
 
-                <!--<div class="form">
+                <div class="form">
                     <label>Violation</label>
                     <div >
                         <input autocomplete="off" id="field1" name="field1" type="text" placeholder="Input Violation" />
@@ -199,7 +205,7 @@
                     </div>
 
                 </div>
-                -->
+                
                 <button>Submit</button><button>Delete</button>
             </form>
         </div>
@@ -222,14 +228,23 @@
         <div class="form">
             <label>Well Info</label>
             <form method="post" action="#">
-                Duis aute: <input type="text" name="name"> <br>
+            Choose a Well:  <select name="choose_well">
+             <option value="--select one--">--select one--</option>
+               {{#each welllist}}
+               
+                <option value={{id}}>{{name}} - {{address}}</option>
+               {{/each}}
+
+            </select>
+                <button>Choose</button>
+              <!--  Duis aute: <input type="text" name="name"> <br>
                 Duis aute:  <input type="text" name="name"> <br>
                 Choose:  <select>
                 <option value="volvo">Volvo</option>
                 <option value="saab">Saab</option>
                 <option value="mercedes">Mercedes</option>
                 <option value="audi">Audi</option>
-            </select><br>
+            </select><br>-->
                 <button class="add_new_btn" type="button">Add New</button>
             </form>
         </div>
@@ -294,14 +309,23 @@
         <div class="form">
             <label>Tank Info</label>
             <form method="post" action="#">
-                Duis aute: <input type="text" name="name"> <br>
+            Choose a septic tank:  <select name="choose_tank">
+            <option value="--select one--">--select one--</option>
+               {{#each tanklist}}
+
+                <option value={{id}}>{{name}} - {{address}}</option>
+               {{/each}}
+
+            </select>
+                <button>Choose</button>
+            <!--    Duis aute: <input type="text" name="name"> <br>
                 Duis aute:  <input type="text" name="name"> <br>
                 Choose:  <select>
                 <option value="volvo">Volvo</option>
                 <option value="saab">Saab</option>
                 <option value="mercedes">Mercedes</option>
                 <option value="audi">Audi</option>
-            </select><br>
+            </select><br>-->
                 <button class="add_new_btn" type="button">Add New</button>
             </form>
         </div>
@@ -384,9 +408,27 @@
     .add_new_form{
         display:none;
     }
+
+    input{
+        margin: 1px;
+    }
+
+    select{
+        margin: 1px;
+
+    }
+
+    button{
+        margin: 1px;
+    }
 </style>
 
 <script>
+    $('button, input:button').addClass('btn');
+    $('button, input:button').addClass('btn-success');
+    $('form').addClass('pure-form pure-form-aligned');
+
+
     $(document).ready(function(){
 
         $('ul.tabs li').click(function(){
@@ -411,7 +453,7 @@
             next = next + 1;
             var newIn = '<input autocomplete="off" id="field' + next + '" name="field' + next + '" type="text" placeholder="Input Violation">';
             var newInput = $(newIn);
-            var removeBtn = '<button id="remove' + (next - 1) + '" class="remove-me" >-</button></div><div id="field">';
+            var removeBtn = '<button id="remove' + (next - 1) + '" class="remove-me btn btn-danger" >-</button></div><div id="field">';
             var removeButton = $(removeBtn);
             $(addto).after(newInput);
             $(addRemove).after(removeButton);
