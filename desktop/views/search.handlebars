@@ -23,8 +23,8 @@
 			Inspection Range: <input type="date" name="restDateAfter" placeholder="DD/MM/YY"> - <input type="date" name="restDateBefore" placeholder="DD/MM/YY"><br>
 			Inspector Name: <input type="text" name="inspectorName" placeholder="e.g. Sam Smith"><br>
 			HACCP: <input type="number" name="HACCP" min="0"><br>
-			Time In:  <input type="text" name="time_in"> <br>
-			Time Out: <input type="text" name="time_out"> <br>
+			Time In:  <input type="text" name="time_in" placeholder="DD/MM/YY"> <br>
+			Time Out: <input type="text" name="time_out" placeholder="DD/MM/YY"> <br>
 			Type of Operation: <select name="operation">
 				<option value="">Select</option>
 				<option value="1">Food Service</option>
@@ -57,7 +57,6 @@
 			Number of Violations: <input type="number" name="numViolations" min="0"><br>
 			Violation Codes: <input type="text" name="codeViolations" placeholder="Ex. Violation Codes"><br>
 			Keywords: <input type="text" name="restKeyword" placeholder="Keywords"><br>
-			<button type="button">Save</button>
 			<input type="Submit" value="Search" Width="90px">
 			<input type="reset" value="Reset"><br>
 		</form>
@@ -74,7 +73,7 @@
 			</select><br>
 			Owner's Name: <input type="text" name="ownerName" placeholder="e.g. Sam Smith"><br>
 			Option: <input type="text" name="option" placeholder="Option"><br> 
-			Pumping Date: <input type="date" name="pumpingDate"><br>
+			Pumping Date: <input type="date" name="pumpingDate" placeholder="DD/MM/YY"><br>
 			Range of Quantity Pumped: <input type="number" name="lowBoundQuantityPumped" min="0">
 			 - <input type="number" name="upBoundQuantityPumped" min="0"><br>
 			
@@ -84,15 +83,14 @@
 			Was it cleaned: Yes<input type="radio" name="isCleaned" value=1>
 			No<input type="radio" name="isCleaned" value=0><br>
 			Observe Condition Keywords: <input type="text" name="conditionKeyword" placeholder="Keywords"><br>
-			System Pumped by Name: <input type="text" name="systemPmpByName" placeholder=""><br>
-			System Pumped by License: <input type="text" name="systemPmpByLic" placeholder=""><br>
-			System Pumped by Company: <input type="text" name="systemPmpByCompany" placeholder=""><br>
+			System Pumped by Name: <input type="text" name="systemPmpByName" placeholder="Name"><br>
+			System Pumped by License: <input type="text" name="systemPmpByLic" placeholder="License"><br>
+			System Pumped by Company: <input type="text" name="systemPmpByCompany" placeholder="Company"><br>
 			Location Where Contents Were Disposed: <input type="text" name="disposalLocation" placeholder="Location of Disposal"><br>
-			Hauler: <input type="text" name="hauler"><br>
-			Hauler Date; <input type="date" name="haulerDate"><br> 
-			Receiving Facility: <input type="text" name="receivingFacility"><br>
-			Receiving Facility Date; <input type="date" name="receivingFacilityDate"><br>
-			<button type="button">Save</button>
+			Hauler: <input type="text" name="hauler" placeholder="Hauler"><br>
+			Hauler Date; <input type="date" name="haulerDate" placeholder="DD/MM/YY"><br> 
+			Receiving Facility: <input type="text" name="receivingFacility" placeholder="Facility"><br>
+			Receiving Facility Date; <input type="date" name="receivingFacilityDate" placeholder="DD/MM/YY"><br>
 			<input type="Submit" value="Search" Width="90px">
 			<input type="reset" value="Reset"><br>
 		</form>
@@ -134,8 +132,6 @@
 			No<input type="radio" name="effluentTeeFilter" value=0><br>
 			Submitted By: <input type="text" name="testerName" placeholder="e.g. Sam Smith"><br>
 			Additional Note: <input type="text" name="additionalNote" placeholder="Additional Note"><br>
-			
-			<button type="button">Save</button>
 			<input type="Submit" value="Search" Width="90px">
 			<input type="reset" value="Reset"><br>
 		</form>
