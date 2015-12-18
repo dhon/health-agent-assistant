@@ -1,9 +1,11 @@
 //data: JSON array
+////Note: If data has multiple types (i.e. restuarant, septic, well), the function will only return sorted information for one of them.
+////The other will not be included in the return at all.
 //sortBy: string or array of strings. If array, strings must be in order of attributes
 //The array of strings is used as a path to get to the attribute to sortBy
-//E.g. [attr1, attr2, attr3] would sort by the attr1.attr2.attr3 values in the JSON
+////E.g. [attr1, attr2, attr3] would sort by the attr1.attr2.attr3 values in the JSON
 //attributeType: typeof sortBy (e.g. number, string). Can be found using typeof
-//Throws JSONTypeError, missingParameterError
+//Throws JSONTypeError, missingParameterError, badParameterError
 function sort(data, sortBy, attributeType) {
 	if(data == undefined || sortBy == undefined){
 		var e = new Error('Missing parameters');
@@ -42,7 +44,7 @@ function sort(data, sortBy, attributeType) {
 			}
 		}
 		else {
-			//TODO: Throw some error or some other error checking
+			return undefined;
 		}
 	//do not call compareNoErrors directly, use compare instead.
 	//compareNoErrors has no errorChecking
@@ -76,7 +78,7 @@ function sort(data, sortBy, attributeType) {
 
 		return unsorted.sort(compare);
 }
-//TODO: check for multiple types
+
 function getType(data) {
 	if(data.restaurant != undefined) return "restaurant";
 	if(data.septics != undefined) return "septic";
