@@ -372,7 +372,7 @@ router.post('/', function(req, res) {
 			typeOfInspections:[{ID:"0", INSPECTIONTYPE:"Routine"}, {ID:"1", INSPECTIONTYPE:"Reinspection"}],
 			reasonings:[{ID:"0", REASONING:"Because"}, {ID:"1", REASONING:"Why not"}]
 		};
-		DBResults = fakeDBResults;
+		//DBResults = fakeDBResults;
 		
 		
 		
@@ -842,7 +842,7 @@ router.post('/', function(req, res) {
 			}]
 		};
 		
-		var DBResults = fakeDBResults;
+		//DBResults = fakeDBResults;
 		
 		results = {septics:[]};
 		
@@ -1132,7 +1132,7 @@ router.post('/', function(req, res) {
 			}]
 		};
 		
-		DBResults = fakeDBResults;
+		//DBResults = fakeDBResults;
 		
 		results = {wells:[]};
 		
